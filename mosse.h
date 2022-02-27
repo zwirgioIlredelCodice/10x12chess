@@ -412,3 +412,165 @@ int mosse_pedone_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
     }
     return mosse_i;
 }
+
+int mosse_cavallo_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
+    int sc_t[120];
+    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+
+    int mosse_t[8]; 
+    int mosse_i_t = 0;
+
+    mosse_i_t = mosse_cavallo_bianco(sc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_bianco_attaccato(sc_t, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_alfiere_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
+    int sc_t[120];
+    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+
+    int mosse_t[20]; 
+    int mosse_i_t = 0;
+
+    mosse_i_t = mosse_alfiere_bianco(sc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_bianco_attaccato(sc_t, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_torre_bianca_l(int *sc, int pos, int *mosse, int mosse_i) {
+    int sc_t[120];
+    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+
+    int mosse_t[20]; 
+    int mosse_i_t = 0;
+
+    mosse_i_t = mosse_torre_bianca(sc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_bianco_attaccato(sc_t, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_regina_bianca_l(int *sc, int pos, int *mosse, int mosse_i) {
+    int sc_t[120];
+    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+
+    int mosse_t[20]; 
+    int mosse_i_t = 0;
+
+    mosse_i_t = mosse_regina_bianca(sc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_bianco_attaccato(sc_t, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_pedone_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
+    int sc_t[120];
+    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+
+    int mosse_t[8]; 
+    int mosse_i_t = 0;
+
+    mosse_i_t = mosse_pedone_nero(sc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_nero_attaccato(sc_t, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_cavallo_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
+    int sc_t[120];
+    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+
+    int mosse_t[8]; 
+    int mosse_i_t = 0;
+
+    mosse_i_t = mosse_cavallo_nero(sc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_nero_attaccato(sc_t, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_alfiere_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
+    int sc_t[120];
+    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+
+    int mosse_t[20]; 
+    int mosse_i_t = 0;
+
+    mosse_i_t = mosse_alfiere_nero(sc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_nero_attaccato(sc_t, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_torre_nera_l(int *sc, int pos, int *mosse, int mosse_i) {
+    int sc_t[120];
+    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+
+    int mosse_t[20]; 
+    int mosse_i_t = 0;
+
+    mosse_i_t = mosse_torre_nera(sc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_nero_attaccato(sc_t, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_regina_nera_l(int *sc, int pos, int *mosse, int mosse_i) {
+    int sc_t[120];
+    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+
+    int mosse_t[20]; 
+    int mosse_i_t = 0;
+
+    mosse_i_t = mosse_regina_nera(sc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_nero_attaccato(sc_t, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}

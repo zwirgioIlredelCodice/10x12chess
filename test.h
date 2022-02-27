@@ -20,7 +20,7 @@ int test1[] = {
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
-                    barriera, torre_n,    vuoto,    pedone_b,    re_b,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, torre_b,    vuoto,    pedone_n,    re_n,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
                     barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
                     barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
                     barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
