@@ -49,14 +49,10 @@ int main() {
     int a_mosse[20];
     int a_i = 0;
     disegna_scacchiera(test1);
-    a_i = mosse_re_bianco_l(test1, 34, a_mosse, a_i);
+    a_i = mosse_pedone_bianco_l(test1, 33, a_mosse, a_i);
 
     for (int i = 0; i < a_i; i++) {
         printf("%d ", a_mosse[i]);
     }
     printf("\n");
-
-    int sas[120] = {0};
-    attacco_neri(test1, sas);
-    disegna_attacco(sas);
 }

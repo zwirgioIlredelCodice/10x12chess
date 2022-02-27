@@ -86,8 +86,3 @@ void disegna_attacco(int *attacco) {
     }
     printf("\n");
 }
-
-void fai_mossa(int *sc, int da, int a) {
-    sc[a] = sc[da];
-    sc[da] = vuoto;
-}
