@@ -228,7 +228,7 @@ int mosse_re_nero(int *sc, int pos, int *mosse, int mosse_i) {
 }
 
 void attacco_bianchi(int *sc, int *attacco) { //prende un array scacchoera e in array attacco [120] che andra a popolare con calselle attaccate (0 non attaccate)
-    int mosse[1200]; //buffer per le mosse dei pezzi
+    int mosse[256]; //buffer per le mosse dei pezzi
     int mosse_i = 0;
     
     for (int i = 0; i < 120; i++) {
@@ -269,7 +269,7 @@ void attacco_bianchi(int *sc, int *attacco) { //prende un array scacchoera e in 
 }
 
 void attacco_neri(int *sc, int *attacco) { //prende un array scacchoera e in array attacco [120] che andra a popolare con calselle attaccate (0 non attaccate)
-    int mosse[1200]; //buffer per le mosse dei pezzi
+    int mosse[256]; //buffer per le mosse dei pezzi
     int mosse_i = 0;
     
     for (int i = 0; i < 120; i++) {
@@ -573,4 +573,98 @@ int mosse_regina_nera_l(int *sc, int pos, int *mosse, int mosse_i) {
         }
     }
     return mosse_i;
+}
+
+typedef struct mossa {
+    int da;
+    int a;
+} mossa;
+
+int mosse_legali_biachi(int *sc, mossa *mosse_l, int mosse_i_l) {
+    
+    int mosse[256];
+    int mosse_i = 0;
+    
+    for (int i = 0; i < 120; i++) {
+        switch (sc[i]) {
+        case pedone_b:
+            mosse_i = mosse_pedone_bianco_l(sc, i, mosse, mosse_i);
+            break;
+        
+        case cavallo_b:
+            mosse_i = mosse_cavallo_bianco_l(sc, i, mosse, mosse_i);
+            break;
+
+        case alfiere_b:
+            mosse_i = mosse_alfiere_bianco_l(sc, i, mosse, mosse_i);
+            break;
+        
+        case torre_b:
+            mosse_i = mosse_torre_bianca_l(sc, i, mosse, mosse_i);
+            break;
+
+        case regina_b:
+            mosse_i = mosse_regina_bianca_l(sc, i, mosse, mosse_i);
+            break;
+
+        case re_b:
+            mosse_i = mosse_re_bianco_l(sc, i, mosse, mosse_i);
+            break;
+        
+        default:
+            break;
+        }
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = i;
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+        mosse_i = 0;
+    }
+    return mosse_i_l;
+}
+
+int mosse_legali_neri(int *sc, mossa *mosse_l, int mosse_i_l) {
+    
+    int mosse[256];
+    int mosse_i = 0;
+    
+    for (int i = 0; i < 120; i++) {
+        switch (sc[i])
+        {
+        case pedone_n:
+            mosse_i = mosse_pedone_nero_l(sc, i, mosse, mosse_i);
+            break;
+        
+        case cavallo_n:
+            mosse_i = mosse_cavallo_nero_l(sc, i, mosse, mosse_i);
+            break;
+
+        case alfiere_n:
+            mosse_i = mosse_alfiere_nero_l(sc, i, mosse, mosse_i);
+            break;
+        
+        case torre_n:
+            mosse_i = mosse_torre_nera_l(sc, i, mosse, mosse_i);
+            break;
+
+        case regina_n:
+            mosse_i = mosse_regina_nera_l(sc, i, mosse, mosse_i);
+            break;
+
+        case re_n:
+            mosse_i = mosse_re_nero_l(sc, i, mosse, mosse_i);
+            break;
+        
+        default:
+            break;
+        }
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = i;
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+        mosse_i = 0;
+    }
+    return mosse_i_l;
 }
