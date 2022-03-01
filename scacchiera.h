@@ -64,12 +64,12 @@ char pezzi_caratteri[14] = {'.', 'P', 'C', 'A', 'T', 'R', '#', 'p', 'c', 'a', 't
 //char pezzi_caratteri[14] = {'.', '♟', '♞', '♝', '♜', '♛', '♚', '♙', '♘', '♗', '♖', '♕', '♔', '='};
 
 void disegna_scacchiera(int *scacchiera) {
-    int numeri = 1;
-    printf("\n%d| ", numeri++);
+    int numeri = 8;
+    printf("\n%d| ", numeri--);
 
     for (int i = 21; i <= 98; i++) {
         if ((i % 10) == 0) {
-            printf("\n%d| ", numeri++);
+            printf("\n%d| ", numeri--);
         }
         if (pezzi_caratteri[scacchiera[i]] != '='){
             printf("%c ", pezzi_caratteri[scacchiera[i]]);

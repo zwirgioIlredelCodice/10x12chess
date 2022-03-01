@@ -668,3 +668,9 @@ int mosse_legali_neri(int *sc, mossa *mosse_l, int mosse_i_l) {
     }
     return mosse_i_l;
 }
+
+int tutte_mosse_legali(int *sc, mossa *mosse_l, int mosse_i_l) {
+    mosse_i_l = mosse_legali_biachi(sc, mosse_l, mosse_i_l);
+    mosse_i_l = mosse_legali_neri(sc, mosse_l, mosse_i_l);
+    return mosse_i_l;
+}
