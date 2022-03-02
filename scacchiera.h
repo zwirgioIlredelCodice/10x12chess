@@ -84,6 +84,7 @@ void disegna_scacchiera(int *scacchiera) {
     for (char i = 'A'; i <= 'H'; i++) {
         printf("%c ", i);
     }
+    printf("\n");
 }
 
 void disegna_attacco(int *attacco) {

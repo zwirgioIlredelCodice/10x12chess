@@ -14,55 +14,10 @@ sas malibox board representation
 #include "pezzi.h"
 #include "mosse.h"
 #include "scacchiera.h"
+#include "valutazione.h"
+#include "cervello.h"
 
 #include "test.h"
-
-
-
-/*
-int maxi( int depth ) {
-    if ( depth == 0 ) return evaluate();
-    int max = -oo;
-    for ( all moves) {
-        score = mini( depth - 1 );
-        if( score > max )
-            max = score;
-    }
-    return max;
-}
-
-int mini( int depth ) {
-    if ( depth == 0 ) return -evaluate();
-    int min = +oo;
-    for ( all moves) {
-        score = maxi( depth - 1 );
-        if( score < min )
-            min = score;
-    }
-    return min;
-}
-*/
-
-
-int Perft(int *sc, int depth) {
-    mossa move_list[256];
-    int n_moves, i;
-    int nodes = 0;
-
-    if (depth == 0) 
-        return 1ULL;
-
-    int sc1[120];
-    memcpy(sc1, sc, sizeof(int) * 120);
-
-    n_moves = tutte_mosse_legali(sc,move_list, 0);
-    for (i = 0; i < n_moves; i++) {
-        fai_mossa(sc1, move_list[i].da, move_list[i].a);
-        nodes += Perft(sc1, depth - 1);
-        memcpy(sc, sc1, sizeof(int) * 120);
-    }
-    return nodes;
-}
 
 int main() {
 /*
@@ -78,6 +33,26 @@ int main() {
     }
     printf("\n");
     */
-    int sas = Perft(scacchiera_0, 3);
-    printf("saas %d\n", sas);
+    migliore_mossa(test1, 3);
+
+    int moss = 0;
+    mossa ssa;
+
+    while(moss == 0) {
+
+        disegna_scacchiera(scacchiera_0);
+        printf("gioca bianco PC\n");
+        ssa = migliore_mossa(scacchiera_0, 3);
+        fai_mossa(scacchiera_0, ssa.da, ssa.a);
+        disegna_scacchiera(scacchiera_0);
+
+        printf("immeti da a\n");
+        scanf("%d", &ssa.da);
+        scanf("%d", &ssa.a);
+        fai_mossa(scacchiera_0, ssa.da, ssa.a);
+        disegna_scacchiera(scacchiera_0);
+
+        printf("continuare?\n");
+        scanf("%d", &moss);
+    }
 }
