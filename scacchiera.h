@@ -101,3 +101,8 @@ void disegna_attacco(int *attacco) {
     }
     printf("\n");
 }
+
+int pos_lettere(char *c) {
+    int pos = (((c[0] - 'a') + 2) * 10) + (c[1] - '0' + 1);
+    printf("asdasdsd %d\n", pos);
+}

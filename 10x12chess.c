@@ -41,16 +41,19 @@ int main() {
     while(moss == 0) {
 
         disegna_scacchiera(scacchiera_0);
+        printf("valutazione: %d\n",valuta_posizione(scacchiera_0));
         printf("gioca bianco PC\n");
         ssa = migliore_mossa(scacchiera_0, 3);
         fai_mossa(scacchiera_0, ssa.da, ssa.a);
         disegna_scacchiera(scacchiera_0);
+        printf("valutazione: %d\n",valuta_posizione(scacchiera_0));
 
         printf("immeti da a\n");
         scanf("%d", &ssa.da);
         scanf("%d", &ssa.a);
         fai_mossa(scacchiera_0, ssa.da, ssa.a);
         disegna_scacchiera(scacchiera_0);
+        printf("valutazione: %d\n",valuta_posizione(scacchiera_0));
 
         printf("continuare?\n");
         scanf("%d", &moss);
