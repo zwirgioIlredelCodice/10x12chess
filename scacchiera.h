@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdio.h>
+#include <string.h>
 
 #include "pezzi.h"
 
@@ -60,27 +61,47 @@ int scacchiera_0[] = {
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera
                 };
 
-char pezzi_caratteri[14] = {'.', 'P', 'C', 'A', 'T', 'R', '#', 'p', 'c', 'a', 't', 'r', '@', '='};
-//char pezzi_caratteri[14] = {'.', '♟', '♞', '♝', '♜', '♛', '♚', '♙', '♘', '♗', '♖', '♕', '♔', '='};
+//Regular background
+#define BLKB "\e[40m"
+#define REDB "\e[41m"
+#define GRNB "\e[42m"
+#define YELB "\e[43m"
+#define BLUB "\e[44m"
+#define MAGB "\e[45m"
+#define CYNB "\e[46m"
+#define WHTB "\e[47m"
+
+#define reset "\e[0m"
+
+//char pezzi_caratteri[14] = {'.', 'P', 'C', 'A', 'T', 'R', '#', 'p', 'c', 'a', 't', 'r', '@', '='};
+char pezzi_caratteri[14][20] = {" ", "♟", "♞", "♝", "♜", "♛", "♚", "♙", "♘", "♗", "♖", "♕", "♔", "="};
 
 void disegna_scacchiera(int *scacchiera) {
     int numeri = 8;
+    int sfaso = 1;
     printf("\n%d| ", numeri--);
 
     for (int i = 21; i <= 98; i++) {
         if ((i % 10) == 0) {
+            sfaso++;
             printf("\n%d| ", numeri--);
         }
-        if (pezzi_caratteri[scacchiera[i]] != '='){
-            printf("%c ", pezzi_caratteri[scacchiera[i]]);
+        if ((i + sfaso) % 2 == 0) {
+            printf(GRNB);
         }
+
+        if (strcmp(pezzi_caratteri[scacchiera[i]], "=") != 0){
+            printf("%s ", pezzi_caratteri[scacchiera[i]]);
+        }
+
+        printf(reset);
     }
     printf("\n  ");
 
     for (int i = 1; i < 9; i++) {
         printf("--");
     }
-    printf("\n  ");
+    printf("\n   ");
     for (char i = 'A'; i <= 'H'; i++) {
         printf("%c ", i);
     }
@@ -103,6 +124,6 @@ void disegna_attacco(int *attacco) {
 }
 
 int pos_lettere(char *c) {
-    int pos = (((c[0] - 'a') + 2) * 10) + (c[1] - '0' + 1);
-    printf("asdasdsd %d\n", pos);
+    int pos = (90 - (c[1] - '1' + 2) * 10) + (c[0] - 'a' + 1) + 20;
+    return pos;
 }
