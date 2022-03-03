@@ -11,10 +11,7 @@ sas malibox board representation
 
 #include "test.h"
 
-int main() {
-
-    migliore_mossa(test1, 3);
-
+void gioco() {
     int moss = 0;
     mossa ssa;
 
@@ -41,4 +38,8 @@ int main() {
         printf("continuare?\n");
         scanf("%d", &moss);
     }
+}
+
+int main() {
+    gioco();
 }

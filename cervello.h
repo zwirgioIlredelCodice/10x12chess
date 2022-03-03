@@ -49,24 +49,37 @@ int mini( int depth ) {
 }
 */
 
+#define INFINITO 100000
+#define MENO_INFINITO -100000
+
 int mini(int *sc, int profondita);
 int maxi(int *sc, int profondita);
+
+int trova_re_bianco(int sc[]) {
+    int re = 0;
+    for (int i = 0; i < 120; i++) {
+        if (sc[i] == re_b) {
+            re = 1;
+            break;
+        }
+    }
+    return re;
+}
+
+int trova_re_nero(int sc[]) {
+    int re = 0;
+    for (int i = 0; i < 120; i++) {
+        if (sc[i] == re_n) {
+            re = 1;
+            break;
+        }
+    }
+    return re;
+}
 
 int maxi(int *sc, int profondita) {
     if (profondita == 0) {
         return valuta_posizione(sc);
-    }
-
-    int re_vivo = 0;
-    for (int i = 0; i < 120; i++) {
-        if (sc[i] == re_b) {
-            re_vivo = 1;
-            break;
-        }  
-    }
-
-    if(!re_vivo) { //---------roba strana senno mangia il re
-        return -100000; // -oo 
     }
 
     //generazione mosse
@@ -74,11 +87,24 @@ int maxi(int *sc, int profondita) {
     int mosse_i = 0;
     mosse_i = mosse_legali_biachi(sc, mosse, mosse_i);
 
+    if(trova_re_bianco(sc) == 0) {
+        return MENO_INFINITO;
+    }
+
+    if(mosse_i == 0) {
+        if (re_bianco_attaccato(sc)) { //scacco matto perchè più mosse e re sotto attacco
+            return MENO_INFINITO;
+        }
+        else {
+            return 0; //patta
+        }
+    }
+
     //fai copia scacchiera
     int sc_temp[120];
     memcpy(sc_temp, sc, sizeof(int) * 120);
 
-    int max = -100000; // -oo
+    int max = MENO_INFINITO; // -oo
 
     for (int i = 0; i < mosse_i; i++) {
         fai_mossa(sc_temp, mosse[i].da, mosse[i].a);
@@ -98,28 +124,29 @@ int mini(int *sc, int profondita) {
         return valuta_posizione(sc);
     }
 
-    int re_vivo = 0;
-    for (int i = 0; i < 120; i++) {
-        if (sc[i] == re_n) {
-            re_vivo = 1;
-            break;
-        }  
-    }
-
-    if(!re_vivo) {                  //---------roba strana senno mangia il re
-        return +100000; // +oo
-    }
-
     //generazione mosse
     mossa mosse[256];
     int mosse_i = 0;
     mosse_i = mosse_legali_neri(sc, mosse, mosse_i);
 
+    if(trova_re_nero(sc) == 0) {
+        return INFINITO;
+    }
+
+    if(mosse_i == 0) {
+        if (re_nero_attaccato(sc)) { //scacco matto perchè più mosse e re sotto attacco
+            return INFINITO;
+        }
+        else {
+            return 0; //patta
+        }
+    }
+
     //fai copia scacchiera
     int sc_temp[120];
     memcpy(sc_temp, sc, sizeof(int) * 120);
 
-    int min = +100000; // +oo
+    int min = INFINITO; // +oo
 
     for (int i = 0; i < mosse_i; i++) {
         fai_mossa(sc_temp, mosse[i].da, mosse[i].a);
@@ -143,7 +170,7 @@ mossa migliore_mossa(int *sc, int profondita) {
     int sc_temp[120];
     memcpy(sc_temp, sc, sizeof(int) * 120);
 
-    int punteggio = -100000;
+    int punteggio = MENO_INFINITO;
 
     for (int i = 0; i < mosse_i; i++) {
         int p = maxi(sc_temp, profondita);
