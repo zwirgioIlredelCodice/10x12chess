@@ -310,44 +310,6 @@ void attacco_neri(int *sc, int *attacco) { //prende un array scacchoera e in arr
     }
 }
 
-int mosse_re_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
-    
-    int attacco[120] = {0};
-    attacco_neri(sc, attacco);
-
-    int mosse_t[8]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_re_bianco(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (attacco[mosse_t[i]] == 0) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
-int mosse_re_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
-    
-    int attacco[120] = {0};
-    attacco_bianchi(sc, attacco);
-
-    int mosse_t[8]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_re_nero(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (attacco[mosse_t[i]] == 0) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
 int re_bianco_attaccato(int sc[]) {
     int attacco[120] = {0};
     attacco_neri(sc, attacco);
@@ -408,6 +370,44 @@ int re_nero_attaccato_mossa(int sc[], int da, int a) {
     memcpy(sc_temp, sc, sizeof(int) * 120);
     fai_mossa(sc_temp, da, a);
     return re_nero_attaccato(sc_temp);
+}
+
+int mosse_re_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
+    
+    int sc_t[120];
+    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+
+    int mosse_t[8]; 
+    int mosse_i_t = 0;
+
+    mosse_i_t = mosse_re_bianco(sc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_bianco_attaccato_mossa(sc_t, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_re_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
+    
+    int sc_t[120];
+    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+
+    int mosse_t[8]; 
+    int mosse_i_t = 0;
+
+    mosse_i_t = mosse_re_nero(sc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_nero_attaccato_mossa(sc_t, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
 }
 
 int mosse_pedone_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {

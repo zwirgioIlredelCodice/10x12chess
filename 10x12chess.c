@@ -44,5 +44,21 @@ void gioco() {
 }
 
 int main() {
-    gui();
+    //gui();
+    
+    int attacco[120] = {0};
+
+    attacco_neri(test1, attacco);
+    disegna_attacco(attacco);
+
+    mossa mosse[100];
+    int i = 0;
+    i = mosse_legali_biachi(test1, mosse, i);
+
+    for (int ii = 0; ii < i; ii++)
+    {
+        printf("da %d a %d\n", mosse[ii].da, mosse[ii].a);
+    }
+    //gioco();
+    
 }
