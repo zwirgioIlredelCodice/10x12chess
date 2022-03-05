@@ -44,8 +44,8 @@ void gioco() {
 }
 
 int main() {
-    //gui();
-    
+    gui(scacchiera_0);
+    /*
     int attacco[120] = {0};
 
     attacco_neri(test1, attacco);
@@ -59,6 +59,6 @@ int main() {
     {
         printf("da %d a %d\n", mosse[ii].da, mosse[ii].a);
     }
-    //gioco();
+    //gioco();*/
     
 }

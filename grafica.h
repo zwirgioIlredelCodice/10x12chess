@@ -4,6 +4,7 @@
 
 #include "pezzi.h"
 #include "scacchiera.h"
+#include "mosse.h"
 
 Image i_pices[12];
 
@@ -17,7 +18,7 @@ void loadPicesImg()
     {
         for (int i = 0; i < 6; i++)
         {
-            i_pices[(ii*6+i)] = ImageFromImage(chess, (Rectangle){i*200, ii*200, 200, 200});
+            i_pices[(ii * 6 + i)] = ImageFromImage(chess, (Rectangle){i * 200, ii * 200, 200, 200});
         }
     }
 }
@@ -27,8 +28,8 @@ void loadPicesTexture()
     for (int i = 0; i < 12; i++)
     {
         t_pices[i] = LoadTextureFromImage(i_pices[i]);
+        printf("%d ", i);
     }
-    
 }
 
 void unloadPicesImg()
@@ -47,8 +48,6 @@ void unloadPicesTexture()
     }
 }
 
-
-
 enum pieces
 {
     king_w,
@@ -66,76 +65,245 @@ enum pieces
     empty
 };
 
-int remap_pices[] = {re_b, regina_b, alfiere_b, cavallo_b, torre_b, pedone_b, re_n, regina_n, alfiere_n, cavallo_n, torre_n, pedone_n, vuoto};
-
 #define QUAD_SIZE 100
 
-void drawBoard(int *board) 
+void drawBoard(int *board)
 {
-    int sfaso = 0;
-    Vector2 pos = { 0, 0};
+    int sfaso = 1;
+    Vector2 pos = {0, 0};
 
-    for(int i = 12; i <= 98; i++) {
+    for (int i = 12; i <= 98; i++)
+    {
 
-        sfaso++;
-    
-        if (i % 10 != 9) {
+        if ((i % 10) == 0)
+        {
+            sfaso++;
+        }
+
+        if (i % 10 != 9)
+        {
+
             int y_quad = i / 10 - 2;
             int x_quad = i % 10 - 1;
 
-            if (sfaso % 2 == 0) {
+            if ((i + sfaso) % 2 == 0)
+            {
                 DrawRectangle(x_quad * QUAD_SIZE, y_quad * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE, BROWN);
             }
-            else {
-            DrawRectangle(x_quad * QUAD_SIZE, y_quad * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE, LIGHTGRAY);
+            else
+            {
+                DrawRectangle(x_quad * QUAD_SIZE, y_quad * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE, LIGHTGRAY);
             }
-            if (board[i] != empty)
+
+            if (board[i] != vuoto)
             {
                 pos.x = x_quad * QUAD_SIZE;
                 pos.y = y_quad * QUAD_SIZE;
 
+                if (board[i] != vuoto)
+                {
 
-                if (board[i] == re_b) {
-                    DrawTextureEx(t_pices[king_w], pos, 0, 0.5, WHITE);
-                }
-
-                if (board[i] == re_n) {
-                    DrawTextureEx(t_pices[queen_w], pos, 0, 0.5, WHITE);
-                }
-
-                else if (board[i] != vuoto) {
-                    DrawTextureEx(t_pices[remap_pices[board[i]]], pos, 0, 0.5, WHITE);
+                    switch (board[i])
+                    {
+                    case pedone_b:
+                        DrawTextureEx(t_pices[pawn_w], pos, 0, 0.5, WHITE);
+                        break;
+                    case cavallo_b:
+                        DrawTextureEx(t_pices[knight_w], pos, 0, 0.5, WHITE);
+                        break;
+                    case alfiere_b:
+                        DrawTextureEx(t_pices[bishop_w], pos, 0, 0.5, WHITE);
+                        break;
+                    case torre_b:
+                        DrawTextureEx(t_pices[rook_w], pos, 0, 0.5, WHITE);
+                        break;
+                    case regina_b:
+                        DrawTextureEx(t_pices[queen_w], pos, 0, 0.5, WHITE);
+                        break;
+                    case re_b:
+                        DrawTextureEx(t_pices[king_w], pos, 0, 0.5, WHITE);
+                        break;
+                    case pedone_n:
+                        DrawTextureEx(t_pices[pawn_b], pos, 0, 0.5, WHITE);
+                        break;
+                    case cavallo_n:
+                        DrawTextureEx(t_pices[knight_b], pos, 0, 0.5, WHITE);
+                        break;
+                    case alfiere_n:
+                        DrawTextureEx(t_pices[bishop_b], pos, 0, 0.5, WHITE);
+                        break;
+                    case torre_n:
+                        DrawTextureEx(t_pices[rook_b], pos, 0, 0.5, WHITE);
+                        break;
+                    case regina_n:
+                        DrawTextureEx(t_pices[queen_b], pos, 0, 0.5, WHITE);
+                        break;
+                    case re_n:
+                        DrawTextureEx(t_pices[king_b], pos, 0, 0.5, WHITE);
+                        break;
+                    default:
+                        break;
+                    }
                 }
             }
-        }   
+        }
     }
 }
 
-
-Vector2 position = { 100, 100};
-int gui()
+int gui(int *sc)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
     const int screenHeight = 800;
-    
+
     InitWindow(screenWidth, screenHeight, "Chesso");
-    
-    loadPicesImg(); 
-    loadPicesTexture();          // Image converted to texture, GPU memory (VRAM)
 
-    unloadPicesImg();   // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM
+    loadPicesImg();
+    loadPicesTexture(); // Image converted to texture, GPU memory (VRAM)
 
-    SetTargetFPS(10);               // Set our game to run at 60 frames-per-second
+    unloadPicesImg(); // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM
+
+    SetTargetFPS(30); // Set our game to run at 60 frames-per-second
+
+    int turno = 1; // biachi 1 neri -1;
+    Vector2 posizione_mouse;
+    int mouse_scacchiera = 0;
+    int px, py;
+
+    int mosse[100];
+    int mosse_i = 0;
+
+    int mossa_mouse = 0;
+
     //--------------------------------------------------------------------------------------
 
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    while (!WindowShouldClose()) // Detect window close button or ESC key
     {
         // Update
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
+        if (turno == 1)
+        {
+            if (IsMouseButtonPressed(0))
+            {
+                mosse_i = 0;
+
+                posizione_mouse = GetMousePosition();
+                px = (int)posizione_mouse.x;
+                py = (int)posizione_mouse.y;
+
+                px = (px / QUAD_SIZE);
+                py = (py / QUAD_SIZE);
+
+                mouse_scacchiera = py * 10 + px + 21;
+
+                if (sc[mouse_scacchiera] != vuoto)
+                {
+
+                    switch (sc[mouse_scacchiera])
+                    {
+                    case pedone_b:
+                        mosse_i = mosse_pedone_bianco_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    case cavallo_b:
+                        mosse_i = mosse_cavallo_bianco_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    case alfiere_b:
+                        mosse_i = mosse_alfiere_bianco_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    case torre_b:
+                        mosse_i = mosse_torre_bianca_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    case regina_b:
+                        mosse_i = mosse_regina_bianca_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    case re_b:
+                        mosse_i = mosse_re_bianco_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+
+            if (IsMouseButtonPressed(1))
+            {
+                posizione_mouse = GetMousePosition();
+                int sspx = (int)posizione_mouse.x;
+                int sspy = (int)posizione_mouse.y;
+
+                sspx = (sspx / QUAD_SIZE);
+                sspy = (sspy / QUAD_SIZE);
+
+                mossa_mouse = sspy * 10 + sspx + 21;
+
+                fai_mossa(sc, mouse_scacchiera, mossa_mouse);
+
+                turno = -turno;
+            }
+        }
+        else if (turno == -1)
+        {
+            if (IsMouseButtonPressed(0))
+            {
+                mosse_i = 0;
+
+                posizione_mouse = GetMousePosition();
+                px = (int)posizione_mouse.x;
+                py = (int)posizione_mouse.y;
+
+                px = (px / QUAD_SIZE);
+                py = (py / QUAD_SIZE);
+
+                mouse_scacchiera = py * 10 + px + 21;
+
+                if (sc[mouse_scacchiera] != vuoto)
+                {
+
+                    switch (sc[mouse_scacchiera])
+                    {
+                    case pedone_n:
+                        mosse_i = mosse_pedone_nero_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    case cavallo_n:
+                        mosse_i = mosse_cavallo_nero_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    case alfiere_n:
+                        mosse_i = mosse_alfiere_nero_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    case torre_n:
+                        mosse_i = mosse_torre_nera_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    case regina_n:
+                        mosse_i = mosse_regina_nera_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    case re_n:
+                        mosse_i = mosse_re_nero_l(sc, mouse_scacchiera, mosse, mosse_i);
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+
+            if (IsMouseButtonPressed(1))
+            {
+                posizione_mouse = GetMousePosition();
+                int sspx = (int)posizione_mouse.x;
+                int sspy = (int)posizione_mouse.y;
+
+                sspx = (sspx / QUAD_SIZE);
+                sspy = (sspy / QUAD_SIZE);
+
+                mossa_mouse = sspy * 10 + sspx + 21;
+
+                fai_mossa(sc, mouse_scacchiera, mossa_mouse);
+
+                turno = -turno;
+            }
+        }
         //----------------------------------------------------------------------------------
 
         // Draw
@@ -143,16 +311,26 @@ int gui()
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
-        drawBoard(scacchiera_0);
+        drawBoard(sc);
+
+        DrawRectangle(px * QUAD_SIZE, py * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE, (Color){253, 249, 0, 100});
+
+        for (int ii = 0; ii < mosse_i; ii++)
+        {
+            int ppx = (mosse[ii] % 10) - 1;
+            int ppy = (mosse[ii] / 10) - 2;
+            DrawRectangle(ppx * QUAD_SIZE, ppy * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE, (Color){0, 228, 48, 100});
+        }
+
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
-    
+
     unloadPicesTexture();
-    
+
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
+    CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
     return 0;
