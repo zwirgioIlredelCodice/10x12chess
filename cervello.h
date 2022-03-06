@@ -4,34 +4,6 @@
 #include "mosse.h"
 #include "scacchiera.h"
 #include "valutazione.h"
-/*
-var minimax = function (depth, game, isMaximisingPlayer) {
-    positionCount++;
-    if (depth === 0) {
-        return -evaluateBoard(game.board());
-    }
-
-    var newGameMoves = game.ugly_moves();
-
-    if (isMaximisingPlayer) {
-        var bestMove = -9999;
-        for (var i = 0; i < newGameMoves.length; i++) {
-            game.ugly_move(newGameMoves[i]);
-            bestMove = Math.max(bestMove, minimax(depth - 1, game, !isMaximisingPlayer));
-            game.undo();
-        }
-        return bestMove;
-    } else {
-        var bestMove = 9999;
-        for (var i = 0; i < newGameMoves.length; i++) {
-            game.ugly_move(newGameMoves[i]);
-            bestMove = Math.min(bestMove, minimax(depth - 1, game, !isMaximisingPlayer));
-            game.undo();
-        }
-        return bestMove;
-    }
-}
-*/
 
 int minimax(int depth, int *game, int isMaximisingPlayer) {
 
@@ -48,8 +20,20 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
     mossa mosse[200];
     int mosse_i = 0;
 
+    printf("W%d ", isMaximisingPlayer);
+
     if (isMaximisingPlayer) {
+        printf("max");
         mosse_i = mosse_legali_biachi(game_used, mosse, mosse_i);
+
+        if (mosse_i == 0) {
+            if (re_bianco_attaccato(game_used)) {
+                return -9999; //ha perso
+            }
+            else {
+                return 0;
+            }
+        }
 
         int bestMove = -9999;
         for (int i = 0; i < mosse_i; i++) {
@@ -63,7 +47,17 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
         printf("%d ", positionCount);
         return bestMove;
     } else {
+        printf("min");
         mosse_i = mosse_legali_neri(game_used, mosse, mosse_i);
+
+        if (mosse_i == 0) {
+            if (re_nero_attaccato(game_used)) {
+                return +9999; //ha perso
+            }
+            else {
+                return 0;
+            }
+        }
 
         int bestMove = 9999;
         for (int i = 0; i < mosse_i; i++) {
@@ -98,7 +92,7 @@ mossa minimaxRoot(int depth, int *game, int isMaximisingPlayer) {
     for(int i = 0; i < mosse_i; i++) {
         mossa newGameMove = mosse[i];
         fai_mossa(game_used, mosse[i].da, mosse[i].a);
-        int value = minimax(depth - 1, game_used, -isMaximisingPlayer);
+        int value = minimax(depth - 1, game_used, !isMaximisingPlayer);
 
         printf("mossa da %d a %d valutazione %d\n", newGameMove.da, newGameMove.a, value);
 
@@ -108,5 +102,6 @@ mossa minimaxRoot(int depth, int *game, int isMaximisingPlayer) {
             bestMoveFound = newGameMove;
         }
     }
+    printf("#--- deciso da %d a %d punteggio %d \n\n", bestMoveFound.da, bestMoveFound.a, bestMove);
     return bestMoveFound;
 };
