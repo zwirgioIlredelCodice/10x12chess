@@ -323,7 +323,7 @@ int re_bianco_attaccato(int sc[]) {
         }  
     }
 
-    assert(posizione_re != -1);
+    //assert(posizione_re != -1);
 
     //controlla che il re non sia attaccato
     if (attacco[posizione_re] == 0) {
@@ -354,7 +354,7 @@ int re_nero_attaccato(int sc[]) {
         }  
     }
 
-    assert(posizione_re != -1);
+    //assert(posizione_re != -1);
 
     //controlla che il re non sia attaccato
     if (attacco[posizione_re] == 0) {

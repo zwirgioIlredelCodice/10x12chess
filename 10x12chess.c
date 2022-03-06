@@ -23,7 +23,7 @@ void gioco() {
         disegna_scacchiera(scacchiera_0);
         printf("valutazione: %d\n",valuta_posizione(scacchiera_0));
         printf("gioca bianco PC\n");
-        ssa = migliore_mossa(scacchiera_0, 6);
+        ssa = minimaxRoot(3, scacchiera_0, 1);
         fai_mossa(scacchiera_0, ssa.da, ssa.a);
         disegna_scacchiera(scacchiera_0);
         printf("valutazione: %d\n",valuta_posizione(scacchiera_0));
@@ -44,7 +44,7 @@ void gioco() {
 }
 
 int main() {
-    gui(scacchiera_0);
+    //gui(scacchiera_0);
     /*
     int attacco[120] = {0};
 
@@ -60,5 +60,7 @@ int main() {
         printf("da %d a %d\n", mosse[ii].da, mosse[ii].a);
     }
     //gioco();*/
+    minimax(1, scacchiera_0, 1);
+    disegna_scacchiera(scacchiera_0);
     
 }

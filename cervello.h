@@ -26,131 +26,105 @@ int Perft(int *sc, int depth) { // ?? '
 }
 
 /*
-int maxi( int depth ) {
-    if ( depth == 0 ) return evaluate();
-    int max = -oo;
-    for ( all moves) {
-        score = mini( depth - 1 );
-        if( score > max )
-            max = score;
+var minimax = function (depth, game, isMaximisingPlayer) {
+    positionCount++;
+    if (depth === 0) {
+        return -evaluateBoard(game.board());
     }
-    return max;
-}
 
-int mini( int depth ) {
-    if ( depth == 0 ) return -evaluate();
-    int min = +oo;
-    for ( all moves) {
-        score = maxi( depth - 1 );
-        if( score < min )
-            min = score;
+    var newGameMoves = game.ugly_moves();
+
+    if (isMaximisingPlayer) {
+        var bestMove = -9999;
+        for (var i = 0; i < newGameMoves.length; i++) {
+            game.ugly_move(newGameMoves[i]);
+            bestMove = Math.max(bestMove, minimax(depth - 1, game, !isMaximisingPlayer));
+            game.undo();
+        }
+        return bestMove;
+    } else {
+        var bestMove = 9999;
+        for (var i = 0; i < newGameMoves.length; i++) {
+            game.ugly_move(newGameMoves[i]);
+            bestMove = Math.min(bestMove, minimax(depth - 1, game, !isMaximisingPlayer));
+            game.undo();
+        }
+        return bestMove;
     }
-    return min;
 }
 */
 
-int mini(int *sc, int profondita);
-int maxi(int *sc, int profondita);
+int minimax(int depth, int *game, int isMaximisingPlayer) {
 
-int maxi(int *sc, int profondita) {
-    if (profondita == 0) {
-        return valuta_posizione(sc);
+    int game_used[120];
+    memcpy(game_used, game, sizeof(int) * 120);
+
+    int positionCount;
+    positionCount++;
+
+    //printf("%d ", positionCount);
+
+    if (depth == 0) {
+        return -valuta_posizione(game_used);
     }
 
-    int re_vivo = 0;
-    for (int i = 0; i < 120; i++) {
-        if (sc[i] == re_b) {
-            re_vivo = 1;
-            break;
-        }  
-    }
-
-    if(!re_vivo) { //---------roba strana senno mangia il re
-        return -100000; // -oo 
-    }
-
-    //generazione mosse
-    mossa mosse[256];
+    mossa mosse[200];
     int mosse_i = 0;
-    mosse_i = mosse_legali_biachi(sc, mosse, mosse_i);
 
-    //fai copia scacchiera
-    int sc_temp[120];
-    memcpy(sc_temp, sc, sizeof(int) * 120);
+    if (isMaximisingPlayer) {
+        mosse_i = mosse_legali_biachi(game_used, mosse, mosse_i);
 
-    int max = -100000; // -oo
-
-    for (int i = 0; i < mosse_i; i++) {
-        fai_mossa(sc_temp, mosse[i].da, mosse[i].a);
-        int punteggio = mini(sc_temp, profondita - 1);
-        
-        if (punteggio > max) {
-            max = punteggio;
+        int bestMove = -9999;
+        for (int i = 0; i < mosse_i; i++) {
+            fai_mossa(game_used, mosse[i].da, mosse[i].a);
+            int mmOVE = minimax(depth - 1, game_used, !isMaximisingPlayer);
+            if (mmOVE > bestMove) {
+                bestMove = mmOVE;
+            }
+            memcpy(game, game_used, sizeof(int) * 120);
         }
+        return bestMove;
+    } else {
+        mosse_i = mosse_legali_neri(game_used, mosse, mosse_i);
 
-        memcpy(sc, sc_temp, sizeof(int) * 120); //resetta
+        int bestMove = 9999;
+        for (int i = 0; i < mosse_i; i++) {
+            fai_mossa(game_used, mosse[i].da, mosse[i].a);
+            int mmOVE = minimax(depth - 1, game_used, !isMaximisingPlayer);
+            if (mmOVE < bestMove) {
+                bestMove = mmOVE;
+            }
+            memcpy(game, game_used, sizeof(int) * 120);
+        }
+        return bestMove;
     }
-    return max;
 }
 
-int mini(int *sc, int profondita) {
-    if (profondita == 0) {
-        return valuta_posizione(sc);
-    }
+mossa minimaxRoot(int depth, int *game, int isMaximisingPlayer) {
 
-    int re_vivo = 0;
-    for (int i = 0; i < 120; i++) {
-        if (sc[i] == re_n) {
-            re_vivo = 1;
-            break;
-        }  
-    }
-
-    if(!re_vivo) {                  //---------roba strana senno mangia il re
-        return +100000; // +oo
-    }
-
-    //generazione mosse
-    mossa mosse[256];
+    mossa mosse[200];
     int mosse_i = 0;
-    mosse_i = mosse_legali_neri(sc, mosse, mosse_i);
 
-    //fai copia scacchiera
-    int sc_temp[120];
-    memcpy(sc_temp, sc, sizeof(int) * 120);
+    int game_used[120];
+    memcpy(game_used, game, sizeof(int) * 120);
 
-    int min = +100000; // +oo
-
-    for (int i = 0; i < mosse_i; i++) {
-        fai_mossa(sc_temp, mosse[i].da, mosse[i].a);
-        int punteggio = maxi(sc_temp, profondita - 1);
-        
-        if (punteggio < min) {
-            min = punteggio;
-        }
-
-        memcpy(sc, sc_temp, sizeof(int) * 120); //resetta
+    if (isMaximisingPlayer) {
+        mosse_i = mosse_legali_biachi(game_used, mosse, mosse_i);
+    } else {
+        mosse_i = mosse_legali_neri(game_used, mosse, mosse_i);
     }
-    return min;
-}
+    int bestMove = -9999;
+    mossa bestMoveFound;
 
-mossa migliore_mossa(int *sc, int profondita) {
-    mossa mosse[256];
-    int mosse_i = 0;
-    mosse_i = mosse_legali_biachi(sc, mosse, mosse_i);
-
-    mossa mossa_m;
-    int sc_temp[120];
-    memcpy(sc_temp, sc, sizeof(int) * 120);
-
-    int punteggio = -100000;
-
-    for (int i = 0; i < mosse_i; i++) {
-        int p = maxi(sc_temp, profondita);
-        if (p > punteggio) {
-            punteggio = p;
-            mossa_m = mosse[i];
+    for(int i = 0; i < mosse_i; i++) {
+        mossa newGameMove = mosse[i];
+        fai_mossa(game_used, mosse[i].da, mosse[i].a);
+        int value = minimax(depth - 1, game_used, !isMaximisingPlayer);
+        memcpy(game, game_used, sizeof(int) * 120);
+        if(value >= bestMove) {
+            bestMove = value;
+            bestMoveFound = newGameMove;
         }
     }
-    return mossa_m;
-}
+    return bestMoveFound;
+};

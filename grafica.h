@@ -224,13 +224,13 @@ int gui(int *sc)
                 }
 
                 mosse_i_l = 0;
-                /*
+                
                 // ---------mossa engine
-                mossa mm = migliore_mossa(sc, 4);
+                mossa mm = minimaxRoot(4, sc, 1);
                 fai_mossa(sc, mm.da, mm.a);
-                turno = -turno;*/
+                turno = -turno;
 
-
+                /*
                 if (IsMouseButtonPressed(0))
                 {
                     mosse_i = 0;
@@ -287,7 +287,7 @@ int gui(int *sc)
                     fai_mossa(sc, mouse_scacchiera, mossa_mouse);
 
                     turno = -turno;
-                }
+                }*/
             }
             else if (turno == -1)
             {
