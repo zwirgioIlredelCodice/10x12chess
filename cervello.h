@@ -4,27 +4,6 @@
 #include "mosse.h"
 #include "scacchiera.h"
 #include "valutazione.h"
-
-int Perft(int *sc, int depth) { // ?? '
-    mossa move_list[256];
-    int n_moves, i;
-    int nodes = 0;
-
-    if (depth == 0) 
-        return 1ULL;
-
-    int sc1[120];
-    memcpy(sc1, sc, sizeof(int) * 120);
-
-    n_moves = tutte_mosse_legali(sc,move_list, 0);
-    for (i = 0; i < n_moves; i++) {
-        fai_mossa(sc1, move_list[i].da, move_list[i].a);
-        nodes += Perft(sc1, depth - 1);
-        memcpy(sc, sc1, sizeof(int) * 120);
-    }
-    return nodes;
-}
-
 /*
 var minimax = function (depth, game, isMaximisingPlayer) {
     positionCount++;
@@ -62,10 +41,8 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
     int positionCount;
     positionCount++;
 
-    //printf("%d ", positionCount);
-
     if (depth == 0) {
-        return -valuta_posizione(game_used);
+        return valuta_posizione(game_used);
     }
 
     mossa mosse[200];
@@ -81,8 +58,9 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
             if (mmOVE > bestMove) {
                 bestMove = mmOVE;
             }
-            memcpy(game, game_used, sizeof(int) * 120);
+            memcpy(game_used, game, sizeof(int) * 120);
         }
+        printf("%d ", positionCount);
         return bestMove;
     } else {
         mosse_i = mosse_legali_neri(game_used, mosse, mosse_i);
@@ -94,8 +72,9 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
             if (mmOVE < bestMove) {
                 bestMove = mmOVE;
             }
-            memcpy(game, game_used, sizeof(int) * 120);
+            memcpy(game_used, game, sizeof(int) * 120);
         }
+        printf("%d ", positionCount);
         return bestMove;
     }
 }
@@ -119,8 +98,11 @@ mossa minimaxRoot(int depth, int *game, int isMaximisingPlayer) {
     for(int i = 0; i < mosse_i; i++) {
         mossa newGameMove = mosse[i];
         fai_mossa(game_used, mosse[i].da, mosse[i].a);
-        int value = minimax(depth - 1, game_used, !isMaximisingPlayer);
-        memcpy(game, game_used, sizeof(int) * 120);
+        int value = minimax(depth - 1, game_used, -isMaximisingPlayer);
+
+        printf("mossa da %d a %d valutazione %d\n", newGameMove.da, newGameMove.a, value);
+
+        memcpy(game_used, game, sizeof(int) * 120);
         if(value >= bestMove) {
             bestMove = value;
             bestMoveFound = newGameMove;

@@ -44,7 +44,7 @@ void gioco() {
 }
 
 int main() {
-    //gui(scacchiera_0);
+    gui(scacchiera_0);
     /*
     int attacco[120] = {0};
 
@@ -58,9 +58,11 @@ int main() {
     for (int ii = 0; ii < i; ii++)
     {
         printf("da %d a %d\n", mosse[ii].da, mosse[ii].a);
-    }
-    //gioco();*/
-    minimax(1, scacchiera_0, 1);
-    disegna_scacchiera(scacchiera_0);
+    }*/
+    //gioco();
+    mossa ss;
+    ss = minimaxRoot(3, test1, -1);
+    disegna_scacchiera(test1);
+    printf("mossa da %d a %d\n", ss.da, ss.a);
     
 }
