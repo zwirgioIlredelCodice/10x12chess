@@ -6,9 +6,9 @@
 #include "scacchiera.h"
 #include "mosse.h"
 
-Image i_pices[12];
+extern Image i_pices[];
 
-Texture2D t_pices[12];
+extern Texture2D t_pices[];
 
 void loadPicesImg();
 

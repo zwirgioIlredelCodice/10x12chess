@@ -8,6 +8,21 @@
 //char pezzi_caratteri[14] = {'.', 'P', 'C', 'A', 'T', 'R', '#', 'p', 'c', 'a', 't', 'r', '@', '='};
 char pezzi_caratteri[14][20] = {" ", "♟", "♞", "♝", "♜", "♛", "♚", "♙", "♘", "♗", "♖", "♕", "♔", "="};
 
+int scacchiera_0[] = {
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, torre_n, cavallo_n, alfiere_n, regina_n, re_n, alfiere_n, cavallo_n, torre_n, barriera,
+                    barriera, pedone_n, pedone_n, pedone_n, pedone_n, pedone_n, pedone_n, pedone_n, pedone_n, barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, barriera,
+                    barriera, torre_b, cavallo_b, alfiere_b, regina_b, re_b, alfiere_b, cavallo_b, torre_b, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera
+                };
+
 void disegna_scacchiera(int *scacchiera) {
     int numeri = 8;
     int sfaso = 1;
