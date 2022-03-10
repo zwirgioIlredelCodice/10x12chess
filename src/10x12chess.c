@@ -60,9 +60,6 @@ int main() {
         printf("da %d a %d\n", mosse[ii].da, mosse[ii].a);
     }*/
     //gioco();
-    mossa ss;
-    disegna_scacchiera(scacchiera_0);
-
 
     minimax(3, scacchiera_0, 1);
     

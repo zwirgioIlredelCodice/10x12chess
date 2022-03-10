@@ -1,8 +1,8 @@
-#pragma once
-
 #include <string.h>
 #include <assert.h>
+#include <stdio.h>
 #include "pezzi.h"
+#include "mosse.h"
 
 
 void fai_mossa(int *sc, int da, int a) {
@@ -595,11 +595,6 @@ int mosse_regina_nera_l(int *sc, int pos, int *mosse, int mosse_i) {
     }
     return mosse_i;
 }
-
-typedef struct mossa {
-    int da;
-    int a;
-} mossa;
 
 int mosse_legali_biachi(int *sc, mossa *mosse_l, int mosse_i_l) {
     

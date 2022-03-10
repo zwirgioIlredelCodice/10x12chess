@@ -1,10 +1,10 @@
-#pragma once
-
 #include "raylib.h"
 
 #include "pezzi.h"
 #include "scacchiera.h"
 #include "mosse.h"
+#include "grafica.h"
+#include "cervello.h"
 
 Image i_pices[12];
 
@@ -12,7 +12,7 @@ Texture2D t_pices[12];
 
 void loadPicesImg()
 {
-    Image chess = LoadImage("Chess_Pieces_Sprite.png");
+    Image chess = LoadImage("../assets/Chess_Pieces_Sprite.png");
 
     for (int ii = 0; ii < 2; ii++)
     {
@@ -47,23 +47,6 @@ void unloadPicesTexture()
         UnloadTexture(t_pices[i]);
     }
 }
-
-enum pieces
-{
-    king_w,
-    queen_w,
-    bishop_w,
-    knight_w,
-    rook_w,
-    pawn_w,
-    king_b,
-    queen_b,
-    bishop_b,
-    knight_b,
-    rook_b,
-    pawn_b,
-    empty
-};
 
 #define QUAD_SIZE 100
 
@@ -149,13 +132,6 @@ void drawBoard(int *board)
         }
     }
 }
-
-typedef enum tipo_schermata
-{
-    menu,
-    partita,
-    vittoria
-} tipo_schermata;
 
 int gui(int *sc)
 {

@@ -1,17 +1,13 @@
-#pragma once
-
 #include "pezzi.h"
 #include "mosse.h"
 #include "scacchiera.h"
 #include "valutazione.h"
+#include "cervello.h"
 
 int minimax(int depth, int *game, int isMaximisingPlayer) {
 
     int game_used[120];
     memcpy(game_used, game, sizeof(int) * 120);
-
-    int positionCount;
-    positionCount++;
 
     if (depth == 0) {
         return valuta_posizione(game_used);
@@ -20,10 +16,7 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
     mossa mosse[200];
     int mosse_i = 0;
 
-    //printf("W%d ", isMaximisingPlayer);
-
     if (isMaximisingPlayer) {
-        //printf("max");
         mosse_i = mosse_legali_biachi(game_used, mosse, mosse_i);
 
         if (mosse_i == 0) {
@@ -44,10 +37,8 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
             }
             memcpy(game_used, game, sizeof(int) * 120);
         }
-        //printf("%d ", positionCount);
         return bestMove;
     } else {
-        //printf("min");
         mosse_i = mosse_legali_neri(game_used, mosse, mosse_i);
 
         if (mosse_i == 0) {
@@ -68,7 +59,6 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
             }
             memcpy(game_used, game, sizeof(int) * 120);
         }
-        //printf("%d ", positionCount);
         return bestMove;
     }
 }
