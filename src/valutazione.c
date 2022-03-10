@@ -1,5 +1,3 @@
-#pragma once
-
 #include "pezzi.h"
 #include "valutazione.h"
 

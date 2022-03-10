@@ -1,4 +1,4 @@
-#include <pezzi.h>
+#include "pezzi.h"
 
 int bianco(int pezzo) {
     if (pezzo > vuoto && pezzo <= re_b)

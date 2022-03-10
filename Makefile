@@ -1,6 +1,6 @@
 # tool macros
 CC ?= gcc # FILL: the compiler
-CCFLAGS := -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 # FILL: compile flags
+CCFLAGS := -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -Wall # FILL: compile flags
 DBGFLAGS := -g
 CCOBJFLAGS := $(CCFLAGS) -c
 
