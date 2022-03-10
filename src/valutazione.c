@@ -1,6 +1,7 @@
 #pragma once
 
 #include "pezzi.h"
+#include "valutazione.h"
 
 
 int pawnEvalWhite[] =

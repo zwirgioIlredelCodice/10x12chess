@@ -1,10 +1,9 @@
-#pragma once
-
 #include "raylib.h"
 
 #include "pezzi.h"
 #include "scacchiera.h"
 #include "mosse.h"
+#include "grafica.h"
 
 Image i_pices[12];
 
@@ -12,7 +11,7 @@ Texture2D t_pices[12];
 
 void loadPicesImg()
 {
-    Image chess = LoadImage("Chess_Pieces_Sprite.png");
+    Image chess = LoadImage("../assets/Chess_Pieces_Sprite.png");
 
     for (int ii = 0; ii < 2; ii++)
     {

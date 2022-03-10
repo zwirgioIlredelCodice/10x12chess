@@ -1,8 +1,7 @@
-#pragma once
-
 #include <string.h>
 #include <assert.h>
 #include "pezzi.h"
+#include "mosse.h"
 
 
 void fai_mossa(int *sc, int da, int a) {

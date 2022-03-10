@@ -1,9 +1,8 @@
-#pragma once
-
 #include "pezzi.h"
 #include "mosse.h"
 #include "scacchiera.h"
 #include "valutazione.h"
+#include "cervello.h"
 
 int minimax(int depth, int *game, int isMaximisingPlayer) {
 
