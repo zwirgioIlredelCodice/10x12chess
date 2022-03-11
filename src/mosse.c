@@ -3,61 +3,72 @@
 #include <stdio.h>
 #include "pezzi.h"
 #include "mosse.h"
+#include "scacchiera.h"
 
 
-void fai_mossa(int *sc, int da, int a) {
-    sc[a] = sc[da];
-    sc[da] = vuoto;
+void fai_mossa(scacchiera *scc, char da, char a) { //--------------------------da riguardare
+    scc->posizione_pezzi[a] = scc->posizione_pezzi[da];
+    scc->posizione_pezzi[da] = vuoto;
 }
 
-int mosse_pedone_bianco(int *sc, int pos, int *mosse, int mosse_i) {
-    int avanti_1 = pos - 10;
-    int avanti_destra = pos - 9;
-    int avanti_sinistra = pos - 11;
+int mosse_pedone_bianco(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    char avanti_1 = pos - 10;
+    char avanti_destra = pos - 9;
+    char avanti_sinistra = pos - 11;
+    char avanti_2 = pos - 20;
 
-    if (sc[avanti_1] == vuoto) {
+    if (scc->sc[avanti_1] == vuoto) {
         mosse[mosse_i] = avanti_1;
         mosse_i++;
     }
-    if (nero(sc[avanti_sinistra])) {
+    if (nero(scc->sc[avanti_sinistra])) {
         mosse[mosse_i] = avanti_sinistra;
         mosse_i++;
     }
-    if (nero(sc[avanti_destra])) {
+    if (nero(scc->sc[avanti_destra])) {
         mosse[mosse_i] = avanti_destra;
         mosse_i++;
+    }
+    if(scc->sc[avanti_1] == vuoto && scc->sc[avanti_2] == vuoto && (pos > 30 && pos < 39)) {
+            mosse[mosse_i] = avanti_2;
+            mosse_i++;
     }
     return mosse_i;
 }
 
-int mosse_pedone_nero(int *sc, int pos, int *mosse, int mosse_i) {
-    int avanti_1 = pos + 10;
-    int avanti_destra = pos + 11;
-    int avanti_sinistra = pos + 9;
+int mosse_pedone_nero(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    char avanti_1 = pos + 10;
+    char avanti_destra = pos + 11;
+    char avanti_sinistra = pos + 9;
+    char avanti_2 = pos + 20;
 
-    if (sc[avanti_1] == vuoto) {
+    if (scc->sc[avanti_1] == vuoto) {
         mosse[mosse_i] = avanti_1;
         mosse_i++;
     }
-    if (bianco(sc[avanti_sinistra])) {
+    if (bianco(scc->sc[avanti_sinistra])) {
         mosse[mosse_i] = avanti_sinistra;
         mosse_i++;
     }
-    if (bianco(sc[avanti_destra])) {
+    if (bianco(scc->sc[avanti_destra])) {
         mosse[mosse_i] = avanti_destra;
         mosse_i++;
+    }
+    if(scc->sc[avanti_1] == vuoto && scc->sc[avanti_2] == vuoto && (pos > 80 && pos < 89)) {
+            mosse[mosse_i] = avanti_2;
+            mosse_i++;
     }
     return mosse_i;
 }
 
-int mosse_cavallo_bianco(int *sc, int pos, int *mosse, int mosse_i) {
-    int mosse_arr[8] = { -19, -21 , -12, -8, 19, 21 , 12, 8};
-    int mossa;
+int mosse_cavallo_bianco(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    char mosse_arr[8] = { -19, -21 , -12, -8, 19, 21 , 12, 8};
+    char mossa;
 
     
     for (int i = 0; i < 8; i++) {
         mossa = pos + mosse_arr[i];
-        if (sc[mossa] == vuoto || nero(sc[mossa])) {
+        if (scc->sc[mossa] == vuoto || nero(scc->sc[mossa])) {
                 mosse[mosse_i] = mossa;
                 mosse_i++;
         }
@@ -65,14 +76,14 @@ int mosse_cavallo_bianco(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-int mosse_cavallo_nero(int *sc, int pos, int *mosse, int mosse_i) {
-    int mosse_arr[8] = { -19, -21 , -12, -8, 19, 21 , 12, 8};
-    int mossa;
+int mosse_cavallo_nero(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    char mosse_arr[8] = { -19, -21 , -12, -8, 19, 21 , 12, 8};
+    char mossa;
 
     
     for (int i = 0; i < 8; i++) {
         mossa = pos + mosse_arr[i];
-        if (sc[mossa] == vuoto || bianco(sc[mossa])) {
+        if (scc->sc[mossa] == vuoto || bianco(scc->sc[mossa])) {
                 mosse[mosse_i] = mossa;
                 mosse_i++;
         }
@@ -80,9 +91,9 @@ int mosse_cavallo_nero(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-int mosse_alfiere_bianco(int *sc, int pos, int *mosse, int mosse_i) {
-    int mosse_arr[4] = { -11, -9, 11, 9};
-    int mossa;
+int mosse_alfiere_bianco(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    char mosse_arr[4] = { -11, -9, 11, 9};
+    char mossa;
 
     for (int i = 0; i < 4; i++) {
 
@@ -90,10 +101,10 @@ int mosse_alfiere_bianco(int *sc, int pos, int *mosse, int mosse_i) {
 
         while(1) {
             mossa += mosse_arr[i];
-            if (sc[mossa] == barriera || bianco(sc[mossa])) {
+            if (scc->sc[mossa] == barriera || bianco(scc->sc[mossa])) {
                 break;
             }
-            if (nero(sc[mossa])) {
+            if (nero(scc->sc[mossa])) {
                 mosse[mosse_i] = mossa;
                 mosse_i++;
                 break;
@@ -107,9 +118,9 @@ int mosse_alfiere_bianco(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-int mosse_alfiere_nero(int *sc, int pos, int *mosse, int mosse_i) {
-    int mosse_arr[4] = { -11, -9, 11, 9};
-    int mossa;
+int mosse_alfiere_nero(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    char mosse_arr[4] = { -11, -9, 11, 9};
+    char mossa;
 
     for (int i = 0; i < 4; i++) {
 
@@ -117,10 +128,10 @@ int mosse_alfiere_nero(int *sc, int pos, int *mosse, int mosse_i) {
 
         while(1) {
             mossa += mosse_arr[i];
-            if (sc[mossa] == barriera || nero(sc[mossa])) {
+            if (scc->sc[mossa] == barriera || nero(scc->sc[mossa])) {
                 break;
             }
-            if (bianco(sc[mossa])) {
+            if (bianco(scc->sc[mossa])) {
                 mosse[mosse_i] = mossa;
                 mosse_i++;
                 break;
@@ -134,9 +145,9 @@ int mosse_alfiere_nero(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-int mosse_torre_bianca(int *sc, int pos, int *mosse, int mosse_i) {
-    int mosse_arr[4] = { -10, -1, 10, 1};
-    int mossa;
+int mosse_torre_bianca(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    char mosse_arr[4] = { -10, -1, 10, 1};
+    char mossa;
 
     for (int i = 0; i < 4; i++) {
 
@@ -144,10 +155,10 @@ int mosse_torre_bianca(int *sc, int pos, int *mosse, int mosse_i) {
 
         while(1) {
             mossa += mosse_arr[i];
-            if (sc[mossa] == barriera || bianco(sc[mossa])) {
+            if (scc->sc[mossa] == barriera || bianco(scc->sc[mossa])) {
                 break;
             }
-            if (nero(sc[mossa])) {
+            if (nero(scc->sc[mossa])) {
                 mosse[mosse_i] = mossa;
                 mosse_i++;
                 break;
@@ -161,9 +172,9 @@ int mosse_torre_bianca(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-int mosse_torre_nera(int *sc, int pos, int *mosse, int mosse_i) {
-    int mosse_arr[4] = { -10, -1, 10, 1};
-    int mossa;
+int mosse_torre_nera(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    char mosse_arr[4] = { -10, -1, 10, 1};
+    char mossa;
 
     for (int i = 0; i < 4; i++) {
 
@@ -171,10 +182,10 @@ int mosse_torre_nera(int *sc, int pos, int *mosse, int mosse_i) {
 
         while(1) {
             mossa += mosse_arr[i];
-            if (sc[mossa] == barriera || nero(sc[mossa])) {
+            if (scc->sc[mossa] == barriera || nero(scc->sc[mossa])) {
                 break;
             }
-            if (bianco(sc[mossa])) {
+            if (bianco(scc->sc[mossa])) {
                 mosse[mosse_i] = mossa;
                 mosse_i++;
                 break;
@@ -188,25 +199,25 @@ int mosse_torre_nera(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-int mosse_regina_bianca(int *sc, int pos, int *mosse, int mosse_i) {
-    mosse_i = mosse_torre_bianca(sc, pos, mosse, mosse_i);
-    mosse_i = mosse_alfiere_bianco(sc, pos, mosse, mosse_i);
+int mosse_regina_bianca(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    mosse_i = mosse_torre_bianca(scc, pos, mosse, mosse_i);
+    mosse_i = mosse_alfiere_bianco(scc, pos, mosse, mosse_i);
     return mosse_i;
 }
 
-int mosse_regina_nera(int *sc, int pos, int *mosse, int mosse_i) {
-    mosse_i = mosse_torre_nera(sc, pos, mosse, mosse_i);
-    mosse_i = mosse_alfiere_nero(sc, pos, mosse, mosse_i);
+int mosse_regina_nera(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    mosse_i = mosse_torre_nera(scc, pos, mosse, mosse_i);
+    mosse_i = mosse_alfiere_nero(scc, pos, mosse, mosse_i);
     return mosse_i;
 }
 
-int mosse_re_bianco(int *sc, int pos, int *mosse, int mosse_i) {
-    int mosse_arr[8] = { -1, -9, -10, -11, 1, 11, 10, 9};
-    int mossa;
+int mosse_re_bianco(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    char mosse_arr[8] = { -1, -9, -10, -11, 1, 11, 10, 9};
+    char mossa;
 
     for (int i = 0; i < 8; i++) {
         mossa = pos + mosse_arr[i];
-        if (sc[mossa] == vuoto || nero(sc[mossa])) {
+        if (scc->sc[mossa] == vuoto || nero(scc->sc[mossa])) {
             mosse[mosse_i] = mossa;
             mosse_i++;
         }
@@ -214,13 +225,13 @@ int mosse_re_bianco(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-int mosse_re_nero(int *sc, int pos, int *mosse, int mosse_i) {
-    int mosse_arr[8] = { -1, -9, -10, -11, 1, 11, 10, 9};
-    int mossa;
+int mosse_re_nero(scacchiera *scc, char pos, char *mosse, int mosse_i) {
+    char mosse_arr[8] = { -1, -9, -10, -11, 1, 11, 10, 9};
+    char mossa;
 
     for (int i = 0; i < 8; i++) {
         mossa = pos + mosse_arr[i];
-        if (sc[mossa] == vuoto || bianco(sc[mossa])) {
+        if (scc->sc[mossa] == vuoto || bianco(scc->sc[mossa])) {
             mosse[mosse_i] = mossa;
             mosse_i++;
         }
@@ -228,40 +239,49 @@ int mosse_re_nero(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-void attacco_bianchi(int *sc, int *attacco) { //prende un array scacchoera e in array attacco [120] che andra a popolare con calselle attaccate (0 non attaccate)
-    int mosse[256]; //buffer per le mosse dei pezzi
+void attacco_bianchi(scacchiera *scc, char *attacco) { //prende un array scacchoera e in array attacco [120] che andra a popolare con calselle attaccate (0 non attaccate)
+    char mosse[256]; //buffer per le mosse dei pezzi
     int mosse_i = 0;
-    
-    for (int i = 0; i < 120; i++) {
-        switch (sc[i])
-        {
-        case pedone_b:
-            mosse_i = mosse_pedone_bianco(sc, i, mosse, mosse_i);
-            break;
-        
-        case cavallo_b:
-            mosse_i = mosse_cavallo_bianco(sc, i, mosse, mosse_i);
-            break;
 
-        case alfiere_b:
-            mosse_i = mosse_alfiere_bianco(sc, i, mosse, mosse_i);
-            break;
-        
-        case torre_b:
-            mosse_i = mosse_torre_bianca(sc, i, mosse, mosse_i);
-            break;
 
-        case regina_b:
-            mosse_i = mosse_regina_bianca(sc, i, mosse, mosse_i);
-            break;
-
-        case re_b:
-            mosse_i = mosse_re_bianco(sc, i, mosse, mosse_i);
-            break;
-        
-        default:
-            break;
+    for (int i = 0; i < 8; i++) { //pedoni
+        if (scc->posizione_pezzi[i] != 0) {
+            mosse_i = mosse_pedone_bianco(scc, scc->posizione_pezzi[i], mosse, mosse_i);
         }
+    }
+
+    //cavalli
+    if (scc->posizione_pezzi[8] != 0) {
+        mosse_i = mosse_cavallo_bianco(scc, scc->posizione_pezzi[8], mosse, mosse_i);
+    }
+    if (scc->posizione_pezzi[9] != 0) {
+        mosse_i = mosse_cavallo_bianco(scc, scc->posizione_pezzi[9], mosse, mosse_i);
+    }
+
+    //alfieri
+    if (scc->posizione_pezzi[10] != 0) {
+        mosse_i = mosse_alfiere_bianco(scc, scc->posizione_pezzi[10], mosse, mosse_i);
+    }
+    if (scc->posizione_pezzi[11] != 0) {
+        mosse_i = mosse_alfiere_bianco(scc, scc->posizione_pezzi[11], mosse, mosse_i);
+    }
+
+    //torri
+    if (scc->posizione_pezzi[12] != 0) {
+        mosse_i = mosse_alfiere_bianco(scc, scc->posizione_pezzi[12], mosse, mosse_i);
+    }
+    if (scc->posizione_pezzi[13] != 0) {
+        mosse_i = mosse_alfiere_bianco(scc, scc->posizione_pezzi[13], mosse, mosse_i);
+    }
+
+    //regina
+    if (scc->posizione_pezzi[14] != 0) {
+        mosse_i = mosse_regina_bianca(scc, scc->posizione_pezzi[14], mosse, mosse_i);
+    }
+
+    //re
+    if (scc->posizione_pezzi[15] != 0) {
+        mosse_i = mosse_re_bianco(scc, scc->posizione_pezzi[15], mosse, mosse_i);
     }
 
     for (int i = 0; i < mosse_i; i++) {
@@ -269,40 +289,48 @@ void attacco_bianchi(int *sc, int *attacco) { //prende un array scacchoera e in 
     }
 }
 
-void attacco_neri(int *sc, int *attacco) { //prende un array scacchoera e in array attacco [120] che andra a popolare con calselle attaccate (0 non attaccate)
-    int mosse[256]; //buffer per le mosse dei pezzi
+void attacco_neri(scacchiera *scc, char *attacco) { //prende un array scacchoera e in array attacco [120] che andra a popolare con calselle attaccate (0 non attaccate)
+    char mosse[256]; //buffer per le mosse dei pezzi
     int mosse_i = 0;
     
-    for (int i = 0; i < 120; i++) {
-        switch (sc[i])
-        {
-        case pedone_n:
-            mosse_i = mosse_pedone_nero(sc, i, mosse, mosse_i);
-            break;
-        
-        case cavallo_n:
-            mosse_i = mosse_cavallo_nero(sc, i, mosse, mosse_i);
-            break;
-
-        case alfiere_n:
-            mosse_i = mosse_alfiere_nero(sc, i, mosse, mosse_i);
-            break;
-        
-        case torre_n:
-            mosse_i = mosse_torre_nera(sc, i, mosse, mosse_i);
-            break;
-
-        case regina_n:
-            mosse_i = mosse_regina_nera(sc, i, mosse, mosse_i);
-            break;
-
-        case re_n:
-            mosse_i = mosse_re_nero(sc, i, mosse, mosse_i);
-            break;
-        
-        default:
-            break;
+    for (int i = 16; i < 24; i++) { //pedoni
+        if (scc->posizione_pezzi[i] != 0) {
+            mosse_i = mosse_pedone_nero(scc, scc->posizione_pezzi[i], mosse, mosse_i);
         }
+    }
+
+    //cavalli
+    if (scc->posizione_pezzi[24] != 0) {
+        mosse_i = mosse_cavallo_nero(scc, scc->posizione_pezzi[24], mosse, mosse_i);
+    }
+    if (scc->posizione_pezzi[25] != 0) {
+        mosse_i = mosse_cavallo_nero(scc, scc->posizione_pezzi[25], mosse, mosse_i);
+    }
+
+    //alfieri
+    if (scc->posizione_pezzi[26] != 0) {
+        mosse_i = mosse_alfiere_nero(scc, scc->posizione_pezzi[26], mosse, mosse_i);
+    }
+    if (scc->posizione_pezzi[27] != 0) {
+        mosse_i = mosse_alfiere_nero(scc, scc->posizione_pezzi[27], mosse, mosse_i);
+    }
+
+    //torri
+    if (scc->posizione_pezzi[28] != 0) {
+        mosse_i = mosse_alfiere_nero(scc, scc->posizione_pezzi[28], mosse, mosse_i);
+    }
+    if (scc->posizione_pezzi[29] != 0) {
+        mosse_i = mosse_alfiere_nero(scc, scc->posizione_pezzi[29], mosse, mosse_i);
+    }
+
+    //regina
+    if (scc->posizione_pezzi[30] != 0) {
+        mosse_i = mosse_regina_nera(scc, scc->posizione_pezzi[30], mosse, mosse_i);
+    }
+
+    //re
+    if (scc->posizione_pezzi[31] != 0) {
+        mosse_i = mosse_re_nero(scc, scc->posizione_pezzi[31], mosse, mosse_i);
     }
 
     for (int i = 0; i < mosse_i; i++) {
@@ -310,23 +338,14 @@ void attacco_neri(int *sc, int *attacco) { //prende un array scacchoera e in arr
     }
 }
 
-int re_bianco_attaccato(int sc[]) {
+int re_bianco_attaccato(scacchiera *scc) {
     int attacco[120] = {0};
-    attacco_neri(sc, attacco);
+    attacco_neri(scc, attacco);
 
     //cerca il re
-    int posizione_re = -1;
-    for (int i = 0; i < 120; i++) {
-        if (sc[i] == re_b) {
-            posizione_re = i;
-            break;
-        }  
-    }
+    char posizione_re = scc->posizione_pezzi[15];
 
-    //assert(posizione_re != -1);
-    if(posizione_re == -1) {
-        printf("-------------non rerrrr bianco\n");
-    }
+    assert(posizione_re != 0);
 
     //controlla che il re non sia attaccato
     if (attacco[posizione_re] == 0) {
@@ -337,30 +356,19 @@ int re_bianco_attaccato(int sc[]) {
     }
 }
 
-int re_bianco_attaccato_mossa(int sc[], int da, int a) {
-    int sc_temp[120];
-    memcpy(sc_temp, sc, sizeof(int) * 120);
-    fai_mossa(sc_temp, da, a);
-    return re_bianco_attaccato(sc_temp);
+int re_bianco_attaccato_mossa(scacchiera scc, char da, char a) { //----------------forse non funzia
+    fai_mossa(&scc, da, a);
+    return re_bianco_attaccato(&scc);
 }
 
-int re_nero_attaccato(int sc[]) {
+int re_nero_attaccato(scacchiera *scc) {
     int attacco[120] = {0};
-    attacco_bianchi(sc, attacco);
+    attacco_neri(scc, attacco);
 
     //cerca il re
-    int posizione_re = -1;
-    for (int i = 0; i < 120; i++) {
-        if (sc[i] == re_n) {
-            posizione_re = i;
-            break;
-        }  
-    }
+    char posizione_re = scc->posizione_pezzi[31];
 
-    //assert(posizione_re != -1);
-    if(posizione_re == -1) {
-        printf("-------------non rerrrr bianco\n");
-    }
+    assert(posizione_re != 0);
 
     //controlla che il re non sia attaccato
     if (attacco[posizione_re] == 0) {
@@ -371,25 +379,36 @@ int re_nero_attaccato(int sc[]) {
     }
 }
 
-int re_nero_attaccato_mossa(int sc[], int da, int a) {
-    int sc_temp[120];
-    memcpy(sc_temp, sc, sizeof(int) * 120);
-    fai_mossa(sc_temp, da, a);
-    return re_nero_attaccato(sc_temp);
+int re_nero_attaccato_mossa(scacchiera scc, char da, char a) {
+    fai_mossa(&scc, da, a);
+    return re_nero_attaccato(&scc);
 }
 
-int mosse_re_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
+int mosse_re_bianco_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
+
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
+
+    mosse_i_t = mosse_re_bianco(&scc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_bianco_attaccato_mossa(scc, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_re_nero_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
     
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
 
-    int mosse_t[8]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_re_bianco(sc, pos, mosse_t, mosse_i_t);
+    mosse_i_t = mosse_re_nero(&scc, pos, mosse_t, mosse_i_t);
 
     for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_bianco_attaccato_mossa(sc_t, pos, mosse_t[i])) {
+        if (!re_bianco_attaccato_mossa(scc, pos, mosse_t[i])) {
             mosse[mosse_i] = mosse_t[i];
             mosse_i++;
         }
@@ -397,18 +416,15 @@ int mosse_re_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-int mosse_re_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
+int mosse_pedone_bianco_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
     
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
 
-    int mosse_t[8]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_re_nero(sc, pos, mosse_t, mosse_i_t);
+    mosse_i_t = mosse_pedone_bianco(&scc, pos, mosse_t, mosse_i_t);
 
     for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_nero_attaccato_mossa(sc_t, pos, mosse_t[i])) {
+        if (!re_bianco_attaccato_mossa(scc, pos, mosse_t[i])) {
             mosse[mosse_i] = mosse_t[i];
             mosse_i++;
         }
@@ -416,277 +432,370 @@ int mosse_re_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-int mosse_pedone_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
-
-    int mosse_t[8]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_pedone_bianco(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_bianco_attaccato_mossa(sc_t, pos, mosse_t[i])) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
-int mosse_cavallo_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
-
-    int mosse_t[8]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_cavallo_bianco(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_bianco_attaccato_mossa(sc_t, pos, mosse_t[i])) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
-int mosse_alfiere_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
-
-    int mosse_t[20]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_alfiere_bianco(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_bianco_attaccato_mossa(sc_t, pos, mosse_t[i])) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
-int mosse_torre_bianca_l(int *sc, int pos, int *mosse, int mosse_i) {
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
-
-    int mosse_t[20]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_torre_bianca(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_bianco_attaccato_mossa(sc_t, pos, mosse_t[i])) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
-int mosse_regina_bianca_l(int *sc, int pos, int *mosse, int mosse_i) {
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
-
-    int mosse_t[20]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_regina_bianca(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_bianco_attaccato_mossa(sc_t, pos, mosse_t[i])) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
-int mosse_pedone_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
-
-    int mosse_t[8]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_pedone_nero(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_nero_attaccato_mossa(sc_t, pos, mosse_t[i])) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
-int mosse_cavallo_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
-
-    int mosse_t[8]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_cavallo_nero(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_nero_attaccato_mossa(sc_t, pos, mosse_t[i])) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
-int mosse_alfiere_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
-
-    int mosse_t[20]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_alfiere_nero(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_nero_attaccato_mossa(sc_t, pos, mosse_t[i])) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
-int mosse_torre_nera_l(int *sc, int pos, int *mosse, int mosse_i) {
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
-
-    int mosse_t[20]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_torre_nera(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_nero_attaccato_mossa(sc_t, pos, mosse_t[i])) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
-int mosse_regina_nera_l(int *sc, int pos, int *mosse, int mosse_i) {
-    int sc_t[120];
-    memcpy(sc_t, sc, sizeof(int) * 120); //fa una copia della scacchiera così non cambia quando prova mosse
-
-    int mosse_t[20]; 
-    int mosse_i_t = 0;
-
-    mosse_i_t = mosse_regina_nera(sc, pos, mosse_t, mosse_i_t);
-
-    for (int i = 0; i < mosse_i_t; i++) {
-        if (!re_nero_attaccato_mossa(sc_t, pos, mosse_t[i])) {
-            mosse[mosse_i] = mosse_t[i];
-            mosse_i++;
-        }
-    }
-    return mosse_i;
-}
-
-int mosse_legali_biachi(int *sc, mossa *mosse_l, int mosse_i_l) {
+int mosse_cavallo_bianco_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
     
-    int mosse[256];
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
+
+    mosse_i_t = mosse_cavallo_bianco(&scc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_bianco_attaccato_mossa(scc, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_alfiere_bianco_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
+    
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
+
+    mosse_i_t = mosse_alfiere_bianco(&scc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_bianco_attaccato_mossa(scc, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_torre_bianca_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
+    
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
+
+    mosse_i_t = mosse_torre_bianca(&scc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_bianco_attaccato_mossa(scc, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_regina_bianca_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
+    
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
+
+    mosse_i_t = mosse_regina_bianca(&scc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_bianco_attaccato_mossa(scc, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_pedone_nero_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
+    
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
+
+    mosse_i_t = mosse_pedone_nero(&scc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_nero_attaccato_mossa(scc, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_cavallo_nero_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
+    
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
+
+    mosse_i_t = mosse_cavallo_nero(&scc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_nero_attaccato_mossa(scc, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_alfiere_nero_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
+    
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
+
+    mosse_i_t = mosse_alfiere_nero(&scc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_nero_attaccato_mossa(scc, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_torre_nera_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
+    
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
+
+    mosse_i_t = mosse_torre_nera(&scc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_nero_attaccato_mossa(scc, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_regina_nera_l(scacchiera scc, char pos, char *mosse, int mosse_i) {
+    
+    char mosse_t[8]; 
+    char mosse_i_t = 0;
+
+    mosse_i_t = mosse_regina_nera(&scc, pos, mosse_t, mosse_i_t);
+
+    for (int i = 0; i < mosse_i_t; i++) {
+        if (!re_nero_attaccato_mossa(scc, pos, mosse_t[i])) {
+            mosse[mosse_i] = mosse_t[i];
+            mosse_i++;
+        }
+    }
+    return mosse_i;
+}
+
+int mosse_legali_biachi(scacchiera scc, mossa *mosse_l, int mosse_i_l) {
+    
+    char mosse[256]; //buffer per le mosse dei pezzi
     int mosse_i = 0;
-    
-    for (int i = 0; i < 120; i++) {
-        switch (sc[i]) {
-        case pedone_b:
-            mosse_i = mosse_pedone_bianco_l(sc, i, mosse, mosse_i);
-            break;
-        
-        case cavallo_b:
-            mosse_i = mosse_cavallo_bianco_l(sc, i, mosse, mosse_i);
-            break;
 
-        case alfiere_b:
-            mosse_i = mosse_alfiere_bianco_l(sc, i, mosse, mosse_i);
-            break;
-        
-        case torre_b:
-            mosse_i = mosse_torre_bianca_l(sc, i, mosse, mosse_i);
-            break;
 
-        case regina_b:
-            mosse_i = mosse_regina_bianca_l(sc, i, mosse, mosse_i);
-            break;
-
-        case re_b:
-            mosse_i = mosse_re_bianco_l(sc, i, mosse, mosse_i);
-            break;
-        
-        default:
-            break;
+    for (int i = 0; i < 8; i++) { //pedoni
+        mosse_i = 0;
+        if (scc.posizione_pezzi[i] != 0) {
+            mosse_i = mosse_pedone_bianco_l(scc, scc.posizione_pezzi[i], mosse, mosse_i);
+            
+            for (int ii = 0; ii < mosse_i; ii++) {
+                mosse_l[mosse_i_l].da = scc.posizione_pezzi[i];
+                mosse_l[mosse_i_l].a = mosse[ii];
+                mosse_i_l++;
+            }
         }
+    }
+
+    //cavalli
+    mosse_i = 0;
+    if (scc.posizione_pezzi[8] != 0) {
+        mosse_i = mosse_cavallo_bianco_l(scc, scc.posizione_pezzi[8], mosse, mosse_i);
+
         for (int ii = 0; ii < mosse_i; ii++) {
-            mosse_l[mosse_i_l].da = i;
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[8];
             mosse_l[mosse_i_l].a = mosse[ii];
             mosse_i_l++;
         }
-        mosse_i = 0;
     }
-    return mosse_i_l;
-}
+    mosse_i = 0;
+    if (scc.posizione_pezzi[9] != 0) {
+        mosse_i = mosse_cavallo_bianco_l(scc, scc.posizione_pezzi[9], mosse, mosse_i);
 
-int mosse_legali_neri(int *sc, mossa *mosse_l, int mosse_i_l) {
-    
-    int mosse[256];
-    int mosse_i = 0;
-    
-    for (int i = 0; i < 120; i++) {
-        switch (sc[i])
-        {
-        case pedone_n:
-            mosse_i = mosse_pedone_nero_l(sc, i, mosse, mosse_i);
-            break;
-        
-        case cavallo_n:
-            mosse_i = mosse_cavallo_nero_l(sc, i, mosse, mosse_i);
-            break;
-
-        case alfiere_n:
-            mosse_i = mosse_alfiere_nero_l(sc, i, mosse, mosse_i);
-            break;
-        
-        case torre_n:
-            mosse_i = mosse_torre_nera_l(sc, i, mosse, mosse_i);
-            break;
-
-        case regina_n:
-            mosse_i = mosse_regina_nera_l(sc, i, mosse, mosse_i);
-            break;
-
-        case re_n:
-            mosse_i = mosse_re_nero_l(sc, i, mosse, mosse_i);
-            break;
-        
-        default:
-            break;
-        }
         for (int ii = 0; ii < mosse_i; ii++) {
-            mosse_l[mosse_i_l].da = i;
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[9];
             mosse_l[mosse_i_l].a = mosse[ii];
             mosse_i_l++;
         }
-        mosse_i = 0;
     }
+
+    //alfieri
+    mosse_i = 0;
+    if (scc.posizione_pezzi[10] != 0) {
+        mosse_i = mosse_alfiere_bianco_l(scc, scc.posizione_pezzi[10], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[10];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+    mosse_i = 0;
+    if (scc.posizione_pezzi[11] != 0) {
+        mosse_i = mosse_alfiere_bianco_l(scc, scc.posizione_pezzi[11], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[11];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+
+    //torri
+    mosse_i = 0;
+    if (scc.posizione_pezzi[12] != 0) {
+        mosse_i = mosse_alfiere_bianco_l(scc, scc.posizione_pezzi[12], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[12];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+    mosse_i = 0;
+    if (scc.posizione_pezzi[13] != 0) {
+        mosse_i = mosse_alfiere_bianco_l(scc, scc.posizione_pezzi[13], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[13];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+
+    //regina
+    mosse_i = 0;
+    if (scc.posizione_pezzi[14] != 0) {
+        mosse_i = mosse_regina_bianca_l(scc, scc.posizione_pezzi[14], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[14];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+
+    //re
+    mosse_i = 0;
+    if (scc.posizione_pezzi[15] != 0) {
+        mosse_i = mosse_re_bianco_l(scc, scc.posizione_pezzi[15], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[15];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+    
     return mosse_i_l;
 }
 
-int tutte_mosse_legali(int *sc, mossa *mosse_l, int mosse_i_l) {
-    mosse_i_l = mosse_legali_biachi(sc, mosse_l, mosse_i_l);
-    mosse_i_l = mosse_legali_neri(sc, mosse_l, mosse_i_l);
+int mosse_legali_neri(scacchiera scc, mossa *mosse_l, int mosse_i_l) {
+    
+    char mosse[256]; //buffer per le mosse dei pezzi
+    int mosse_i = 0;
+
+
+    for (int i = 0; i < 8; i++) { //pedoni
+        mosse_i = 0;
+        if (scc.posizione_pezzi[i] != 0) {
+            mosse_i = mosse_pedone_nero_l(scc, scc.posizione_pezzi[i], mosse, mosse_i);
+            
+            for (int ii = 0; ii < mosse_i; ii++) {
+                mosse_l[mosse_i_l].da = scc.posizione_pezzi[i];
+                mosse_l[mosse_i_l].a = mosse[ii];
+                mosse_i_l++;
+            }
+        }
+    }
+
+    //cavalli
+    mosse_i = 0;
+    if (scc.posizione_pezzi[8] != 0) {
+        mosse_i = mosse_cavallo_nero_l(scc, scc.posizione_pezzi[8], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[8];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+    mosse_i = 0;
+    if (scc.posizione_pezzi[9] != 0) {
+        mosse_i = mosse_cavallo_nero_l(scc, scc.posizione_pezzi[9], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[9];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+
+    //alfieri
+    mosse_i = 0;
+    if (scc.posizione_pezzi[10] != 0) {
+        mosse_i = mosse_alfiere_nero_l(scc, scc.posizione_pezzi[10], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[10];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+    mosse_i = 0;
+    if (scc.posizione_pezzi[11] != 0) {
+        mosse_i = mosse_alfiere_nero_l(scc, scc.posizione_pezzi[11], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[11];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+
+    //torri
+    mosse_i = 0;
+    if (scc.posizione_pezzi[12] != 0) {
+        mosse_i = mosse_alfiere_nero_l(scc, scc.posizione_pezzi[12], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[12];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+    mosse_i = 0;
+    if (scc.posizione_pezzi[13] != 0) {
+        mosse_i = mosse_alfiere_nero_l(scc, scc.posizione_pezzi[13], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[13];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+
+    //regina
+    mosse_i = 0;
+    if (scc.posizione_pezzi[14] != 0) {
+        mosse_i = mosse_regina_nera_l(scc, scc.posizione_pezzi[14], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[14];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+
+    //re
+    mosse_i = 0;
+    if (scc.posizione_pezzi[15] != 0) {
+        mosse_i = mosse_re_nero_l(scc, scc.posizione_pezzi[15], mosse, mosse_i);
+
+        for (int ii = 0; ii < mosse_i; ii++) {
+            mosse_l[mosse_i_l].da = scc.posizione_pezzi[15];
+            mosse_l[mosse_i_l].a = mosse[ii];
+            mosse_i_l++;
+        }
+    }
+    
     return mosse_i_l;
 }

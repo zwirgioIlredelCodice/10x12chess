@@ -45,8 +45,16 @@
 */
 
 
+
+typedef struct scacchiera
+{
+    char sc[120];
+    char posizione_pezzi[32];
+    char arrocco[4];
+} scacchiera;
+
 // la scacchiera di partenza
-extern int scacchiera_0[];
+extern scacchiera scacchiera_0;
 
 //Regular background
 #define BLKB "\e[40m"
