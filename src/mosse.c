@@ -7,8 +7,22 @@
 
 
 void fai_mossa(scacchiera *scc, unsigned char da, unsigned char a) { //--------------------------da riguardare
+    
+    for (int i = 0; i < 32; i++) {           //aggiorna la posizione dei pezzi
+        if (scc->posizione_pezzi[i] == da) {
+            scc->posizione_pezzi[i] = a;
+            break;
+        }
+    }
+    for (int i = 0; i < 32; i++) {           //aggiorna la posizione dei pezzi
+        if (scc->posizione_pezzi[i] == a) {
+            scc->posizione_pezzi[i] = 0;
+            break;
+        }
+    }
     scc->posizione_pezzi[a] = scc->posizione_pezzi[da];
     scc->posizione_pezzi[da] = vuoto;
+
 }
 
 int mosse_pedone_bianco(scacchiera *scc, unsigned char pos, unsigned char *mosse, int mosse_i) {
