@@ -39,12 +39,40 @@ char pezzi_iniziale[] = {
                         95
                         }; //bianchi 8 pedoni 2 cavalli, 2 alfieri, 2 torri, regina, re neri ...
 
-scacchiera scacchiera_0;
-memcpy(scacchiera_0.sc, posizione_iniziale, 120);
-memcpy(scacchiera_0.posizione_pezzi, pezzi_iniziale, 32);
-memcpy(scacchiera_0.arrocco, arrocco_iniziale, 4);
+scacchiera scacchiera_0 = {
+    {
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, torre_n, cavallo_n, alfiere_n, regina_n, re_n, alfiere_n, cavallo_n, torre_n, barriera,
+                    barriera, pedone_n, pedone_n, pedone_n, pedone_n, pedone_n, pedone_n, pedone_n, pedone_n, barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, barriera,
+                    barriera, torre_b, cavallo_b, alfiere_b, regina_b, re_b, alfiere_b, cavallo_b, torre_b, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera
+    },
+    {1, 1, 1, 1},
+    {
+                        31, 32, 33, 34, 35, 36, 37, 38,
+                        22, 27, 
+                        23, 26, 
+                        21, 28, 
+                        24, 
+                        25,
 
-void disegna_scacchiera(int *scacchiera) {
+                        81, 82, 83, 84, 85, 86, 87, 88,
+                        92, 97,
+                        93, 96,
+                        91, 98,
+                        94,
+                        95
+    }
+};
+
+void disegna_scacchiera(scacchiera *scc) {
     int numeri = 8;
     int sfaso = 1;
     printf("\n%d| ", numeri--);
@@ -58,8 +86,8 @@ void disegna_scacchiera(int *scacchiera) {
             printf(GRNB);
         }
 
-        if (strcmp(pezzi_caratteri[scacchiera[i]], "=") != 0){
-            printf("%s ", pezzi_caratteri[scacchiera[i]]);
+        if (strcmp(pezzi_caratteri[scc->sc[i]], "=") != 0){
+            printf("%s ", pezzi_caratteri[scc->sc[i]]);
         }
 
         printf(reset);

@@ -37,7 +37,7 @@ enum pieces
 
 #define QUAD_SIZE 100
 
-void drawBoard(int *board);
+void drawBoard(scacchiera *board);
 
 typedef enum tipo_schermata
 {
@@ -46,4 +46,4 @@ typedef enum tipo_schermata
     vittoria
 } tipo_schermata;
 
-int gui(int *sc);
+int gui(scacchiera scc);

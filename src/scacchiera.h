@@ -48,9 +48,9 @@
 
 typedef struct scacchiera
 {
-    char sc[120];
-    char posizione_pezzi[32];
-    char arrocco[4];
+    unsigned char sc[120];
+    unsigned char posizione_pezzi[32];
+    unsigned char arrocco[4];
 } scacchiera;
 
 // la scacchiera di partenza
@@ -70,7 +70,7 @@ extern scacchiera scacchiera_0;
 
 extern char pezzi_caratteri[14][20];
 
-void disegna_scacchiera(int *scacchiera);
+void disegna_scacchiera(scacchiera *scc);
 
 void disegna_attacco(int *attacco);
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "pezzi.h"
+#include "scacchiera.h"
 
 
 extern int pawnEvalWhite[];
@@ -24,4 +25,4 @@ extern int kingEvalWhite[];
 
 extern int kingEvalBlack[];
 
-int valuta_posizione(int *sc);
+int valuta_posizione(scacchiera *scc);

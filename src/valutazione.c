@@ -1,5 +1,6 @@
 #include "pezzi.h"
 #include "valutazione.h"
+#include "scacchiera.h"
 
 
 int pawnEvalWhite[] =
@@ -157,10 +158,10 @@ int kingEvalBlack[] = {
     0, 0,   0,   0,   0,   0,   0,   0,     0, 0
 };
 
-int valuta_posizione(int *sc) {
+int valuta_posizione(scacchiera *scc) {
     int val = 0;
     for (int i = 0; i < 120; i++) {
-        switch (sc[i]) {
+        switch (scc->sc[i]) {
             case pedone_b:
                 val += 100;
                 val += pawnEvalWhite[i];

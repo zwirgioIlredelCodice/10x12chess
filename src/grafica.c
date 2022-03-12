@@ -50,7 +50,7 @@ void unloadPicesTexture()
 
 #define QUAD_SIZE 100
 
-void drawBoard(int *board)
+void drawBoard(scacchiera *board)
 {
     int sfaso = 1;
     Vector2 pos = {0, 0};
@@ -78,15 +78,15 @@ void drawBoard(int *board)
                 DrawRectangle(x_quad * QUAD_SIZE, y_quad * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE, LIGHTGRAY);
             }
 
-            if (board[i] != vuoto)
+            if (board->sc[i] != vuoto)
             {
                 pos.x = x_quad * QUAD_SIZE;
                 pos.y = y_quad * QUAD_SIZE;
 
-                if (board[i] != vuoto)
+                if (board->sc[i] != vuoto)
                 {
 
-                    switch (board[i])
+                    switch (board->sc[i])
                     {
                     case pedone_b:
                         DrawTextureEx(t_pices[pawn_w], pos, 0, 0.5, WHITE);
@@ -133,10 +133,9 @@ void drawBoard(int *board)
     }
 }
 
-int gui(int *sc)
+int gui(scacchiera scc)
 {
-    int sc_salvata[120];
-    memcpy(sc_salvata, sc, sizeof(int) * 120);
+    scacchiera scc_salvata = scc;
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
@@ -156,7 +155,7 @@ int gui(int *sc)
     int mouse_scacchiera = 0;
     int px, py;
 
-    int mosse[200];
+    unsigned char mosse[200];
     mossa mosse_l[200];
     int mosse_i = 0;
     int mosse_i_l = 0;
@@ -178,7 +177,7 @@ int gui(int *sc)
         case menu:
             if (IsKeyPressed(KEY_A))
             {
-                memcpy(sc, sc_salvata, sizeof(int) * 120);
+                scc = scc_salvata;
                 schermata = partita;
             }
             break;
@@ -192,7 +191,7 @@ int gui(int *sc)
             if (turno == 1)
             {
                 
-                mosse_i_l = mosse_legali_biachi(sc, mosse_l, mosse_i_l);
+                mosse_i_l = mosse_legali_biachi(scc, mosse_l, mosse_i_l);
 
                 if (mosse_i_l == 0)
                 {
@@ -203,8 +202,8 @@ int gui(int *sc)
                 
                 // ---------mossa engine
                 
-                mossa mm = minimaxRoot(4, sc, 1);
-                fai_mossa(sc, mm.da, mm.a);
+                mossa mm = minimaxRoot(4, scc, 1);
+                fai_mossa(&scc, mm.da, mm.a);
                 turno = -turno;
                 
                 /*
@@ -261,14 +260,14 @@ int gui(int *sc)
 
                     mossa_mouse = sspy * 10 + sspx + 21;
 
-                    fai_mossa(sc, mouse_scacchiera, mossa_mouse);
+                    fai_mossa(&scc, mouse_scacchiera, mossa_mouse);
 
                     turno = -turno;
                 }
             }
             else if (turno == -1)
             {
-                mosse_i_l = mosse_legali_neri(sc, mosse_l, mosse_i_l);
+                mosse_i_l = mosse_legali_neri(scc, mosse_l, mosse_i_l);
 
                 if (mosse_i_l == 0)
                 {
@@ -290,28 +289,28 @@ int gui(int *sc)
 
                     mouse_scacchiera = py * 10 + px + 21;
 
-                    if (sc[mouse_scacchiera] != vuoto)
+                    if (scc.sc[mouse_scacchiera] != vuoto)
                     {
 
-                        switch (sc[mouse_scacchiera])
+                        switch (scc.sc[mouse_scacchiera])
                         {
                         case pedone_n:
-                            mosse_i = mosse_pedone_nero_l(sc, mouse_scacchiera, mosse, mosse_i);
+                            mosse_i = mosse_pedone_nero_l(scc, mouse_scacchiera, mosse, mosse_i);
                             break;
                         case cavallo_n:
-                            mosse_i = mosse_cavallo_nero_l(sc, mouse_scacchiera, mosse, mosse_i);
+                            mosse_i = mosse_cavallo_nero_l(scc, mouse_scacchiera, mosse, mosse_i);
                             break;
                         case alfiere_n:
-                            mosse_i = mosse_alfiere_nero_l(sc, mouse_scacchiera, mosse, mosse_i);
+                            mosse_i = mosse_alfiere_nero_l(scc, mouse_scacchiera, mosse, mosse_i);
                             break;
                         case torre_n:
-                            mosse_i = mosse_torre_nera_l(sc, mouse_scacchiera, mosse, mosse_i);
+                            mosse_i = mosse_torre_nera_l(scc, mouse_scacchiera, mosse, mosse_i);
                             break;
                         case regina_n:
-                            mosse_i = mosse_regina_nera_l(sc, mouse_scacchiera, mosse, mosse_i);
+                            mosse_i = mosse_regina_nera_l(scc, mouse_scacchiera, mosse, mosse_i);
                             break;
                         case re_n:
-                            mosse_i = mosse_re_nero_l(sc, mouse_scacchiera, mosse, mosse_i);
+                            mosse_i = mosse_re_nero_l(scc, mouse_scacchiera, mosse, mosse_i);
                             break;
                         default:
                             break;
@@ -330,7 +329,7 @@ int gui(int *sc)
 
                     mossa_mouse = sspy * 10 + sspx + 21;
 
-                    fai_mossa(sc, mouse_scacchiera, mossa_mouse);
+                    fai_mossa(&scc, mouse_scacchiera, mossa_mouse);
 
                     turno = -turno;
                 }
@@ -362,7 +361,7 @@ int gui(int *sc)
             break;
 
         case partita:
-            drawBoard(sc);
+            drawBoard(&scc);
 
             DrawRectangle(px * QUAD_SIZE, py * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE, (Color){253, 249, 0, 100});
 

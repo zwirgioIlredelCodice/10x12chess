@@ -13,7 +13,7 @@ sas malibox board representation
 #include "grafica.h"
 
 #include "test.h"
-
+/*
 void gioco() {
     int moss = 0;
     mossa ssa;
@@ -41,7 +41,7 @@ void gioco() {
         printf("continuare?\n");
         scanf("%d", &moss);
     }
-}
+}*/
 
 int main() {
     gui(scacchiera_0);
@@ -58,9 +58,9 @@ int main() {
     for (int ii = 0; ii < i; ii++)
     {
         printf("da %d a %d\n", mosse[ii].da, mosse[ii].a);
-    }*/
+    }
     //gioco();
 
     minimax(3, scacchiera_0, 1);
-    
+    */
 }
