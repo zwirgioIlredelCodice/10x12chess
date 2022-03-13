@@ -3,20 +3,74 @@
 #include <stdio.h>
 #include "pezzi.h"
 #include "mosse.h"
+#include "scacchiera.h"
 
 
 void fai_mossa(int *sc, int da, int a) {
-    sc[a] = sc[da];
-    sc[da] = vuoto;
+    if (da == 95) {
+        sc[arrocco_bdx] = NO_ARROCCO;
+        sc[arrocco_bsx] = NO_ARROCCO;
+    }
+    if (da == 25) {
+        sc[arrocco_ndx] = NO_ARROCCO;
+        sc[arrocco_nsx] = NO_ARROCCO;
+    }
+    if (da == 98) {
+        sc[arrocco_bdx] = NO_ARROCCO;
+    }
+    if (da == 91) {
+        sc[arrocco_bsx] = NO_ARROCCO;
+    }
+    if (da == 28) {
+        sc[arrocco_ndx] = NO_ARROCCO;
+    }
+    if (da == 21) {
+        sc[arrocco_nsx] = NO_ARROCCO;
+    }
+    if (a < 0) {
+        if (a == moss_arrocco_bdx) {
+            sc[97] = re_b;
+            sc[95] = vuoto;
+            sc[96] = torre_b;
+            sc[98] = vuoto;
+        }
+        else if (a == moss_arrocco_bsx) {
+            sc[93] = re_b;
+            sc[95] = vuoto;
+            sc[95] = torre_b;
+            sc[91] = vuoto;
+        }
+        else if (a == moss_arrocco_ndx) {
+            sc[27] = re_n;
+            sc[25] = vuoto;
+            sc[26] = torre_n;
+            sc[28] = vuoto;
+        }
+        else if (a == moss_arrocco_nsx) {
+            sc[23] = re_n;
+            sc[25] = vuoto;
+            sc[25] = torre_n;
+            sc[21] = vuoto;
+        }
+    }
+    else {
+        sc[a] = sc[da];
+        sc[da] = vuoto;
+    }
 }
 
 int mosse_pedone_bianco(int *sc, int pos, int *mosse, int mosse_i) {
     int avanti_1 = pos - 10;
     int avanti_destra = pos - 9;
     int avanti_sinistra = pos - 11;
+    int avanti_2 = pos - 20;
 
     if (sc[avanti_1] == vuoto) {
         mosse[mosse_i] = avanti_1;
+        mosse_i++;
+    }
+    if(sc[avanti_2] == vuoto && sc[avanti_1] == vuoto && (pos > 80 && pos < 90)) {
+        mosse[mosse_i] = avanti_2;
         mosse_i++;
     }
     if (nero(sc[avanti_sinistra])) {
@@ -27,16 +81,22 @@ int mosse_pedone_bianco(int *sc, int pos, int *mosse, int mosse_i) {
         mosse[mosse_i] = avanti_destra;
         mosse_i++;
     }
+
     return mosse_i;
 }
 
 int mosse_pedone_nero(int *sc, int pos, int *mosse, int mosse_i) {
     int avanti_1 = pos + 10;
+    int avanti_2 = pos + 20;
     int avanti_destra = pos + 11;
     int avanti_sinistra = pos + 9;
 
     if (sc[avanti_1] == vuoto) {
         mosse[mosse_i] = avanti_1;
+        mosse_i++;
+    }
+    if(sc[avanti_2] == vuoto && sc[avanti_1] == vuoto && (pos > 30 && pos < 40)) {
+        mosse[mosse_i] = avanti_2;
         mosse_i++;
     }
     if (bianco(sc[avanti_sinistra])) {
@@ -211,6 +271,19 @@ int mosse_re_bianco(int *sc, int pos, int *mosse, int mosse_i) {
             mosse_i++;
         }
     }
+
+    if (sc[arrocco_bdx] == SI_ARROCCO) {
+        if (sc[96] == vuoto && sc[97] == vuoto) {
+            mosse[mosse_i] = moss_arrocco_bdx;
+            mosse_i++;
+        }
+    }
+    if (sc[arrocco_bsx] == SI_ARROCCO) {
+        if (sc[92] == vuoto && sc[93] == vuoto && sc[94] == vuoto) {
+            mosse[mosse_i] = moss_arrocco_bsx;
+            mosse_i++;
+        }
+    }
     return mosse_i;
 }
 
@@ -222,6 +295,18 @@ int mosse_re_nero(int *sc, int pos, int *mosse, int mosse_i) {
         mossa = pos + mosse_arr[i];
         if (sc[mossa] == vuoto || bianco(sc[mossa])) {
             mosse[mosse_i] = mossa;
+            mosse_i++;
+        }
+    }
+    if (sc[arrocco_ndx] == SI_ARROCCO) {
+        if (sc[26] == vuoto && sc[27] == vuoto) {
+            mosse[mosse_i] = moss_arrocco_ndx;
+            mosse_i++;
+        }
+    }
+    if (sc[arrocco_nsx] == SI_ARROCCO) {
+        if (sc[22] == vuoto && sc[23] == vuoto && sc[24] == vuoto) {
+            mosse[mosse_i] = moss_arrocco_nsx;
             mosse_i++;
         }
     }

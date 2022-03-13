@@ -4,6 +4,7 @@
 #include "pezzi.h"
 
 #include "scacchiera.h"
+#include "mosse.h"
 
 //char pezzi_caratteri[14] = {'.', 'P', 'C', 'A', 'T', 'R', '#', 'p', 'c', 'a', 't', 'r', '@', '='};
 char pezzi_caratteri[14][20] = {" ", "♟", "♞", "♝", "♜", "♛", "♚", "♙", "♘", "♗", "♖", "♕", "♔", "="};
@@ -20,7 +21,8 @@ int scacchiera_0[] = {
                     barriera, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, pedone_b, barriera,
                     barriera, torre_b, cavallo_b, alfiere_b, regina_b, re_b, alfiere_b, cavallo_b, torre_b, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
-                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, SI_ARROCCO //arrocco bdx bsx ndx nsx
                 };
 
 void disegna_scacchiera(int *scacchiera) {

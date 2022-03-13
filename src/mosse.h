@@ -77,3 +77,10 @@ int mosse_legali_biachi(int *sc, mossa *mosse_l, int mosse_i_l);
 int mosse_legali_neri(int *sc, mossa *mosse_l, int mosse_i_l);
 
 int tutte_mosse_legali(int *sc, mossa *mosse_l, int mosse_i_l);
+
+#define SI_ARROCCO 1
+#define NO_ARROCCO 0
+#define moss_arrocco_bdx -1
+#define moss_arrocco_bsx -2
+#define moss_arrocco_ndx -3
+#define moss_arrocco_nsx -4

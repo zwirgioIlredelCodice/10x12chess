@@ -33,6 +33,8 @@
 100 101 102 103 104 105 106 107 108 109 
 110 111 112 113 114 115 116 117 118 119
 
+1111 //arrocchi
+
 21  22  23  24  25  26  27  28 
 31  32  33  34  35  36  37  38 
 41  42  43  44  45  46  47  48 
@@ -43,6 +45,11 @@
 91  92  93  94  95  96  97  98 
 
 */
+
+#define arrocco_bdx 120
+#define arrocco_bsx 121
+#define arrocco_ndx 122
+#define arrocco_nsx 123
 
 
 // la scacchiera di partenza
