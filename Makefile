@@ -1,4 +1,5 @@
 # tool macros
+# x86_64-w64-mingw32-gcc for linux->windows
 CC ?= gcc # FILL: the compiler
 CCFLAGS := -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -Wall -Wunreachable-code # FILL: compile flags
 DBGFLAGS := -g

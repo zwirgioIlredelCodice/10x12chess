@@ -203,7 +203,7 @@ int gui(int *sc)
                 
                 // ---------mossa engine
                 
-                mossa mm = minimaxRoot(5, sc, 1);
+                mossa mm = minimaxRoot(4, sc, 1);
                 fai_mossa(sc, mm.da, mm.a);
                 turno = -turno;
                 
