@@ -203,7 +203,7 @@ int gui(int *sc)
                 
                 // ---------mossa engine
                 
-                mossa mm = minimaxRoot(4, sc, 1);
+                mossa mm = minimaxRoot(5, sc, 1);
                 fai_mossa(sc, mm.da, mm.a);
                 turno = -turno;
                 
@@ -332,6 +332,10 @@ int gui(int *sc)
 
                     fai_mossa(sc, mouse_scacchiera, mossa_mouse);
 
+                    turno = -turno;
+                }
+                if (IsKeyPressed(KEY_Q)) {
+                    fai_mossa(sc, mouse_scacchiera, moss_arrocco_ndx);
                     turno = -turno;
                 }
             }
