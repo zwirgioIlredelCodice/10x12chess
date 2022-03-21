@@ -272,14 +272,23 @@ int mosse_re_bianco(int *sc, int pos, int *mosse, int mosse_i) {
         }
     }
 
-    if (sc[arrocco_bdx] == SI_ARROCCO) {
-        if (sc[96] == vuoto && sc[97] == vuoto) {
+    if (sc[96] == vuoto && sc[97] == vuoto) {
+
+        int attacco[120] = {0};
+        //attacco_neri(sc, attacco);
+
+        if (sc[arrocco_bdx] == SI_ARROCCO && attacco[96] == 0 && attacco[97] == 0) {
             mosse[mosse_i] = moss_arrocco_bdx;
             mosse_i++;
         }
     }
-    if (sc[arrocco_bsx] == SI_ARROCCO) {
-        if (sc[92] == vuoto && sc[93] == vuoto && sc[94] == vuoto) {
+
+    if (sc[92] == vuoto && sc[93] == vuoto && sc[94] == vuoto) {
+
+        int attacco[120] = {0};
+        //attacco_neri(sc, attacco);
+
+        if (sc[arrocco_bsx] == SI_ARROCCO && attacco[92] == 0 && attacco[93] == 0 && attacco[94] == 0) {
             mosse[mosse_i] = moss_arrocco_bsx;
             mosse_i++;
         }
@@ -298,14 +307,24 @@ int mosse_re_nero(int *sc, int pos, int *mosse, int mosse_i) {
             mosse_i++;
         }
     }
-    if (sc[arrocco_ndx] == SI_ARROCCO) {
-        if (sc[26] == vuoto && sc[27] == vuoto) {
+    
+    if (sc[26] == vuoto && sc[27] == vuoto) {
+
+        int attacco[120] = {0};
+        attacco_bianchi(sc, attacco);
+
+        if (sc[arrocco_ndx] == SI_ARROCCO && attacco[26] == 0 && attacco[27] == 0) {
             mosse[mosse_i] = moss_arrocco_ndx;
             mosse_i++;
         }
     }
-    if (sc[arrocco_nsx] == SI_ARROCCO) {
-        if (sc[22] == vuoto && sc[23] == vuoto && sc[24] == vuoto) {
+    
+    if (sc[22] == vuoto && sc[23] == vuoto && sc[24] == vuoto) {
+
+        int attacco[120] = {0};
+        attacco_bianchi(sc, attacco);
+
+        if (sc[arrocco_nsx] == SI_ARROCCO && attacco[22] == 0 && attacco[23] == 0 && attacco[24] == 0) {
             mosse[mosse_i] = moss_arrocco_nsx;
             mosse_i++;
         }
@@ -318,6 +337,9 @@ void attacco_bianchi(int *sc, int *attacco) { //prende un array scacchoera e in 
     int mosse_i = 0;
     
     for (int i = 0; i < 120; i++) {
+
+        mosse_i = 0;
+
         switch (sc[i])
         {
         case pedone_b:
@@ -347,10 +369,11 @@ void attacco_bianchi(int *sc, int *attacco) { //prende un array scacchoera e in 
         default:
             break;
         }
-    }
-
-    for (int i = 0; i < mosse_i; i++) {
-        attacco[mosse[i]]++;
+        for (int i = 0; i < mosse_i; i++) {
+            if (mosse[i] >= 0) {
+                attacco[mosse[i]]++;
+            }
+        }
     }
 }
 
@@ -359,6 +382,9 @@ void attacco_neri(int *sc, int *attacco) { //prende un array scacchoera e in arr
     int mosse_i = 0;
     
     for (int i = 0; i < 120; i++) {
+
+        mosse_i = 0;
+
         switch (sc[i])
         {
         case pedone_n:
@@ -388,10 +414,11 @@ void attacco_neri(int *sc, int *attacco) { //prende un array scacchoera e in arr
         default:
             break;
         }
-    }
-
-    for (int i = 0; i < mosse_i; i++) {
-        attacco[mosse[i]]++;
+        for (int i = 0; i < mosse_i; i++) {
+            if (mosse[i] >= 0) {
+                attacco[mosse[i]]++;
+            }
+        }
     }
 }
 

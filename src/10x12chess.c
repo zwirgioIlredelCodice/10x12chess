@@ -58,9 +58,8 @@ int main() {
     for (int ii = 0; ii < i; ii++)
     {
         printf("da %d a %d\n", mosse[ii].da, mosse[ii].a);
-    }*/
-    //gioco();
-/*
+    }
+    gioco();
     mossa moss[40];
     int asd = 0;
     asd = mosse_legali_biachi(test1, moss, asd);
@@ -71,6 +70,12 @@ int main() {
     }
 
     disegna_scacchiera(test1);
-    fai_mossa(test1, 0, moss_arrocco_bsx);
-    disegna_scacchiera(test1);*/
+    fai_mossa(test1, 0, moss_arrocco_bdx);
+    disegna_scacchiera(test1);
+    
+    int attacco[120] = {0};
+
+    attacco_neri(test1, attacco);
+    disegna_attacco(attacco);
+    */
 }
