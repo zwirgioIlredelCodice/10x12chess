@@ -84,3 +84,13 @@ int tutte_mosse_legali(int *sc, mossa *mosse_l, int mosse_i_l);
 #define moss_arrocco_bsx -2
 #define moss_arrocco_ndx -3
 #define moss_arrocco_nsx -4
+
+#define promozione_pb_r -5
+#define promozione_pb_t -6
+#define promozione_pb_a -7
+#define promozione_pb_c -8
+
+#define promozione_pn_r -9
+#define promozione_pn_t -10
+#define promozione_pn_a -11
+#define promozione_pn_c -12

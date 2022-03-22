@@ -7,50 +7,113 @@
 
 
 void fai_mossa(int *sc, int da, int a) {
-    if (da == 95) {
-        sc[arrocco_bdx] = NO_ARROCCO;
-        sc[arrocco_bsx] = NO_ARROCCO;
-    }
-    if (da == 25) {
+    
+    switch (da)
+    {
+    case 21:
+        sc[arrocco_nsx] = NO_ARROCCO;
+        break;
+    
+    case 25:
         sc[arrocco_ndx] = NO_ARROCCO;
         sc[arrocco_nsx] = NO_ARROCCO;
-    }
-    if (da == 98) {
-        sc[arrocco_bdx] = NO_ARROCCO;
-    }
-    if (da == 91) {
-        sc[arrocco_bsx] = NO_ARROCCO;
-    }
-    if (da == 28) {
+        break;
+    
+    case 28:
         sc[arrocco_ndx] = NO_ARROCCO;
+        break;
+
+    case 91:
+        sc[arrocco_bsx] = NO_ARROCCO;
+        break;
+    
+    case 95:
+        sc[arrocco_bdx] = NO_ARROCCO;
+        sc[arrocco_bsx] = NO_ARROCCO;
+        break;
+    
+    case 98:
+        sc[arrocco_bdx] = NO_ARROCCO;
+        break;
+    
+    default:
+        break;
     }
-    if (da == 21) {
-        sc[arrocco_nsx] = NO_ARROCCO;
-    }
+
     if (a < 0) {
-        if (a == moss_arrocco_bdx) {
+
+        switch (a)
+        {
+        case moss_arrocco_bdx:
             sc[97] = re_b;
             sc[95] = vuoto;
             sc[96] = torre_b;
             sc[98] = vuoto;
-        }
-        else if (a == moss_arrocco_bsx) {
+            break;
+        
+        case moss_arrocco_bsx:
             sc[93] = re_b;
             sc[95] = vuoto;
             sc[94] = torre_b;
             sc[91] = vuoto;
-        }
-        else if (a == moss_arrocco_ndx) {
+            break;
+        
+        case moss_arrocco_ndx:
             sc[27] = re_n;
             sc[25] = vuoto;
             sc[26] = torre_n;
             sc[28] = vuoto;
-        }
-        else if (a == moss_arrocco_nsx) {
+            break;
+        
+        case moss_arrocco_nsx:
             sc[23] = re_n;
             sc[25] = vuoto;
             sc[24] = torre_n;
             sc[21] = vuoto;
+            break;
+        
+        case promozione_pb_r:
+            sc[da] = vuoto;
+            sc[da - 10] = regina_b;
+            break;
+        
+        case promozione_pb_t:
+            sc[da] = vuoto;
+            sc[da - 10] = torre_b;
+            break;
+        
+        case promozione_pb_a:
+            sc[da] = vuoto;
+            sc[da - 10] = alfiere_b;
+            break;
+        
+        case promozione_pb_c:
+            sc[da] = vuoto;
+            sc[da - 10] = cavallo_b;
+            break;
+
+        case promozione_pn_r:
+            sc[da] = vuoto;
+            sc[da + 10] = regina_n;
+            break;
+        
+        case promozione_pn_t:
+            sc[da] = vuoto;
+            sc[da + 10] = torre_n;
+            break;
+        
+        case promozione_pn_a:
+            sc[da] = vuoto;
+            sc[da + 10] = alfiere_n;
+            break;
+        
+        case promozione_pn_c:
+            sc[da] = vuoto;
+            sc[da + 10] = cavallo_n;
+            break;
+        
+        default:
+            break;
         }
     }
     else {
@@ -66,8 +129,20 @@ int mosse_pedone_bianco(int *sc, int pos, int *mosse, int mosse_i) {
     int avanti_2 = pos - 20;
 
     if (sc[avanti_1] == vuoto) {
-        mosse[mosse_i] = avanti_1;
-        mosse_i++;
+        if (pos > 30 && pos < 40) { //puo fare promozioni
+            mosse[mosse_i] = promozione_pb_r;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pb_t;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pb_a;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pb_c;
+            mosse_i++;
+        }
+        else {
+            mosse[mosse_i] = avanti_1;
+            mosse_i++;
+        }
     }
     if(sc[avanti_2] == vuoto && sc[avanti_1] == vuoto && (pos > 80 && pos < 90)) {
         mosse[mosse_i] = avanti_2;
@@ -92,8 +167,20 @@ int mosse_pedone_nero(int *sc, int pos, int *mosse, int mosse_i) {
     int avanti_sinistra = pos + 9;
 
     if (sc[avanti_1] == vuoto) {
-        mosse[mosse_i] = avanti_1;
-        mosse_i++;
+        if (pos > 80 && pos < 90) { //puo fare promozioni
+            mosse[mosse_i] = promozione_pn_r;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pn_t;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pn_a;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pn_c;
+            mosse_i++;
+        }
+        else {
+            mosse[mosse_i] = avanti_1;
+            mosse_i++;
+        }
     }
     if(sc[avanti_2] == vuoto && sc[avanti_1] == vuoto && (pos > 30 && pos < 40)) {
         mosse[mosse_i] = avanti_2;
