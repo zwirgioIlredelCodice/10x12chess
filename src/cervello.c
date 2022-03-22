@@ -13,7 +13,7 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
         return valuta_posizione(game_used);
     }
 
-    mossa mosse[200];
+    mossa mosse[400];
     int mosse_i = 0;
 
     if (isMaximisingPlayer) {
@@ -65,7 +65,7 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
 
 mossa minimaxRoot(int depth, int *game, int isMaximisingPlayer) {
 
-    mossa mosse[200];
+    mossa mosse[400];
     int mosse_i = 0;
 
     int game_used[124];

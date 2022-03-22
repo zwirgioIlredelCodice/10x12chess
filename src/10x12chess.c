@@ -71,11 +71,23 @@ int main() {
 
     disegna_scacchiera(test1);
     fai_mossa(test1, 0, moss_arrocco_bdx);
+    
     disegna_scacchiera(test1);
     
     int attacco[120] = {0};
 
     attacco_neri(test1, attacco);
     disegna_attacco(attacco);
-    */
+
+    mossa moss[40];
+    int asd = 0;
+    asd = mosse_legali_biachi(test1, moss, asd);
+
+    for (size_t i = 0; i < asd; i++)
+    {
+        printf("da %d a %d ", moss[i].da, moss[i].a);
+    }
+
+    minimaxRoot(4, test1, 1);*/
+    
 }
