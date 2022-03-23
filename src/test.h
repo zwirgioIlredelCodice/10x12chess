@@ -42,8 +42,8 @@ int test_pro[] = {
                     barriera, vuoto,    vuoto,    vuoto,    vuoto,    pedone_n,    vuoto,    vuoto,    vuoto,    barriera,
                     barriera, vuoto,    vuoto,    vuoto,    regina_n,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
                     barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
-                    barriera, pedone_n, vuoto, pedone_n, pedone_n, pedone_n, pedone_n, pedone_n, pedone_b, barriera,
-                    barriera, vuoto, vuoto, vuoto, vuoto, re_b,    vuoto,  vuoto, vuoto, barriera,
+                    barriera, pedone_n, vuoto, pedone_n, vuoto, vuoto, vuoto, vuoto, vuoto, vuoto,
+                    barriera, vuoto,    vuoto,    vuoto, torre_b, torre_b,    re_b,  vuoto, vuoto, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_ARROCCO //arrocco bdx bsx ndx nsx

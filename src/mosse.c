@@ -111,6 +111,86 @@ void fai_mossa(int *sc, int da, int a) {
             sc[da] = vuoto;
             sc[da + 10] = cavallo_n;
             break;
+
+        case promozione_pbdx_r:
+            sc[da] = vuoto;
+            sc[da - 11] = regina_b;
+            break;
+        
+        case promozione_pbdx_t:
+            sc[da] = vuoto;
+            sc[da - 11] = torre_b;
+            break;
+        
+        case promozione_pbdx_a:
+            sc[da] = vuoto;
+            sc[da - 11] = alfiere_b;
+            break;
+        
+        case promozione_pbdx_c:
+            sc[da] = vuoto;
+            sc[da - 11] = cavallo_b;
+            break;
+
+        case promozione_pndx_r:
+            sc[da] = vuoto;
+            sc[da + 11] = regina_n;
+            break;
+        
+        case promozione_pndx_t:
+            sc[da] = vuoto;
+            sc[da + 11] = torre_n;
+            break;
+        
+        case promozione_pndx_a:
+            sc[da] = vuoto;
+            sc[da + 11] = alfiere_n;
+            break;
+        
+        case promozione_pndx_c:
+            sc[da] = vuoto;
+            sc[da + 11] = cavallo_n;
+            break;
+        
+        case promozione_pbsx_r:
+            sc[da] = vuoto;
+            sc[da - 9] = regina_b;
+            break;
+        
+        case promozione_pbsx_t:
+            sc[da] = vuoto;
+            sc[da - 9] = torre_b;
+            break;
+        
+        case promozione_pbsx_a:
+            sc[da] = vuoto;
+            sc[da - 9] = alfiere_b;
+            break;
+        
+        case promozione_pbsx_c:
+            sc[da] = vuoto;
+            sc[da - 9] = cavallo_b;
+            break;
+
+        case promozione_pnsx_r:
+            sc[da] = vuoto;
+            sc[da + 9] = regina_n;
+            break;
+        
+        case promozione_pnsx_t:
+            sc[da] = vuoto;
+            sc[da + 9] = torre_n;
+            break;
+        
+        case promozione_pnsx_a:
+            sc[da] = vuoto;
+            sc[da + 9] = alfiere_n;
+            break;
+        
+        case promozione_pnsx_c:
+            sc[da] = vuoto;
+            sc[da + 9] = cavallo_n;
+            break;
         
         default:
             break;
@@ -124,8 +204,8 @@ void fai_mossa(int *sc, int da, int a) {
 
 int mosse_pedone_bianco(int *sc, int pos, int *mosse, int mosse_i) {
     int avanti_1 = pos - 10;
-    int avanti_destra = pos - 9;
-    int avanti_sinistra = pos - 11;
+    int avanti_destra = pos - 11;
+    int avanti_sinistra = pos - 9;
     int avanti_2 = pos - 20;
 
     if (sc[avanti_1] == vuoto) {
@@ -149,12 +229,36 @@ int mosse_pedone_bianco(int *sc, int pos, int *mosse, int mosse_i) {
         mosse_i++;
     }
     if (nero(sc[avanti_sinistra])) {
-        mosse[mosse_i] = avanti_sinistra;
-        mosse_i++;
+        if (pos > 30 && pos < 40) { //puo fare promozioni
+            mosse[mosse_i] = promozione_pbsx_r;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pbsx_t;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pbsx_a;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pbsx_c;
+            mosse_i++;
+        }
+        else {
+            mosse[mosse_i] = avanti_sinistra;
+            mosse_i++;
+        }
     }
     if (nero(sc[avanti_destra])) {
-        mosse[mosse_i] = avanti_destra;
-        mosse_i++;
+        if (pos > 30 && pos < 40) { //puo fare promozioni
+            mosse[mosse_i] = promozione_pbdx_r;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pbdx_t;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pbdx_a;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pbdx_c;
+            mosse_i++;
+        }
+        else {
+            mosse[mosse_i] = avanti_destra;
+            mosse_i++;
+        }
     }
 
     return mosse_i;
@@ -187,12 +291,36 @@ int mosse_pedone_nero(int *sc, int pos, int *mosse, int mosse_i) {
         mosse_i++;
     }
     if (bianco(sc[avanti_sinistra])) {
-        mosse[mosse_i] = avanti_sinistra;
-        mosse_i++;
+        if (pos > 80 && pos < 90) { //puo fare promozioni
+            mosse[mosse_i] = promozione_pnsx_r;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pnsx_t;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pnsx_a;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pnsx_c;
+            mosse_i++;
+        }
+        else {
+            mosse[mosse_i] = avanti_sinistra;
+            mosse_i++;
+        }
     }
     if (bianco(sc[avanti_destra])) {
-        mosse[mosse_i] = avanti_destra;
-        mosse_i++;
+        if (pos > 80 && pos < 90) { //puo fare promozioni
+            mosse[mosse_i] = promozione_pndx_r;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pndx_t;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pndx_a;
+            mosse_i++;
+            mosse[mosse_i] = promozione_pndx_c;
+            mosse_i++;
+        }
+        else {
+            mosse[mosse_i] = avanti_destra;
+            mosse_i++;
+        }
     }
     return mosse_i;
 }

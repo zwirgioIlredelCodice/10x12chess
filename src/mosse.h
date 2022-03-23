@@ -94,3 +94,23 @@ int tutte_mosse_legali(int *sc, mossa *mosse_l, int mosse_i_l);
 #define promozione_pn_t -10
 #define promozione_pn_a -11
 #define promozione_pn_c -12
+
+#define promozione_pbdx_r -13
+#define promozione_pbdx_t -14
+#define promozione_pbdx_a -15
+#define promozione_pbdx_c -16
+
+#define promozione_pndx_r -17
+#define promozione_pndx_t -18
+#define promozione_pndx_a -19
+#define promozione_pndx_c -20
+
+#define promozione_pbsx_r -21
+#define promozione_pbsx_t -22
+#define promozione_pbsx_a -23
+#define promozione_pbsx_c -24
+
+#define promozione_pnsx_r -25
+#define promozione_pnsx_t -26
+#define promozione_pnsx_a -27
+#define promozione_pnsx_c -28
