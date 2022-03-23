@@ -6,8 +6,8 @@
 
 int minimax(int depth, int *game, int isMaximisingPlayer) {
 
-    int game_used[124];
-    memcpy(game_used, game, sizeof(int) * 124);
+    int game_used[GRANDEZZA_SC];
+    memcpy(game_used, game, MEM_GRANDEZZA_SC);
 
     if (depth == 0) {
         return valuta_posizione(game_used);
@@ -35,7 +35,7 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
             if (mmOVE > bestMove) {
                 bestMove = mmOVE;
             }
-            memcpy(game_used, game, sizeof(int) * 124);
+            memcpy(game_used, game, MEM_GRANDEZZA_SC);
         }
         return bestMove;
     } else {
@@ -57,7 +57,7 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
             if (mmOVE < bestMove) {
                 bestMove = mmOVE;
             }
-            memcpy(game_used, game, sizeof(int) * 124);
+            memcpy(game_used, game, MEM_GRANDEZZA_SC);
         }
         return bestMove;
     }
@@ -68,8 +68,8 @@ mossa minimaxRoot(int depth, int *game, int isMaximisingPlayer) {
     mossa mosse[400];
     int mosse_i = 0;
 
-    int game_used[124];
-    memcpy(game_used, game, sizeof(int) * 124);
+    int game_used[GRANDEZZA_SC];
+    memcpy(game_used, game, MEM_GRANDEZZA_SC);
 
     if (isMaximisingPlayer) {
         mosse_i = mosse_legali_biachi(game_used, mosse, mosse_i);
@@ -86,7 +86,7 @@ mossa minimaxRoot(int depth, int *game, int isMaximisingPlayer) {
 
         printf("mossa da %d a %d valutazione %d\n", newGameMove.da, newGameMove.a, value);
 
-        memcpy(game_used, game, sizeof(int) * 124);
+        memcpy(game_used, game, MEM_GRANDEZZA_SC);
         if(value >= bestMove) {
             bestMove = value;
             bestMoveFound = newGameMove;

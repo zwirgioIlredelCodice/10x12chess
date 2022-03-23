@@ -135,8 +135,8 @@ void drawBoard(int *board)
 
 int gui(int *sc)
 {
-    int sc_salvata[120];
-    memcpy(sc_salvata, sc, sizeof(int) * 120);
+    int sc_salvata[GRANDEZZA_SC];
+    memcpy(sc_salvata, sc, MEM_GRANDEZZA_SC);
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
@@ -178,7 +178,7 @@ int gui(int *sc)
         case menu:
             if (IsKeyPressed(KEY_A))
             {
-                memcpy(sc, sc_salvata, sizeof(int) * 120);
+                memcpy(sc, sc_salvata, MEM_GRANDEZZA_SC);
                 schermata = partita;
             }
             break;

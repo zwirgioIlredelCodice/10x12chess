@@ -46,6 +46,9 @@
 
 */
 
+#define GRANDEZZA_SC 124 // 124 interi
+#define MEM_GRANDEZZA_SC sizeof(int) * GRANDEZZA_SC // in byte
+
 #define arrocco_bdx 120
 #define arrocco_bsx 121
 #define arrocco_ndx 122
