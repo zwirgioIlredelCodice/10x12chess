@@ -46,7 +46,7 @@
 
 */
 
-#define GRANDEZZA_SC 124 // 124 interi
+#define GRANDEZZA_SC 125 // 124 interi
 #define MEM_GRANDEZZA_SC sizeof(int) * GRANDEZZA_SC // in byte
 
 #define arrocco_bdx 120
@@ -54,6 +54,7 @@
 #define arrocco_ndx 122
 #define arrocco_nsx 123
 
+#define presa_al_varco 124
 
 // la scacchiera di partenza
 extern int scacchiera_0[];

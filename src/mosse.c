@@ -40,6 +40,11 @@ void fai_mossa(int *sc, int da, int a) {
         break;
     }
 
+    //guarda se sono possibili prese al varco
+    if ((sc[da] == pedone_b || sc[da] == pedone_n) && ((a - da == 20) || ((a - da == -20)))) {
+        sc[presa_al_varco] = a; //si ricorda se il pedone si piò prendere
+    }
+
     if (a < 0) {
 
         switch (a)
@@ -192,6 +197,34 @@ void fai_mossa(int *sc, int da, int a) {
             sc[da + 9] = cavallo_n;
             break;
         
+        case pav_b_dx:
+            sc[da] = vuoto;
+            sc[da + 1] = vuoto;
+            sc[da - 9] = pedone_b;
+            sc[presa_al_varco] = 0;
+            break;
+        
+        case pav_b_sx:
+            sc[da] = vuoto;
+            sc[da - 1] = vuoto;
+            sc[da - 11] = pedone_b;
+            sc[presa_al_varco] = 0;
+            break;
+        
+        case pav_n_dx:
+            sc[da] = vuoto;
+            sc[da + 1] = vuoto;
+            sc[da + 11] = pedone_n;
+            sc[presa_al_varco] = 0;
+            break;
+        
+        case pav_n_sx:
+            sc[da] = vuoto;
+            sc[da - 1] = vuoto;
+            sc[da + 9] = pedone_n;
+            sc[presa_al_varco] = 0;
+            break;
+        
         default:
             break;
         }
@@ -204,9 +237,11 @@ void fai_mossa(int *sc, int da, int a) {
 
 int mosse_pedone_bianco(int *sc, int pos, int *mosse, int mosse_i) {
     int avanti_1 = pos - 10;
-    int avanti_destra = pos - 11;
-    int avanti_sinistra = pos - 9;
+    int avanti_destra = pos - 9;
+    int avanti_sinistra = pos - 11;
     int avanti_2 = pos - 20;
+    int pav_destra = pos + 1;
+    int pav_sinistra = pos - 1;
 
     if (sc[avanti_1] == vuoto) {
         if (pos > 30 && pos < 40) { //puo fare promozioni
@@ -260,6 +295,14 @@ int mosse_pedone_bianco(int *sc, int pos, int *mosse, int mosse_i) {
             mosse_i++;
         }
     }
+    if (sc[pav_destra] == pedone_n && sc[presa_al_varco] == pav_destra) {
+        mosse[mosse_i] = pav_b_dx;
+        mosse_i++;
+    }
+    if (sc[pav_sinistra] == pedone_n && sc[presa_al_varco] == pav_sinistra) {
+        mosse[mosse_i] = pav_b_sx;
+        mosse_i++;
+    }
 
     return mosse_i;
 }
@@ -269,6 +312,8 @@ int mosse_pedone_nero(int *sc, int pos, int *mosse, int mosse_i) {
     int avanti_2 = pos + 20;
     int avanti_destra = pos + 11;
     int avanti_sinistra = pos + 9;
+    int pav_destra = pos + 1;
+    int pav_sinistra = pos - 1;
 
     if (sc[avanti_1] == vuoto) {
         if (pos > 80 && pos < 90) { //puo fare promozioni
@@ -322,6 +367,15 @@ int mosse_pedone_nero(int *sc, int pos, int *mosse, int mosse_i) {
             mosse_i++;
         }
     }
+    if (sc[pav_destra] == pedone_b && sc[presa_al_varco] == pav_destra) {
+        mosse[mosse_i] = pav_b_dx;
+        mosse_i++;
+    }
+    if (sc[pav_sinistra] == pedone_b && sc[presa_al_varco] == pav_sinistra) {
+        mosse[mosse_i] = pav_b_sx;
+        mosse_i++;
+    }
+
     return mosse_i;
 }
 

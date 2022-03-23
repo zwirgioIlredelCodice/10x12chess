@@ -114,3 +114,12 @@ int tutte_mosse_legali(int *sc, mossa *mosse_l, int mosse_i_l);
 #define promozione_pnsx_t -26
 #define promozione_pnsx_a -27
 #define promozione_pnsx_c -28
+
+#define NO_PRESA_AL_VARCO 0
+
+// presa al varco -> pav
+#define pav_b_dx -29
+#define pav_b_sx -30
+
+#define pav_n_dx -31
+#define pav_n_sx -32
