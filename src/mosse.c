@@ -56,6 +56,8 @@ void fai_mossa(int *sc, int da, int a) {
             sc[95] = vuoto;
             sc[96] = torre_b;
             sc[98] = vuoto;
+            sc[arrocco_bdx] = NO_ARROCCO;
+            sc[arrocco_bsx] = NO_ARROCCO;
             break;
         
         case moss_arrocco_bsx:
@@ -63,6 +65,8 @@ void fai_mossa(int *sc, int da, int a) {
             sc[95] = vuoto;
             sc[94] = torre_b;
             sc[91] = vuoto;
+            sc[arrocco_bdx] = NO_ARROCCO;
+            sc[arrocco_bsx] = NO_ARROCCO;
             break;
         
         case moss_arrocco_ndx:
@@ -70,6 +74,8 @@ void fai_mossa(int *sc, int da, int a) {
             sc[25] = vuoto;
             sc[26] = torre_n;
             sc[28] = vuoto;
+            sc[arrocco_ndx] = NO_ARROCCO;
+            sc[arrocco_nsx] = NO_ARROCCO;
             break;
         
         case moss_arrocco_nsx:
@@ -77,6 +83,8 @@ void fai_mossa(int *sc, int da, int a) {
             sc[25] = vuoto;
             sc[24] = torre_n;
             sc[21] = vuoto;
+            sc[arrocco_ndx] = NO_ARROCCO;
+            sc[arrocco_nsx] = NO_ARROCCO;
             break;
         
         case promozione_pb_r:
