@@ -17,6 +17,22 @@
 110 111 112 113 114 115 116 117 118 119
 */
 
+int test_vuoto[] = {
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, vuoto,    vuoto,    vuoto,     re_n,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    pedone_n,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    pedone_b,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,     re_b,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_PRESA_AL_VARCO //arrocco bdx bsx ndx nsx
+                };
+
 int test1[] = {
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
@@ -30,7 +46,7 @@ int test1[] = {
                     barriera, torre_b, vuoto, vuoto, vuoto, re_b,    vuoto,  vuoto, torre_b, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
-                    SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, SI_ARROCCO //arrocco bdx bsx ndx nsx
+                    SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, NO_PRESA_AL_VARCO//arrocco bdx bsx ndx nsx
             };
 
 int test_pro[] = {
@@ -46,5 +62,21 @@ int test_pro[] = {
                     barriera, vuoto,    vuoto,    vuoto, torre_b, torre_b,    re_b,  vuoto, vuoto, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
-                    NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_ARROCCO //arrocco bdx bsx ndx nsx
+                    NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_PRESA_AL_VARCO//arrocco bdx bsx ndx nsx
+            };
+
+int test_varco[] = {
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, torre_n, cavallo_n, alfiere_n, regina_n, re_n, alfiere_n, cavallo_n, torre_n, barriera,
+                    barriera, pedone_n, torre_n, pedone_n, pedone_n,  vuoto, pedone_n, pedone_n, pedone_n, barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    pedone_n,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    regina_n,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, pedone_n, vuoto, pedone_n, vuoto, vuoto, vuoto, vuoto, vuoto, vuoto,
+                    barriera, vuoto,    vuoto,    vuoto, torre_b, torre_b,    re_b,  vuoto, vuoto, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_PRESA_AL_VARCO//arrocco bdx bsx ndx nsx
             };

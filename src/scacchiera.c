@@ -22,7 +22,7 @@ int scacchiera_0[] = {
                     barriera, torre_b, cavallo_b, alfiere_b, regina_b, re_b, alfiere_b, cavallo_b, torre_b, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
-                    SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, SI_ARROCCO //arrocco bdx bsx ndx nsx
+                    SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, NO_PRESA_AL_VARCO //arrocco bdx bsx ndx nsx
                 };
 
 void disegna_scacchiera(int *scacchiera) {
@@ -54,6 +54,9 @@ void disegna_scacchiera(int *scacchiera) {
     for (char i = 'A'; i <= 'H'; i++) {
         printf("%c ", i);
     }
+
+    printf("\narrocchi %d %d %d %d ", scacchiera[arrocco_bdx], scacchiera[arrocco_bsx], scacchiera[arrocco_ndx], scacchiera[arrocco_nsx]);
+    printf("\npresa al varco %d", scacchiera[presa_al_varco]);
     printf("\n");
 }
 

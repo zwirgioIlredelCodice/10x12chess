@@ -40,6 +40,8 @@ void fai_mossa(int *sc, int da, int a) {
         break;
     }
 
+    sc[presa_al_varco] = NO_PRESA_AL_VARCO; // solo per un turno 
+
     //guarda se sono possibili prese al varco
     if ((sc[da] == pedone_b || sc[da] == pedone_n) && ((a - da == 20) || ((a - da == -20)))) {
         sc[presa_al_varco] = a; //si ricorda se il pedone si piò prendere
@@ -201,28 +203,24 @@ void fai_mossa(int *sc, int da, int a) {
             sc[da] = vuoto;
             sc[da + 1] = vuoto;
             sc[da - 9] = pedone_b;
-            sc[presa_al_varco] = 0;
             break;
         
         case pav_b_sx:
             sc[da] = vuoto;
             sc[da - 1] = vuoto;
             sc[da - 11] = pedone_b;
-            sc[presa_al_varco] = 0;
             break;
         
         case pav_n_dx:
             sc[da] = vuoto;
             sc[da + 1] = vuoto;
             sc[da + 11] = pedone_n;
-            sc[presa_al_varco] = 0;
             break;
         
         case pav_n_sx:
             sc[da] = vuoto;
             sc[da - 1] = vuoto;
             sc[da + 9] = pedone_n;
-            sc[presa_al_varco] = 0;
             break;
         
         default:
@@ -368,11 +366,11 @@ int mosse_pedone_nero(int *sc, int pos, int *mosse, int mosse_i) {
         }
     }
     if (sc[pav_destra] == pedone_b && sc[presa_al_varco] == pav_destra) {
-        mosse[mosse_i] = pav_b_dx;
+        mosse[mosse_i] = pav_n_dx;
         mosse_i++;
     }
     if (sc[pav_sinistra] == pedone_b && sc[presa_al_varco] == pav_sinistra) {
-        mosse[mosse_i] = pav_b_sx;
+        mosse[mosse_i] = pav_n_sx;
         mosse_i++;
     }
 

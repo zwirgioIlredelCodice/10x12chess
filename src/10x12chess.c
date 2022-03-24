@@ -44,7 +44,7 @@ void gioco() {
 }
 
 int main() {
-    gui(scacchiera_0);
+    gui(test_vuoto);
     /*
     int attacco[120] = {0};
 
@@ -78,16 +78,21 @@ int main() {
 
     attacco_neri(test1, attacco);
     disegna_attacco(attacco);
+    disegna_scacchiera(test_vuoto);
+    fai_mossa(test_vuoto, 82, 62);
+    disegna_scacchiera(test_vuoto);
 
     mossa moss[40];
     int asd = 0;
-    asd = mosse_legali_biachi(test1, moss, asd);
+    asd = mosse_legali_neri(test_vuoto, moss, asd);
 
     for (size_t i = 0; i < asd; i++)
     {
         printf("da %d a %d ", moss[i].da, moss[i].a);
     }
 
-    minimaxRoot(4, test1, 1);*/
+    fai_mossa(test_vuoto, 63, -32);
+    disegna_scacchiera(test_vuoto);
+    */
     
 }
