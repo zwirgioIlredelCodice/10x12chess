@@ -44,7 +44,7 @@ void gioco() {
 }
 
 int main() {
-    gui(test_vuoto);
+    gui(scacchiera_0);
     /*
     int attacco[120] = {0};
 
