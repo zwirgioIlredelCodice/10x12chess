@@ -163,6 +163,9 @@ int gui(int *sc)
 
     int mossa_mouse = 0;
 
+    int mossa_speciale_quadrato = 0; //tiene la posizione del quadrato delle mosse speciali BLU
+    int mossa_speciale_mossa = 0; //il numero della mossa es MOSS_ARROCCO_BDX
+
     tipo_schermata schermata = menu;
 
     //--------------------------------------------------------------------------------------
@@ -207,6 +210,7 @@ int gui(int *sc)
                 fai_mossa(sc, mm.da, mm.a);
                 turno = -turno;
                 
+                
                 /*
                 if (IsMouseButtonPressed(0))
                 {
@@ -220,6 +224,9 @@ int gui(int *sc)
                     py = (py / QUAD_SIZE);
 
                     mouse_scacchiera = py * 10 + px + 21;
+
+                    mossa_speciale_quadrato = 0;
+                    mossa_speciale_mossa = 0;
 
                     if (sc[mouse_scacchiera] != vuoto)
                     {
@@ -248,7 +255,7 @@ int gui(int *sc)
                             break;
                         }
                     }
-                }*/
+                }
 
                 if (IsMouseButtonPressed(1))
                 {
@@ -261,10 +268,15 @@ int gui(int *sc)
 
                     mossa_mouse = sspy * 10 + sspx + 21;
 
-                    fai_mossa(sc, mouse_scacchiera, mossa_mouse);
+                    if (mossa_mouse == mossa_speciale_quadrato) {
+                        fai_mossa(sc, mouse_scacchiera, mossa_speciale_mossa);
+                    }
+                    else {
+                        fai_mossa(sc, mouse_scacchiera, mossa_mouse);
+                    }
 
                     turno = -turno;
-                }
+                }*/
             }
             else if (turno == -1)
             {
@@ -289,6 +301,9 @@ int gui(int *sc)
                     py = (py / QUAD_SIZE);
 
                     mouse_scacchiera = py * 10 + px + 21;
+
+                    mossa_speciale_quadrato = 0;
+                    mossa_speciale_mossa = 0;
 
                     if (sc[mouse_scacchiera] != vuoto)
                     {
@@ -330,12 +345,13 @@ int gui(int *sc)
 
                     mossa_mouse = sspy * 10 + sspx + 21;
 
-                    fai_mossa(sc, mouse_scacchiera, mossa_mouse);
+                    if (mossa_mouse == mossa_speciale_quadrato) {
+                        fai_mossa(sc, mouse_scacchiera, mossa_speciale_mossa);
+                    }
+                    else {
+                        fai_mossa(sc, mouse_scacchiera, mossa_mouse);
+                    }
 
-                    turno = -turno;
-                }
-                if (IsKeyPressed(KEY_Q)) {
-                    fai_mossa(sc, mouse_scacchiera, moss_arrocco_ndx);
                     turno = -turno;
                 }
             }
@@ -374,7 +390,76 @@ int gui(int *sc)
             {
                 int ppx = (mosse[ii] % 10) - 1;
                 int ppy = (mosse[ii] / 10) - 2;
-                DrawRectangle(ppx * QUAD_SIZE, ppy * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE, (Color){0, 228, 48, 100});
+                int sq = 0;
+
+                if (mosse[ii] > 0) {
+                    DrawRectangle(ppx * QUAD_SIZE, ppy * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE, (Color){0, 228, 48, 100});
+                }
+                else {
+                    switch (mosse[ii])
+                    {
+                    case moss_arrocco_bdx:
+                        sq = 97;
+                        ppx = (sq % 10) - 1;
+                        ppy = (sq / 10) - 2;
+                        mossa_speciale_mossa = moss_arrocco_bdx;
+                        break;
+                    
+                    case moss_arrocco_bsx:
+                        sq = 93; 
+                        ppx = (sq % 10) - 1;
+                        ppy = (sq / 10) - 2;
+                        mossa_speciale_mossa = moss_arrocco_bsx;
+                        break;
+                    
+                    case moss_arrocco_ndx:
+                        sq = 27;
+                        ppx = (sq % 10) - 1;
+                        ppy = (sq / 10) - 2;
+                        mossa_speciale_mossa = moss_arrocco_ndx;
+                        break;
+                    
+                    case moss_arrocco_nsx:
+                        sq = 23;
+                        ppx = (sq % 10) - 1;
+                        ppy = (sq / 10) - 2;
+                        mossa_speciale_mossa = moss_arrocco_nsx;
+                        break;
+                    
+                    case pav_b_dx:
+                        sq = sc[presa_al_varco] - 10; 
+                        ppx = (sq % 10) - 1;
+                        ppy = (sq / 10) - 2;
+                        mossa_speciale_mossa = pav_b_dx;
+                        break;
+
+                    case pav_b_sx:
+                        sq = sc[presa_al_varco] - 10; 
+                        ppx = (sq % 10) - 1;
+                        ppy = (sq / 10) - 2;
+                        mossa_speciale_mossa = pav_b_sx;
+                        break;
+                    
+                    case pav_n_dx:
+                        sq = sc[presa_al_varco] + 10; 
+                        ppx = (sq % 10) - 1;
+                        ppy = (sq / 10) - 2;
+                        mossa_speciale_mossa = pav_n_dx;
+                        break;
+                    
+                    case pav_n_sx:
+                        sq = sc[presa_al_varco] + 10; 
+                        ppx = (sq % 10) - 1;
+                        ppy = (sq / 10) - 2;
+                        mossa_speciale_mossa = pav_n_sx;
+                        break;
+                    
+                    default:
+                        break;
+                    }
+                    mossa_speciale_quadrato = sq;
+                    DrawRectangle(ppx * QUAD_SIZE, ppy * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE, (Color){0, 115, 225, 100});
+                }
             }
             break;
 
