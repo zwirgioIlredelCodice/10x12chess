@@ -18,21 +18,50 @@ a chess engine with the [10x12 board representation](https://www.chessprogrammin
 
 ### compiling
 
-* open terminal in the project folder and type:
+* for linux:
 
+    open terminal in the project folder and type:
 
-``` bash
-mkdir build
-cd build
-cmake ..
-make
-```
+    ``` bash
+    mkdir build
+    cd build
+    cmake ..
+    make
+    ```
+* for windows:
+    open terminal in the project folder and type:
+
+    ``` bash
+    mkdir build
+    cd build
+    cmake ..
+    ```
+    (method i found, probably wrong)
+    * open the project folder in **visual studio**
+    * compile
 
 ### Executing program
 
-* got in the project folder
-* got in the `/build` folder
-* run `./10x12chess` in the terminal or double click with the mouse
+* for linux:
+    * got in the project folder
+    * got in the `/build` folder
+    * run `./10x12chess` in the terminal or double click with the mouse
+
+* for windows:
+    * executable is in `/out/build/`
+    * create a folder 
+    * put the executable like this:
+        
+        (this is to put the image in the correct path [`"../assets/Chess_Pieces_Sprite.png"`])
+        ```
+            folder
+            ├───assets
+            │       Chess_Pieces_Sprite.png
+            │
+            └───bin
+                    10x12chess.exe
+        ```
+    *now go to `bin/` and run `10x12chess.exe`
 
 ## Help
 
