@@ -1,1 +1,0 @@
-gcc 10x12chess.c -g -O0 && valgrind --leak-check=yes ./a.out

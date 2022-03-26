@@ -13,18 +13,25 @@ a chess engine with the [10x12 board representation](https://www.chessprogrammin
 ### Dependencies
   
 * Linux or Windows 10 (for now not tested)
-* gcc and make
+* gcc and cmake
 * [raylib](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux)
 
 ### compiling
 
-* got in the project folder
-* run `make` in the terminal
+* open terminal in the project folder and type:
+
+
+``` bash
+mkdir build
+cd build
+cmake ..
+make
+```
 
 ### Executing program
 
 * got in the project folder
-* got in `/bin` folder
+* got in the `/build` folder
 * run `./10x12chess` in the terminal or double click with the mouse
 
 ## Help
