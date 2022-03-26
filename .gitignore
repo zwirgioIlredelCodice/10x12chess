@@ -6,3 +6,5 @@ bin/*
 debug/*
 obj/*
 build/*
+.vs/*
+out/*
