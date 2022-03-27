@@ -784,7 +784,7 @@ int re_bianco_attaccato(int sc[]) {
     attacco_neri(sc, attacco);
 
     //cerca il re
-    int posizione_re = -1;
+    int posizione_re = 0;
     for (int i = 0; i < 120; i++) {
         if (sc[i] == re_b) {
             posizione_re = i;
@@ -792,8 +792,8 @@ int re_bianco_attaccato(int sc[]) {
         }  
     }
 
-    //assert(posizione_re != -1);
-    if(posizione_re == -1) {
+    //assert(posizione_re != 0);
+    if(posizione_re == 0) {
         printf("-------------non rerrrr bianco\n");
     }
 
@@ -818,7 +818,7 @@ int re_nero_attaccato(int sc[]) {
     attacco_bianchi(sc, attacco);
 
     //cerca il re
-    int posizione_re = -1;
+    int posizione_re = 0;
     for (int i = 0; i < 120; i++) {
         if (sc[i] == re_n) {
             posizione_re = i;
@@ -826,9 +826,9 @@ int re_nero_attaccato(int sc[]) {
         }  
     }
 
-    //assert(posizione_re != -1);
-    if(posizione_re == -1) {
-        printf("-------------non rerrrr bianco\n");
+    //assert(posizione_re != 0);
+    if(posizione_re == 0) {
+        printf("-------------non rerrrr nero\n");
     }
 
     //controlla che il re non sia attaccato
@@ -852,7 +852,7 @@ int mosse_re_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[8]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_re_bianco(sc, pos, mosse_t, mosse_i_t);
@@ -871,7 +871,7 @@ int mosse_re_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[8]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_re_nero(sc, pos, mosse_t, mosse_i_t);
@@ -889,7 +889,7 @@ int mosse_pedone_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[8]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_pedone_bianco(sc, pos, mosse_t, mosse_i_t);
@@ -907,7 +907,7 @@ int mosse_cavallo_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[8]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_cavallo_bianco(sc, pos, mosse_t, mosse_i_t);
@@ -925,7 +925,7 @@ int mosse_alfiere_bianco_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[20]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_alfiere_bianco(sc, pos, mosse_t, mosse_i_t);
@@ -943,7 +943,7 @@ int mosse_torre_bianca_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[20]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_torre_bianca(sc, pos, mosse_t, mosse_i_t);
@@ -961,7 +961,7 @@ int mosse_regina_bianca_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[20]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_regina_bianca(sc, pos, mosse_t, mosse_i_t);
@@ -979,7 +979,7 @@ int mosse_pedone_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[8]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_pedone_nero(sc, pos, mosse_t, mosse_i_t);
@@ -997,7 +997,7 @@ int mosse_cavallo_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[8]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_cavallo_nero(sc, pos, mosse_t, mosse_i_t);
@@ -1015,7 +1015,7 @@ int mosse_alfiere_nero_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[20]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_alfiere_nero(sc, pos, mosse_t, mosse_i_t);
@@ -1033,7 +1033,7 @@ int mosse_torre_nera_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[20]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_torre_nera(sc, pos, mosse_t, mosse_i_t);
@@ -1051,7 +1051,7 @@ int mosse_regina_nera_l(int *sc, int pos, int *mosse, int mosse_i) {
     int sc_t[GRANDEZZA_SC];
     memcpy(sc_t, sc, MEM_GRANDEZZA_SC); //fa una copia della scacchiera così non cambia quando prova mosse
 
-    int mosse_t[20]; 
+    int mosse_t[64]; 
     int mosse_i_t = 0;
 
     mosse_i_t = mosse_regina_nera(sc, pos, mosse_t, mosse_i_t);

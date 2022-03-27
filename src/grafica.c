@@ -384,8 +384,6 @@ int gui(int *sc)
         case partita:
             drawBoard(sc);
 
-            DrawRectangle(px * QUAD_SIZE, py * QUAD_SIZE, QUAD_SIZE, QUAD_SIZE, (Color){253, 249, 0, 100});
-
             for (int ii = 0; ii < mosse_i; ii++)
             {
                 int ppx = (mosse[ii] % 10) - 1;
