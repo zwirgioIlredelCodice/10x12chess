@@ -586,7 +586,7 @@ int mosse_re_nero(int *sc, int pos, int *mosse, int mosse_i) {
     if (sc[arrocco_ndx] == SI_ARROCCO && sc[26] == vuoto && sc[27] == vuoto) {
 
         int attacco[120] = {0};
-        attacco_neri_no_re(sc, attacco);
+        attacco_bianchi_no_re(sc, attacco);
 
         if (attacco[26] == 0 && attacco[27] == 0) {
             mosse[mosse_i] = moss_arrocco_ndx;
@@ -597,7 +597,7 @@ int mosse_re_nero(int *sc, int pos, int *mosse, int mosse_i) {
     if (sc[arrocco_nsx] == SI_ARROCCO && sc[22] == vuoto && sc[23] == vuoto && sc[24] == vuoto) {
 
         int attacco[120] = {0};
-        attacco_neri_no_re(sc, attacco);
+        attacco_bianchi_no_re(sc, attacco);
 
         if (attacco[22] == 0 && attacco[23] == 0 && attacco[24] == 0) {
             mosse[mosse_i] = moss_arrocco_nsx;
