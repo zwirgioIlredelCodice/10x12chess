@@ -20,6 +20,9 @@ endif()
 
 # Our Project
 
+# debug use mkdir Debug cd Debug , cmake -DCMAKE_BUILD_TYPE=Debug .. , make
+set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall -g")
+
 file(GLOB SOURCES "src/*.c")
 
 # Add an executable with the above sources
