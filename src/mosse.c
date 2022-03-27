@@ -550,7 +550,7 @@ int mosse_re_bianco(int *sc, int pos, int *mosse, int mosse_i) {
     if (sc[arrocco_bdx] == SI_ARROCCO && sc[96] == vuoto && sc[97] == vuoto) {
 
         int attacco[120] = {0};
-        attacco_neri(sc, attacco);
+        attacco_neri_no_re(sc, attacco);
 
         if (attacco[96] == 0 && attacco[97] == 0) {
             mosse[mosse_i] = moss_arrocco_bdx;
@@ -561,7 +561,7 @@ int mosse_re_bianco(int *sc, int pos, int *mosse, int mosse_i) {
     if (sc[arrocco_bsx] == SI_ARROCCO && sc[92] == vuoto && sc[93] == vuoto && sc[94] == vuoto) {
 
         int attacco[120] = {0};
-        attacco_neri(sc, attacco);
+        attacco_neri_no_re(sc, attacco);
 
         if (attacco[92] == 0 && attacco[93] == 0 && attacco[94] == 0) {
             mosse[mosse_i] = moss_arrocco_bsx;
@@ -586,7 +586,7 @@ int mosse_re_nero(int *sc, int pos, int *mosse, int mosse_i) {
     if (sc[arrocco_ndx] == SI_ARROCCO && sc[26] == vuoto && sc[27] == vuoto) {
 
         int attacco[120] = {0};
-        attacco_bianchi(sc, attacco);
+        attacco_neri_no_re(sc, attacco);
 
         if (attacco[26] == 0 && attacco[27] == 0) {
             mosse[mosse_i] = moss_arrocco_ndx;
@@ -597,7 +597,7 @@ int mosse_re_nero(int *sc, int pos, int *mosse, int mosse_i) {
     if (sc[arrocco_nsx] == SI_ARROCCO && sc[22] == vuoto && sc[23] == vuoto && sc[24] == vuoto) {
 
         int attacco[120] = {0};
-        attacco_bianchi(sc, attacco);
+        attacco_neri_no_re(sc, attacco);
 
         if (attacco[22] == 0 && attacco[23] == 0 && attacco[24] == 0) {
             mosse[mosse_i] = moss_arrocco_nsx;
@@ -684,6 +684,88 @@ void attacco_neri(int *sc, int *attacco) { //prende un array scacchoera e in arr
 
         case re_n:
             mosse_i = mosse_re_nero(sc, i, mosse, mosse_i);
+            break;
+        
+        default:
+            break;
+        }
+        for (int i = 0; i < mosse_i; i++) {
+            if (mosse[i] >= 0) {
+                attacco[mosse[i]]++;
+            }
+        }
+    }
+}
+
+void attacco_bianchi_no_re(int *sc, int *attacco) { //senza in re perchè senno si richiama infinite volte se stessa in mosse re quando controlla l'arrocco che non sia attaccato
+    int mosse[256]; //buffer per le mosse dei pezzi
+    int mosse_i = 0;
+    
+    for (int i = 0; i < 120; i++) {
+
+        mosse_i = 0;
+
+        switch (sc[i])
+        {
+        case pedone_b:
+            mosse_i = mosse_pedone_bianco(sc, i, mosse, mosse_i);
+            break;
+        
+        case cavallo_b:
+            mosse_i = mosse_cavallo_bianco(sc, i, mosse, mosse_i);
+            break;
+
+        case alfiere_b:
+            mosse_i = mosse_alfiere_bianco(sc, i, mosse, mosse_i);
+            break;
+        
+        case torre_b:
+            mosse_i = mosse_torre_bianca(sc, i, mosse, mosse_i);
+            break;
+
+        case regina_b:
+            mosse_i = mosse_regina_bianca(sc, i, mosse, mosse_i);
+            break;
+        
+        default:
+            break;
+        }
+        for (int i = 0; i < mosse_i; i++) {
+            if (mosse[i] >= 0) {
+                attacco[mosse[i]]++;
+            }
+        }
+    }
+}
+
+void attacco_neri_no_re(int *sc, int *attacco) { //senza in re perchè senno si richiama infinite volte se stessa in mosse re quando controlla l'arrocco che non sia attaccato
+    int mosse[256]; //buffer per le mosse dei pezzi
+    int mosse_i = 0;
+    
+    for (int i = 0; i < 120; i++) {
+
+        mosse_i = 0;
+
+        switch (sc[i])
+        {
+        case pedone_n:
+            mosse_i = mosse_pedone_nero(sc, i, mosse, mosse_i);
+            break;
+        
+        case cavallo_n:
+            mosse_i = mosse_cavallo_nero(sc, i, mosse, mosse_i);
+            break;
+
+        case alfiere_n:
+            mosse_i = mosse_alfiere_nero(sc, i, mosse, mosse_i);
+            break;
+        
+        case torre_n:
+            mosse_i = mosse_torre_nera(sc, i, mosse, mosse_i);
+            break;
+
+        case regina_n:
+            mosse_i = mosse_regina_nera(sc, i, mosse, mosse_i);
             break;
         
         default:

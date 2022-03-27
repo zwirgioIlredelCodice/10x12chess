@@ -35,6 +35,10 @@ void attacco_bianchi(int *sc, int *attacco);
 
 void attacco_neri(int *sc, int *attacco);
 
+void attacco_bianchi_no_re(int *sc, int *attacco);
+
+void attacco_neri_no_re(int *sc, int *attacco);
+
 int re_bianco_attaccato(int sc[]);
 
 int re_bianco_attaccato_mossa(int sc[], int da, int a);
