@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "scacchiera.h": "c",
+        "raylib.h": "c",
+        "stdio.h": "c",
+        "mosse.h": "c",
+        "cstring": "c",
+        "variant": "c",
+        "pezzi.h": "c"
+    }
+}

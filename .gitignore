@@ -1,7 +1,6 @@
 *.exe
 *.out
 *.o
-.vscode/**
 bin/*
 debug/*
 obj/*
