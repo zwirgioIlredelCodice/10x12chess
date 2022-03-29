@@ -11,6 +11,7 @@ sas malibox board representation
 
 #include "raylib.h"
 #include "grafica.h"
+#include "cli.h"
 
 #include "test.h"
 
@@ -44,7 +45,7 @@ void gioco() {
 }
 
 int main() {
-    gui(test1);
+    //gui(test1);
     /*
     int attacco[120] = {0};
 
@@ -94,5 +95,5 @@ int main() {
     fai_mossa(test_vuoto, 63, -32);
     disegna_scacchiera(test_vuoto);
     */
-    
+    cli();
 }
