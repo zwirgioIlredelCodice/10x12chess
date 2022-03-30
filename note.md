@@ -2,7 +2,7 @@
 
 ## roba che non funziona 
 
-* in `mosse.c` l'arrocco lo fa anche se le caselle sono attaccate. c'è un bug che non fa funzionare la funzione `attacco neri/bianchi`
+* in cli.c se metti dei comandi con degli spazi li tratta come comandi separati, scanf e un bimbo speciale
 
 ## robe da fare meglio
 

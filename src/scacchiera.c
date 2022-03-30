@@ -25,6 +25,22 @@ int scacchiera_0[] = {
                     SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, NO_PRESA_AL_VARCO //arrocco bdx bsx ndx nsx
                 };
 
+int empty_board[] = {
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
+                    NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_PRESA_AL_VARCO
+                };
+
 void disegna_scacchiera(int *scacchiera) {
     int numeri = 8;
     int sfaso = 1;
@@ -78,4 +94,140 @@ void disegna_attacco(int *attacco) {
 int pos_lettere(char *c) {
     int pos = (90 - (c[1] - '1' + 2) * 10) + (c[0] - 'a' + 1) + 20;
     return pos;
+}
+
+enum fen_state {
+    piece_placement,
+    color,
+    castling,
+    en_passant,
+    halfmove,
+    fullmove
+};
+
+enum color_pice {
+    white,
+    black
+};
+
+void fen_to_board(char fen_string[], int board[]) {
+    memcpy(board, empty_board, MEM_GRANDEZZA_SC); //reset the board
+
+    char c = ' ';
+    enum fen_state state = piece_placement;
+    int pos_in_board = 21;
+    int color_to_move = white;
+
+    for (int i = 0; fen_string[i] != '\0'; i++) {
+        c = fen_string[i];
+        if (c == ' ' || c == '-') { //go to the next state
+            state++;
+            continue;
+        }
+
+        switch (state)
+        {
+        case piece_placement:
+            if (c == 'p') {
+                board[pos_in_board] = pedone_n;
+                pos_in_board++;
+            }
+            else if (c == 'n') {
+                board[pos_in_board] = cavallo_n;
+                pos_in_board++;
+            }
+            else if (c == 'b') {
+                board[pos_in_board] = alfiere_n;
+                pos_in_board++;
+            }
+            else if (c == 'r') {
+                board[pos_in_board] = torre_n;
+                pos_in_board++;
+            }
+            else if (c == 'q') {
+                board[pos_in_board] = regina_n;
+                pos_in_board++;
+            }
+            else if (c == 'k') {
+                board[pos_in_board] = re_n;
+                pos_in_board++;
+            }
+            if (c == 'P') {
+                board[pos_in_board] = pedone_b;
+                pos_in_board++;
+            }
+            else if (c == 'N') {
+                board[pos_in_board] = cavallo_b;
+                pos_in_board++;
+            }
+            else if (c == 'B') {
+                board[pos_in_board] = alfiere_b;
+                pos_in_board++;
+            }
+            else if (c == 'R') {
+                board[pos_in_board] = torre_b;
+                pos_in_board++;
+            }
+            else if (c == 'Q') {
+                board[pos_in_board] = regina_b;
+                pos_in_board++;
+            }
+            else if (c == 'K') {
+                board[pos_in_board] = re_b;
+                pos_in_board++;
+            }
+
+            else if (c == '/') {
+                pos_in_board += 2;
+            }
+
+            else if (c >= '1' && c <= '8') {
+                pos_in_board += (c - '0');
+            }
+
+            break;
+        
+        case color:
+            if (c == 'w') {
+                color_to_move = white;
+            }
+            else if (c == 'b') {
+                color_to_move = black;
+            }
+            break;
+
+        case castling:
+            if (c == 'K') {
+                board[arrocco_bdx] = SI_ARROCCO;
+            }
+            else if (c == 'Q') {
+                board[arrocco_bsx] = SI_ARROCCO;
+            }
+            else if (c == 'k') {
+                board[arrocco_ndx] = SI_ARROCCO;
+            }
+            else if (c == 'q') {
+                board[arrocco_nsx] = SI_ARROCCO;
+            }
+            break;
+        
+        case en_passant:
+            int pos = (90 - (fen_string[i+1] - '1' + 2) * 10) + (fen_string[i] - 'a' + 1) + 20;
+            i++; //skip one char because use 2 char
+
+            board[presa_al_varco] = pos;
+            break;
+        
+        case halfmove:
+            /* code */
+            break;
+        
+        case fullmove:
+            /* code */
+            break;
+        
+        default:
+            break;
+        }
+    }
 }

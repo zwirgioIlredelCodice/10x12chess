@@ -6,6 +6,7 @@
         "mosse.h": "c",
         "cstring": "c",
         "variant": "c",
-        "pezzi.h": "c"
+        "pezzi.h": "c",
+        "sstream": "c"
     }
 }

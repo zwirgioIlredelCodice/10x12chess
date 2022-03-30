@@ -58,6 +58,7 @@
 
 // la scacchiera di partenza
 extern int scacchiera_0[];
+extern int empty_board[];
 
 //Regular background
 #define BLKB "\e[40m"
@@ -78,3 +79,5 @@ void disegna_scacchiera(int *scacchiera);
 void disegna_attacco(int *attacco);
 
 int pos_lettere(char *c);
+
+void fen_to_board(char fen_string[], int board[]);
