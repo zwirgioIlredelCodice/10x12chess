@@ -2,8 +2,8 @@
 
 ## roba che non funziona 
 
-* in cli.c se metti dei comandi con degli spazi li tratta come comandi separati, scanf e un bimbo speciale
+* con perft sbaglia quando ci sono degli scacchi matti, probabilmente perchè fa ancora mosse dopo che il re non cè.
 
 ## robe da fare meglio
 
-* in `mosse.c` in `fai_mossa` usare uno switch
+* tutto

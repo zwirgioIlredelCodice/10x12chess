@@ -4,6 +4,7 @@
 #include "cli.h"
 #include "grafica.h"
 #include "scacchiera.h"
+#include "cervello.h"
 
 const char cli_start_text[] = 
     "## welcome to the 10x12chess chess engine\n"
@@ -15,8 +16,16 @@ const char cli_help_text[] =
     "   * help (various helps)\n"
     "   * printboard (print the board in the terminal)\n"
     "   * fen (set the board with a fen notation string)\n"
+    "   * perft (see al node in the position for testing)\n"
     "   * playgui (play against the engine with a gui)\n"
     ;
+
+void fen_fn(int board[]) {
+    char fen_string[256];
+    printf("insert fen string notation:\n");
+    scanf("%s", fen_string);
+    fen_to_board(fen_string, board);
+}
 
 void cli() {
     
@@ -29,25 +38,32 @@ void cli() {
 
     while (1) {
         printf("10x12chess -> ");
-        scanf("%s", command);
+        fgets(command, 200, stdin); //fgets to read an entire line with spaces
 
-        if (strcmp(command, "quit") == 0) {
+        if (strcmp(command, "quit\n") == 0) {
             printf("quitting...\n");
             break;
         }
-        else if ((strcmp(command, "help") == 0)) {
+        else if ((strcmp(command, "help\n") == 0)) {
             printf(cli_help_text);
         }
-        else if ((strcmp(command, "printboard") == 0)) {
+        else if ((strcmp(command, "printboard\n") == 0)) {
             disegna_scacchiera(board_used);
         }
-        else if ((strcmp(command, "fen") == 0)) {
+        else if ((strcmp(command, "fen\n") == 0)) {
             char fen_string[256];
             printf("insert fen string notation:\n");
-            scanf("%s", fen_string);
+            fgets(fen_string, 256, stdin);
             fen_to_board(fen_string, board_used);
         }
-        else if ((strcmp(command, "playgui") == 0)) { // not definitive
+        else if ((strcmp(command, "perft\n") == 0)) {
+            int depth;
+            printf("insert perft depth:\n");
+            scanf("%d", &depth);
+            unsigned long int nodes = perft(depth, board_used, 1); //ismaximising temp
+            printf("nodes found: %lu \n", nodes);
+        }
+        else if ((strcmp(command, "playgui\n") == 0)) { // not definitive
             gui(scacchiera_0);
         }
         else {

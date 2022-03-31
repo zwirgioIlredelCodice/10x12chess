@@ -95,3 +95,34 @@ mossa minimaxRoot(int depth, int *game, int isMaximisingPlayer) {
     printf("#--- deciso da %d a %d punteggio %d \n\n", bestMoveFound.da, bestMoveFound.a, bestMove);
     return bestMoveFound;
 };
+
+
+// for testing https://wiki.sharewiz.net/doku.php?id=chess:programming:perft
+
+unsigned long int perft(int depth, int *game, int isMaximisingPlayer) {
+
+    unsigned long int nodes = 0;
+
+    int game_used[GRANDEZZA_SC];
+    memcpy(game_used, game, MEM_GRANDEZZA_SC);
+
+    if (depth == 0) {
+        return 1;
+    }
+
+    mossa mosse[400];
+    int mosse_i = 0;
+
+    if (isMaximisingPlayer) {
+        mosse_i = mosse_legali_biachi(game_used, mosse, mosse_i);
+    } 
+    else if (!isMaximisingPlayer) {
+        mosse_i = mosse_legali_neri(game_used, mosse, mosse_i);
+    }
+    for (int i = 0; i < mosse_i; i++) {
+        fai_mossa(game_used, mosse[i].da, mosse[i].a);
+        nodes += perft(depth - 1, game_used, !isMaximisingPlayer);
+        memcpy(game_used, game, MEM_GRANDEZZA_SC);
+    }
+    return nodes;
+}
