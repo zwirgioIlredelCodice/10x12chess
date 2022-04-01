@@ -5,6 +5,7 @@
 #include "grafica.h"
 #include "scacchiera.h"
 #include "cervello.h"
+#include "test.h"
 
 const char cli_start_text[] = 
     "## welcome to the 10x12chess chess engine\n"
@@ -17,6 +18,7 @@ const char cli_help_text[] =
     "   * printboard (print the board in the terminal)\n"
     "   * fen (set the board with a fen notation string)\n"
     "   * perft (see al node in the position for testing)\n"
+    "   * test (test suite)\n"
     "   * playgui (play against the engine with a gui)\n"
     ;
 
@@ -62,6 +64,9 @@ void cli() {
             scanf("%d", &depth);
             unsigned long int nodes = perft(depth, board_used, 1); //ismaximising temp
             printf("nodes found: %lu \n", nodes);
+        }
+        else if ((strcmp(command, "test\n") == 0)) {
+            test_moves();
         }
         else if ((strcmp(command, "playgui\n") == 0)) { // not definitive
             gui(scacchiera_0);

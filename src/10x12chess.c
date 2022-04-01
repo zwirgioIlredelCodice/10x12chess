@@ -96,6 +96,5 @@ int main() {
     disegna_scacchiera(test_vuoto);
     */
     //cli();
-    fen_to_board("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1", scacchiera_0);
-    printf("%lu \n", perft(4, scacchiera_0, 1));
+    test_moves();
 }
