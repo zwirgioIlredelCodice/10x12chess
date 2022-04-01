@@ -58,7 +58,7 @@ void test_moves() {
         printf("\ntest 2 promotion:\n");
 
         fen_to_board("n1n5/PPPk4/8/8/8/8/4Kppp/5N1N b - - 0 1 ", test_board);
-        depth = 0;
+        depth = 5;
         unsigned long int result_2[6] = {24, 496, 9483, 182838, 3605103, 71179139};
         for (int i = 1; i <= depth; i++) {
                 result = perft(i, test_board, 0);

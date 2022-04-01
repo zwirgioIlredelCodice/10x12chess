@@ -385,6 +385,59 @@ int mosse_pedone_nero(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
+int mosse_pedone_bianco_base(int *sc, int pos, int *mosse, int mosse_i) {
+    int avanti_1 = pos - 10;
+    int avanti_destra = pos - 9;
+    int avanti_sinistra = pos - 11;
+    int avanti_2 = pos - 20;
+
+    if (sc[avanti_1] == vuoto) {
+        mosse[mosse_i] = avanti_1;
+        mosse_i++;
+    }
+    if(sc[avanti_2] == vuoto && sc[avanti_1] == vuoto && (pos > 80 && pos < 90)) {
+        mosse[mosse_i] = avanti_2;
+        mosse_i++;
+    }
+    if (nero(sc[avanti_sinistra])) {
+        mosse[mosse_i] = avanti_sinistra;
+        mosse_i++;
+        
+    }
+    if (nero(sc[avanti_destra])) {
+        mosse[mosse_i] = avanti_destra;
+        mosse_i++;
+    }
+
+    return mosse_i;
+}
+
+int mosse_pedone_nero_base(int *sc, int pos, int *mosse, int mosse_i) {
+    int avanti_1 = pos + 10;
+    int avanti_2 = pos + 20;
+    int avanti_destra = pos + 11;
+    int avanti_sinistra = pos + 9;
+
+    if (sc[avanti_1] == vuoto) {
+        mosse[mosse_i] = avanti_1;
+        mosse_i++;
+    }
+    if(sc[avanti_2] == vuoto && sc[avanti_1] == vuoto && (pos > 30 && pos < 40)) {
+        mosse[mosse_i] = avanti_2;
+        mosse_i++;
+    }
+    if (bianco(sc[avanti_sinistra])) {
+        mosse[mosse_i] = avanti_sinistra;
+        mosse_i++;
+    }
+    if (bianco(sc[avanti_destra])) {
+        mosse[mosse_i] = avanti_destra;
+        mosse_i++;
+    }
+
+    return mosse_i;
+}
+
 int mosse_cavallo_bianco(int *sc, int pos, int *mosse, int mosse_i) {
     int mosse_arr[8] = { -19, -21 , -12, -8, 19, 21 , 12, 8};
     int mossa;
@@ -646,7 +699,7 @@ void attacco_bianchi(int *sc, int *attacco) { //prende un array scacchoera e in 
         switch (sc[i])
         {
         case pedone_b:
-            mosse_i = mosse_pedone_bianco(sc, i, mosse, mosse_i);
+            mosse_i = mosse_pedone_bianco_base(sc, i, mosse, mosse_i);
             break;
         
         case cavallo_b:
@@ -673,9 +726,7 @@ void attacco_bianchi(int *sc, int *attacco) { //prende un array scacchoera e in 
             break;
         }
         for (int i = 0; i < mosse_i; i++) {
-            if (mosse[i] >= 0) {
-                attacco[mosse[i]]++;
-            }
+            attacco[mosse[i]]++;
         }
     }
 }
@@ -691,7 +742,7 @@ void attacco_neri(int *sc, int *attacco) { //prende un array scacchoera e in arr
         switch (sc[i])
         {
         case pedone_n:
-            mosse_i = mosse_pedone_nero(sc, i, mosse, mosse_i);
+            mosse_i = mosse_pedone_nero_base(sc, i, mosse, mosse_i);
             break;
         
         case cavallo_n:
@@ -718,11 +769,29 @@ void attacco_neri(int *sc, int *attacco) { //prende un array scacchoera e in arr
             break;
         }
         for (int i = 0; i < mosse_i; i++) {
-            if (mosse[i] >= 0) {
-                attacco[mosse[i]]++;
-            }
+            attacco[mosse[i]]++;
         }
     }
+}
+
+int trova_re_bianco(int sc[]) {
+    int posizione_re = 0;
+    for (int i = 0; i < 120; i++) {
+        if (sc[i] == re_b) {
+            return i;
+        }
+    }
+    return 0; //se non ha trovato il re
+}
+
+int trova_re_nero(int sc[]) {
+    int posizione_re = 0;
+    for (int i = 0; i < 120; i++) {
+        if (sc[i] == re_n) {
+            return i;
+        }
+    }
+    return 0; //se non ha trovato il re
 }
 
 int re_bianco_attaccato(int sc[]) {
@@ -730,13 +799,7 @@ int re_bianco_attaccato(int sc[]) {
     attacco_neri(sc, attacco);
 
     //cerca il re
-    int posizione_re = 0;
-    for (int i = 0; i < 120; i++) {
-        if (sc[i] == re_b) {
-            posizione_re = i;
-            break;
-        }  
-    }
+    int posizione_re = trova_re_bianco(sc);
 
     //assert(posizione_re != 0);
     if(posizione_re == 0) {
@@ -764,13 +827,7 @@ int re_nero_attaccato(int sc[]) {
     attacco_bianchi(sc, attacco);
 
     //cerca il re
-    int posizione_re = 0;
-    for (int i = 0; i < 120; i++) {
-        if (sc[i] == re_n) {
-            posizione_re = i;
-            break;
-        }  
-    }
+    int posizione_re = trova_re_nero(sc);
 
     //assert(posizione_re != 0);
     if(posizione_re == 0) {
