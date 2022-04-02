@@ -88,7 +88,8 @@ int mosse_legali_biachi(int *sc, mossa *mosse_l, int mosse_i_l);
 
 int mosse_legali_neri(int *sc, mossa *mosse_l, int mosse_i_l);
 
-int tutte_mosse_legali(int *sc, mossa *mosse_l, int mosse_i_l);
+//mosse a secondo del turno
+int mosse_legali(int *sc, mossa *mosse_l, int mosse_i_l);
 
 #define SI_ARROCCO 1
 #define NO_ARROCCO 0

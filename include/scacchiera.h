@@ -46,15 +46,33 @@
 
 */
 
-#define GRANDEZZA_SC 125 // 124 interi
+enum board_coordinate {
+    a8 = 21, b8, c8, d8, e8, f8, g8, h8,
+    a7 = 31, b7, c7, d7, e7, f7, g7, h7,
+    a6 = 41, b6, c6, d6, e6, f6, g6, h6,
+    a5 = 51, b5, c5, d5, e5, f5, g5, h5,
+    a4 = 61, b4, c4, d4, e4, f4, g4, h4,
+    a3 = 71, b3, c3, d3, e3, f3, g3, h3,
+    a2 = 81, b2, c2, d2, e2, f2, g2, h2,
+    a1 = 91, b1, c1, d1, e1, f1, g1, h1,
+};
+
+#define GRANDEZZA_SC 126 // 126 interi
 #define MEM_GRANDEZZA_SC sizeof(int) * GRANDEZZA_SC // in byte
 
-#define arrocco_bdx 120
-#define arrocco_bsx 121
-#define arrocco_ndx 122
-#define arrocco_nsx 123
+enum board_slot {
+    arrocco_bdx = 120,
+    arrocco_bsx,
+    arrocco_ndx,
+    arrocco_nsx,
+    presa_al_varco,
+    turno
+};
 
-#define presa_al_varco 124
+enum turn {
+    turn_black = 0,
+    turn_white
+};
 
 // la scacchiera di partenza
 extern int scacchiera_0[];

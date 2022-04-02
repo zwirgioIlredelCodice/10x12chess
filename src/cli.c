@@ -62,7 +62,7 @@ void cli() {
             int depth;
             printf("insert perft depth:\n");
             scanf("%d", &depth);
-            unsigned long int nodes = perft(depth, board_used, 1); //ismaximising temp
+            unsigned long int nodes = perft(depth, board_used); //ismaximising temp
             printf("nodes found: %lu \n", nodes);
         }
         else if ((strcmp(command, "test\n") == 0)) {

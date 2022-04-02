@@ -9,7 +9,7 @@
 //char pezzi_caratteri[14] = {'.', 'P', 'C', 'A', 'T', 'R', '#', 'p', 'c', 'a', 't', 'r', '@', '='};
 char pezzi_caratteri[14][20] = {" ", "♟", "♞", "♝", "♜", "♛", "♚", "♙", "♘", "♗", "♖", "♕", "♔", "="};
 
-int scacchiera_0[] = {
+int scacchiera_0[GRANDEZZA_SC] = {
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, torre_n, cavallo_n, alfiere_n, regina_n, re_n, alfiere_n, cavallo_n, torre_n, barriera,
@@ -22,10 +22,10 @@ int scacchiera_0[] = {
                     barriera, torre_b, cavallo_b, alfiere_b, regina_b, re_b, alfiere_b, cavallo_b, torre_b, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
-                    SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, NO_PRESA_AL_VARCO //arrocco bdx bsx ndx nsx
+                    SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, SI_ARROCCO, NO_PRESA_AL_VARCO, turn_white //arrocco bdx bsx ndx nsx
                 };
 
-int empty_board[] = {
+int empty_board[GRANDEZZA_SC] = {
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
@@ -38,7 +38,7 @@ int empty_board[] = {
                     barriera, vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    vuoto,    barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
                     barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera, barriera,
-                    NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_PRESA_AL_VARCO
+                    NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_ARROCCO, NO_PRESA_AL_VARCO, turn_white
                 };
 
 void disegna_scacchiera(int *scacchiera) {
@@ -189,10 +189,10 @@ void fen_to_board(char fen_string[], int board[]) {
         
         case color:
             if (c == 'w') {
-                color_to_move = white;
+                board[turno] = turn_white;
             }
             else if (c == 'b') {
-                color_to_move = black;
+                board[turno] = turn_black;
             }
             break;
 

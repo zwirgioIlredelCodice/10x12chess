@@ -24,7 +24,7 @@ void gioco() {
         disegna_scacchiera(scacchiera_0);
         printf("valutazione: %d\n",valuta_posizione(scacchiera_0));
         printf("gioca bianco PC\n");
-        ssa = minimaxRoot(3, scacchiera_0, 1);
+        ssa = minimaxRoot(3, scacchiera_0);
         fai_mossa(scacchiera_0, ssa.da, ssa.a);
         disegna_scacchiera(scacchiera_0);
         printf("valutazione: %d\n",valuta_posizione(scacchiera_0));

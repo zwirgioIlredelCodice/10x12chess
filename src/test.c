@@ -25,7 +25,7 @@ void test_moves() {
         depth = 5;
         unsigned long int result_0[6] = {20, 400, 8902, 197281, 4865609, 119060324};
         for (int i = 1; i <= depth; i++) {
-                result = perft(i, test_board, 1);
+                result = perft(i, test_board);
 
                 if (result == result_0[i-1]) {
                         printf("depth %d pass :)\n", i);
@@ -43,7 +43,7 @@ void test_moves() {
         depth = 4;
         unsigned long int result_1[6] = {48, 2039, 97862, 4085603, 193690690, 8031647685};
         for (int i = 1; i <= depth; i++) {
-                result = perft(i, test_board, 1);
+                result = perft(i, test_board);
 
                 if (result == result_1[i-1]) {
                         printf("depth %d pass :)\n", i);
@@ -61,7 +61,7 @@ void test_moves() {
         depth = 5;
         unsigned long int result_2[6] = {24, 496, 9483, 182838, 3605103, 71179139};
         for (int i = 1; i <= depth; i++) {
-                result = perft(i, test_board, 0);
+                result = perft(i, test_board);
 
                 if (result == result_2[i-1]) {
                         printf("depth %d pass :)\n", i);

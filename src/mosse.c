@@ -239,6 +239,8 @@ void fai_mossa(int *sc, int da, int a) {
         sc[a] = sc[da];
         sc[da] = vuoto;
     }
+
+    sc[turno] = !sc[turno]; //da il turno al altro
 }
 
 int mosse_pedone_bianco(int *sc, int pos, int *mosse, int mosse_i) {
@@ -1157,8 +1159,11 @@ int mosse_legali_neri(int *sc, mossa *mosse_l, int mosse_i_l) {
     return mosse_i_l;
 }
 
-int tutte_mosse_legali(int *sc, mossa *mosse_l, int mosse_i_l) {
-    mosse_i_l = mosse_legali_biachi(sc, mosse_l, mosse_i_l);
-    mosse_i_l = mosse_legali_neri(sc, mosse_l, mosse_i_l);
+int mosse_legali(int *sc, mossa *mosse_l, int mosse_i_l) {
+    if (sc[turno] == turn_white) {
+        mosse_i_l = mosse_legali_biachi(sc, mosse_l, mosse_i_l);
+    } else {
+        mosse_i_l = mosse_legali_neri(sc, mosse_l, mosse_i_l);
+    }
     return mosse_i_l;
 }

@@ -4,7 +4,7 @@
 #include "valutazione.h"
 #include "cervello.h"
 
-int minimax(int depth, int *game, int isMaximisingPlayer) {
+int minimax(int depth, int *game) {
 
     int game_used[GRANDEZZA_SC];
     memcpy(game_used, game, MEM_GRANDEZZA_SC);
@@ -15,23 +15,24 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
 
     mossa mosse[400];
     int mosse_i = 0;
+    mosse_i = mosse_legali(game_used, mosse, mosse_i);
 
-    if (isMaximisingPlayer) {
-        mosse_i = mosse_legali_biachi(game_used, mosse, mosse_i);
+    if (game_used[turno] == turn_white) {
+        
 
         if (mosse_i == 0) {
             if (re_bianco_attaccato(game_used)) {
-                return -9999; //ha perso
+                return -99999; //ha perso
             }
             else {
                 return 0;
             }
         }
 
-        int bestMove = -9999;
+        int bestMove = -99999;
         for (int i = 0; i < mosse_i; i++) {
             fai_mossa(game_used, mosse[i].da, mosse[i].a);
-            int mmOVE = minimax(depth - 1, game_used, !isMaximisingPlayer);
+            int mmOVE = minimax(depth - 1, game_used);
             if (mmOVE > bestMove) {
                 bestMove = mmOVE;
             }
@@ -39,21 +40,20 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
         }
         return bestMove;
     } else {
-        mosse_i = mosse_legali_neri(game_used, mosse, mosse_i);
 
         if (mosse_i == 0) {
             if (re_nero_attaccato(game_used)) {
-                return +9999; //ha perso
+                return +99999; //ha perso
             }
             else {
                 return 0;
             }
         }
 
-        int bestMove = 9999;
+        int bestMove = 99999;
         for (int i = 0; i < mosse_i; i++) {
             fai_mossa(game_used, mosse[i].da, mosse[i].a);
-            int mmOVE = minimax(depth - 1, game_used, !isMaximisingPlayer);
+            int mmOVE = minimax(depth - 1, game_used);
             if (mmOVE < bestMove) {
                 bestMove = mmOVE;
             }
@@ -63,7 +63,7 @@ int minimax(int depth, int *game, int isMaximisingPlayer) {
     }
 }
 
-mossa minimaxRoot(int depth, int *game, int isMaximisingPlayer) {
+mossa minimaxRoot(int depth, int *game) {
 
     mossa mosse[400];
     int mosse_i = 0;
@@ -71,18 +71,21 @@ mossa minimaxRoot(int depth, int *game, int isMaximisingPlayer) {
     int game_used[GRANDEZZA_SC];
     memcpy(game_used, game, MEM_GRANDEZZA_SC);
 
-    if (isMaximisingPlayer) {
-        mosse_i = mosse_legali_biachi(game_used, mosse, mosse_i);
+    mosse_i = mosse_legali(game_used, mosse, mosse_i);
+
+    int bestMove = 0;
+
+    if (game_used[turno] == turn_white) {
+        bestMove = -99999;
     } else {
-        mosse_i = mosse_legali_neri(game_used, mosse, mosse_i);
+        bestMove = +99999;
     }
-    int bestMove = -9999;
     mossa bestMoveFound;
 
     for(int i = 0; i < mosse_i; i++) {
         mossa newGameMove = mosse[i];
         fai_mossa(game_used, mosse[i].da, mosse[i].a);
-        int value = minimax(depth - 1, game_used, !isMaximisingPlayer);
+        int value = minimax(depth - 1, game_used);
 
         printf("mossa da %d a %d valutazione %d\n", newGameMove.da, newGameMove.a, value);
 
@@ -99,7 +102,7 @@ mossa minimaxRoot(int depth, int *game, int isMaximisingPlayer) {
 
 // for testing https://wiki.sharewiz.net/doku.php?id=chess:programming:perft
 
-unsigned long int perft(int depth, int *game, int isMaximisingPlayer) {
+unsigned long int perft(int depth, int *game) {
 
     unsigned long int nodes = 0;
 
@@ -112,16 +115,11 @@ unsigned long int perft(int depth, int *game, int isMaximisingPlayer) {
 
     mossa mosse[400];
     int mosse_i = 0;
+    mosse_i = mosse_legali(game_used, mosse, mosse_i);
 
-    if (isMaximisingPlayer) {
-        mosse_i = mosse_legali_biachi(game_used, mosse, mosse_i);
-    } 
-    else if (!isMaximisingPlayer) {
-        mosse_i = mosse_legali_neri(game_used, mosse, mosse_i);
-    }
     for (int i = 0; i < mosse_i; i++) {
         fai_mossa(game_used, mosse[i].da, mosse[i].a);
-        nodes += perft(depth - 1, game_used, !isMaximisingPlayer);
+        nodes += perft(depth - 1, game_used);
         memcpy(game_used, game, MEM_GRANDEZZA_SC);
     }
     return nodes;
