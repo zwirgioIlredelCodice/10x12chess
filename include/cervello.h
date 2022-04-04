@@ -10,3 +10,5 @@ int minimax(int depth, int *game);
 mossa minimaxRoot(int depth, int *game);
 
 unsigned long int perft(int depth, int *game);
+
+void perftRoot(int depth, int *game);

@@ -77,6 +77,7 @@ enum turn {
 // la scacchiera di partenza
 extern int scacchiera_0[];
 extern int empty_board[];
+extern const char square_coordinate[][3];
 
 //Regular background
 #define BLKB "\e[40m"

@@ -124,3 +124,33 @@ unsigned long int perft(int depth, int *game) {
     }
     return nodes;
 }
+
+void perftRoot(int depth, int *game) {
+
+    mossa mosse[400];
+    int mosse_i = 0;
+
+    int game_used[GRANDEZZA_SC];
+    memcpy(game_used, game, MEM_GRANDEZZA_SC);
+
+    mosse_i = mosse_legali(game_used, mosse, mosse_i);
+
+    char froms[3];
+    char tos[3];
+
+    for(int i = 0; i < mosse_i; i++) {
+        mossa newGameMove = mosse[i];
+        fai_mossa(game_used, mosse[i].da, mosse[i].a);
+        int value = perft(depth - 1, game_used);
+
+        if (newGameMove.da >= 21) {
+            printf("%s%s: %d\n", square_coordinate[newGameMove.da], square_coordinate[newGameMove.a], value);
+        } else {
+            printf("move from %s to %d nodes: %d\n", square_coordinate[newGameMove.da], newGameMove.a, value);
+        }
+
+        
+
+        memcpy(game_used, game, MEM_GRANDEZZA_SC);
+    }
+}
