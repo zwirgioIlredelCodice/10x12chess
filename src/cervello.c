@@ -143,7 +143,7 @@ void perftRoot(int depth, int *game) {
         fai_mossa(game_used, mosse[i].da, mosse[i].a);
         int value = perft(depth - 1, game_used);
 
-        if (newGameMove.da >= 21) {
+        if (newGameMove.a >= 21 && newGameMove.a <= 98) {
             printf("%s%s: %d\n", square_coordinate[newGameMove.da], square_coordinate[newGameMove.a], value);
         } else {
             printf("move from %s to %d nodes: %d\n", square_coordinate[newGameMove.da], newGameMove.a, value);

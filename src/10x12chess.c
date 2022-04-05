@@ -96,5 +96,17 @@ int main() {
     disegna_scacchiera(test_vuoto);
     */
     //cli();
-    test_moves();
+    //test_moves();
+    int sccc[GRANDEZZA_SC] = {0};
+    fen_to_board("2n5/PPPk4/1n6/8/8/8/4Kppp/5N1N w - - 1 2", sccc);
+    fai_mossa(sccc, b7, -14);
+
+    mossa moss[400];
+    int asd = 0;
+    asd = mosse_legali_neri(sccc, moss, asd);
+
+    for (size_t i = 0; i < asd; i++)
+    {
+        printf("da %s a %d \n", square_coordinate[moss[i].da], moss[i].a);
+    }
 }

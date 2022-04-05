@@ -246,3 +246,139 @@ void fen_to_board(char fen_string[], int board[]) {
         }
     }
 }
+
+void num_to_coordinates(int n, char return_string[]) {
+    if ( n >= 0) {
+        strcpy(return_string, square_coordinate[n]);
+    } else {
+        switch (n)
+        {
+        case moss_arrocco_bdx:
+            strcpy(return_string, "O-O");
+            break;
+        
+        case moss_arrocco_bsx:
+            strcpy(return_string, "O-O-O");
+            break;
+        
+        case moss_arrocco_ndx:
+            strcpy(return_string, "o-o");
+            break;
+        
+        case moss_arrocco_nsx:
+            strcpy(return_string, "o-o-o");
+            break;
+        
+        case promozione_pb_r:
+            strcpy(return_string, "Q");
+            break;
+        
+        case promozione_pb_t:
+            strcpy(return_string, "R");
+            break;
+        
+        case promozione_pb_a:
+            strcpy(return_string, "B");
+            break;
+        
+        case promozione_pb_c:
+            strcpy(return_string, "N");
+            break;
+
+        case promozione_pn_r:
+            strcpy(return_string, "q");
+            break;
+        
+        case promozione_pn_t:
+            strcpy(return_string, "r");
+            break;
+        
+        case promozione_pn_a:
+            strcpy(return_string, "b");
+            break;
+        
+        case promozione_pn_c:
+            strcpy(return_string, "n");
+            break;
+
+        case promozione_pbdx_r:
+            strcpy(return_string, "Q");
+            break;
+        
+        case promozione_pbdx_t:
+            strcpy(return_string, "R");
+            break;
+        
+        case promozione_pbdx_a:
+            strcpy(return_string, "B");
+            break;
+        
+        case promozione_pbdx_c:
+            strcpy(return_string, "N");
+            break;
+
+        case promozione_pndx_r:
+            strcpy(return_string, "q");
+            break;
+        
+        case promozione_pndx_t:
+            strcpy(return_string, "r");
+            break;
+        
+        case promozione_pndx_a:
+            strcpy(return_string, "b");
+            break;
+        
+        case promozione_pndx_c:
+            strcpy(return_string, "n");
+            break;
+        
+        case promozione_pbsx_t:
+            strcpy(return_string, "R");
+            break;
+        
+        case promozione_pbsx_a:
+            strcpy(return_string, "B");
+            break;
+        
+        case promozione_pbsx_c:
+            strcpy(return_string, "N");
+            break;
+
+        case promozione_pnsx_r:
+            strcpy(return_string, "q");
+            break;
+        
+        case promozione_pnsx_t:
+            strcpy(return_string, "r");
+            break;
+        
+        case promozione_pnsx_a:
+            strcpy(return_string, "b");
+            break;
+        
+        case promozione_pnsx_c:
+            strcpy(return_string, "n");
+            break;
+        
+        case pav_b_dx:
+            strcpy(return_string, "anp");
+            break;
+        
+        case pav_b_sx:
+            strcpy(return_string, "anp");
+            break;
+        
+        case pav_n_dx:
+            strcpy(return_string, "anp");
+            break;
+        
+        case pav_n_sx:
+            strcpy(return_string, "anp");
+            break;
+        
+        default:
+            break;
+        }
+    }
+}

@@ -134,17 +134,17 @@ void fai_mossa(int *sc, int da, int a) {
         
         case promozione_pbdx_t:
             sc[da] = vuoto;
-            sc[da - 11] = torre_b;
+            sc[da - 9] = torre_b;
             break;
         
         case promozione_pbdx_a:
             sc[da] = vuoto;
-            sc[da - 11] = alfiere_b;
+            sc[da - 9] = alfiere_b;
             break;
         
         case promozione_pbdx_c:
             sc[da] = vuoto;
-            sc[da - 11] = cavallo_b;
+            sc[da - 9] = cavallo_b;
             break;
 
         case promozione_pndx_r:
@@ -169,22 +169,22 @@ void fai_mossa(int *sc, int da, int a) {
         
         case promozione_pbsx_r:
             sc[da] = vuoto;
-            sc[da - 9] = regina_b;
+            sc[da - 11] = regina_b;
             break;
         
         case promozione_pbsx_t:
             sc[da] = vuoto;
-            sc[da - 9] = torre_b;
+            sc[da - 11] = torre_b;
             break;
         
         case promozione_pbsx_a:
             sc[da] = vuoto;
-            sc[da - 9] = alfiere_b;
+            sc[da - 11] = alfiere_b;
             break;
         
         case promozione_pbsx_c:
             sc[da] = vuoto;
-            sc[da - 9] = cavallo_b;
+            sc[da - 11] = cavallo_b;
             break;
 
         case promozione_pnsx_r:

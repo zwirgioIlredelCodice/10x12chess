@@ -1,0 +1,106 @@
+n1n5/PPPk4/8/8/8/8/4Kppp/5N1N b - - 0 1
+
+g2f1q: 90
+g2f1r: 298
+g2f1b: 107
+g2f1n: 237
+g2h1q: 393
+g2h1r: 295
+g2h1b: 336
+g2h1n: 242
+g2g1q: 448
+g2g1r: 467
+g2g1b: 258
+g2g1n: 75
+a8b6: 533
+a8c7: 593
+c8b6: 489
+c8d6: 563
+c8a7: 481
+c8e7: 521
+d7c6: 526
+d7d6: 549
+d7e6: 559
+d7c7: 437
+d7e7: 532
+d7e8: 454
+--------------------
+a8b6: 552 no 533 --si vede questa
+                        #####################
+                
+2n5/PPPk4/1n6/8/8/8/4Kppp/5N1N w - - 1 2
+
+b7c8q: 5
+b7c8r: 22 s
+b7c8b: 7  s
+b7c8n: 22
+a7a8q: 25
+a7a8r: 25
+a7a8b: 25
+a7a8n: 24
+b7b8q: 24
+b7b8r: 25
+b7b8b: 24
+b7b8n: 5
+f1d2: 25
+f1h2: 25
+f1e3: 25
+f1g3: 25
+h1f2: 25
+h1g3: 25
+e2d1: 25
+e2f3: 25
+e2d2: 25 v
+e2f2: 25
+e2d3: 25
+e2e3: 25
+----------
+move from a7 to -5 nodes: 25 v
+move from a7 to -6 nodes: 25 v
+move from a7 to -7 nodes: 25 v
+move from a7 to -8 nodes: 24 v
+move from b7 to -5 nodes: 24 v
+move from b7 to -6 nodes: 25 v
+move from b7 to -7 nodes: 24 v
+move from b7 to -8 nodes: 5  v
+move from b7 to -13 nodes: 24 v
+move from b7 to -14 nodes: 22 v
+move from b7 to -15 nodes: 7  v
+move from b7 to -16 nodes: 22
+e2d2: 25 v
+e2f3: 25 v
+e2e3: 25 v
+e2d3: 25 v
+e2f2: 25 v
+e2d1: 25 v
+f1g3: 25 v
+f1e3: 25 v
+f1d2: 25 v
+f1h2: 25 v
+h1g3: 25 v
+h1f2: 25 v
+
+                        #####################
+a8c7: 616 no 591
+c8b6: 489 si
+c8d6: 563 si
+c8e7: 521 si
+c8a7: 481 s
+d7c7: 454 no 437
+d7e8: 468 no 451
+d7e7: 537 no 537
+d7e6: 576 no 559
+d7d6: 551 no 559
+d7c6: 513 no 526
+move from g2 to -9 nodes: 462
+move from g2 to -10 nodes: 481
+move from g2 to -11 nodes: 263
+move from g2 to -12 nodes: 75
+move from g2 to -25 nodes: 90
+move from g2 to -26 nodes: 310
+move from g2 to -27 nodes: 107
+move from g2 to -28 nodes: 245
+move from g2 to -17 nodes: 407
+move from g2 to -18 nodes: 302
+move from g2 to -19 nodes: 348
+move from g2 to -20 nodes: 248
