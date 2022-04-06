@@ -387,7 +387,7 @@ int mosse_pedone_nero(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-int mosse_pedone_bianco_base(int *sc, int pos, int *mosse, int mosse_i) {
+int mosse_pedone_bianco_attacco(int *sc, int pos, int *mosse, int mosse_i) {
     int avanti_1 = pos - 10;
     int avanti_destra = pos - 9;
     int avanti_sinistra = pos - 11;
@@ -401,12 +401,12 @@ int mosse_pedone_bianco_base(int *sc, int pos, int *mosse, int mosse_i) {
         mosse[mosse_i] = avanti_2;
         mosse_i++;
     }
-    if (nero(sc[avanti_sinistra])) {
+    if (sc[avanti_sinistra] == vuoto || nero(sc[avanti_sinistra])) {
         mosse[mosse_i] = avanti_sinistra;
         mosse_i++;
         
     }
-    if (nero(sc[avanti_destra])) {
+    if (sc[avanti_destra] == vuoto || nero(sc[avanti_destra])) {
         mosse[mosse_i] = avanti_destra;
         mosse_i++;
     }
@@ -414,7 +414,7 @@ int mosse_pedone_bianco_base(int *sc, int pos, int *mosse, int mosse_i) {
     return mosse_i;
 }
 
-int mosse_pedone_nero_base(int *sc, int pos, int *mosse, int mosse_i) {
+int mosse_pedone_nero_attacco(int *sc, int pos, int *mosse, int mosse_i) {
     int avanti_1 = pos + 10;
     int avanti_2 = pos + 20;
     int avanti_destra = pos + 11;
@@ -428,11 +428,11 @@ int mosse_pedone_nero_base(int *sc, int pos, int *mosse, int mosse_i) {
         mosse[mosse_i] = avanti_2;
         mosse_i++;
     }
-    if (bianco(sc[avanti_sinistra])) {
+    if (sc[avanti_sinistra] == vuoto || bianco(sc[avanti_sinistra])) {
         mosse[mosse_i] = avanti_sinistra;
         mosse_i++;
     }
-    if (bianco(sc[avanti_destra])) {
+    if (sc[avanti_destra] == vuoto || bianco(sc[avanti_destra])) {
         mosse[mosse_i] = avanti_destra;
         mosse_i++;
     }
@@ -701,7 +701,7 @@ void attacco_bianchi(int *sc, int *attacco) { //prende un array scacchoera e in 
         switch (sc[i])
         {
         case pedone_b:
-            mosse_i = mosse_pedone_bianco_base(sc, i, mosse, mosse_i);
+            mosse_i = mosse_pedone_bianco_attacco(sc, i, mosse, mosse_i);
             break;
         
         case cavallo_b:
@@ -744,7 +744,7 @@ void attacco_neri(int *sc, int *attacco) { //prende un array scacchoera e in arr
         switch (sc[i])
         {
         case pedone_n:
-            mosse_i = mosse_pedone_nero_base(sc, i, mosse, mosse_i);
+            mosse_i = mosse_pedone_nero_attacco(sc, i, mosse, mosse_i);
             break;
         
         case cavallo_n:

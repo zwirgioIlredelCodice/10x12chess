@@ -75,9 +75,9 @@ void test_moves() {
         //test 3 general bugs
         printf("\ntest 3 general bugs:\n");
 
-        fen_to_board("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ", test_board);
-        depth = 4;
-        unsigned long int result_3[6] = {48, 2039, 97862, 4085603, 193690690, 8031647685};
+        fen_to_board("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -", test_board);
+        depth = 6;
+        unsigned long int result_3[6] = {14, 191, 2812, 43238, 674624, 11030083};
         for (int i = 1; i <= depth; i++) {
                 result = perft(i, test_board);
 

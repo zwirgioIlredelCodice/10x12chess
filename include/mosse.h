@@ -11,9 +11,9 @@ int mosse_pedone_bianco(int *sc, int pos, int *mosse, int mosse_i);
 
 int mosse_pedone_nero(int *sc, int pos, int *mosse, int mosse_i);
 
-int mosse_pedone_bianco_base(int *sc, int pos, int *mosse, int mosse_i);
+int mosse_pedone_bianco_attacco(int *sc, int pos, int *mosse, int mosse_i);
 
-int mosse_pedone_nero_base(int *sc, int pos, int *mosse, int mosse_i);
+int mosse_pedone_bianco_attacco(int *sc, int pos, int *mosse, int mosse_i);
 
 int mosse_cavallo_bianco(int *sc, int pos, int *mosse, int mosse_i);
 
