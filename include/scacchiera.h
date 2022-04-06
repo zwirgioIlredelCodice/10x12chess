@@ -100,5 +100,3 @@ void disegna_attacco(int *attacco);
 int pos_lettere(char *c);
 
 void fen_to_board(char fen_string[], int board[]);
-
-void num_to_coordinates(int n, char return_string[]);

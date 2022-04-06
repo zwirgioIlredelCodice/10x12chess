@@ -46,67 +46,6 @@ void gioco() {
 
 int main() {
     //gui(test1);
-    /*
-    int attacco[120] = {0};
-
-    attacco_neri(test1, attacco);
-    disegna_attacco(attacco);
-    
-    mossa mosse[100];
-    int i = 0;
-    i = mosse_legali_biachi(test1, mosse, i);
-
-    for (int ii = 0; ii < i; ii++)
-    {
-        printf("da %d a %d\n", mosse[ii].da, mosse[ii].a);
-    }
-    gioco();
-    mossa moss[40];
-    int asd = 0;
-    asd = mosse_legali_biachi(test1, moss, asd);
-
-    for (size_t i = 0; i < asd; i++)
-    {
-        printf("da %d a %d ", moss[i].da, moss[i].a);
-    }
-
-    disegna_scacchiera(test1);
-    fai_mossa(test1, 0, moss_arrocco_bdx);
-    
-    disegna_scacchiera(test1);
-    
-    int attacco[120] = {0};
-
-    attacco_neri(test1, attacco);
-    disegna_attacco(attacco);
-    disegna_scacchiera(test_vuoto);
-    fai_mossa(test_vuoto, 82, 62);
-    disegna_scacchiera(test_vuoto);
-
-    mossa moss[40];
-    int asd = 0;
-    asd = mosse_legali_neri(test_vuoto, moss, asd);
-
-    for (size_t i = 0; i < asd; i++)
-    {
-        printf("da %d a %d ", moss[i].da, moss[i].a);
-    }
-
-    fai_mossa(test_vuoto, 63, -32);
-    disegna_scacchiera(test_vuoto);
-    */
     //cli();
-    //test_moves();
-    int sccc[GRANDEZZA_SC] = {0};
-    fen_to_board("2n5/PPPk4/1n6/8/8/8/4Kppp/5N1N w - - 1 2", sccc);
-    fai_mossa(sccc, b7, -14);
-
-    mossa moss[400];
-    int asd = 0;
-    asd = mosse_legali_neri(sccc, moss, asd);
-
-    for (size_t i = 0; i < asd; i++)
-    {
-        printf("da %s a %d \n", square_coordinate[moss[i].da], moss[i].a);
-    }
+    test_moves();
 }

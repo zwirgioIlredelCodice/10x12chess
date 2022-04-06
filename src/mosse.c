@@ -129,7 +129,7 @@ void fai_mossa(int *sc, int da, int a) {
 
         case promozione_pbdx_r:
             sc[da] = vuoto;
-            sc[da - 11] = regina_b;
+            sc[da - 9] = regina_b;
             break;
         
         case promozione_pbdx_t:
