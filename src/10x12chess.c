@@ -46,19 +46,5 @@ void gioco() {
 
 int main() {
     //gui(test1);
-    //cli();
-    //test_moves();
-    
-    int sas[GRANDEZZA_SC] = {0};
-    fen_to_board("1r2k2N/p1ppq1b1/bn2pnp1/3P4/1p2P3/2N2Q1p/PPPBBPPP/R3K2R b KQ - 0 2", sas);
-    //perftRoot(2, sas);
-    
-    mossa moss[400];
-    int asd = 0;
-    asd = mosse_legali(sas, moss, asd);
-
-    for (size_t i = 0; i < asd; i++)
-    {
-        printf("da %s a %d \n", square_coordinate[moss[i].da], moss[i].a);
-    }
+    cli();
 }

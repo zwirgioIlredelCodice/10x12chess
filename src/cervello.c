@@ -138,10 +138,16 @@ void perftRoot(int depth, int *game) {
     char froms[3];
     char tos[3];
 
+    int tot = 0;
+
+    mossa newGameMove;
+
     for(int i = 0; i < mosse_i; i++) {
-        mossa newGameMove = mosse[i];
+        newGameMove = mosse[i];
         fai_mossa(game_used, mosse[i].da, mosse[i].a);
         int value = perft(depth - 1, game_used);
+
+        tot += value;
 
         if (newGameMove.a >= 21 && newGameMove.a <= 98) {
             printf("%s%s: %d\n", square_coordinate[newGameMove.da], square_coordinate[newGameMove.a], value);
@@ -149,8 +155,7 @@ void perftRoot(int depth, int *game) {
             printf("move from %s to %d nodes: %d\n", square_coordinate[newGameMove.da], newGameMove.a, value);
         }
 
-        
-
         memcpy(game_used, game, MEM_GRANDEZZA_SC);
     }
+    printf("\nNodes searched: %d\n", tot);
 }

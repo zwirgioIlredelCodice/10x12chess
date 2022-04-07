@@ -40,6 +40,28 @@ void fai_mossa(int *sc, int da, int a) {
         break;
     }
 
+    switch (a)
+    {
+    case a8:
+        sc[arrocco_nsx] = NO_ARROCCO;
+        break;
+    
+    case h8:
+        sc[arrocco_ndx] = NO_ARROCCO;
+        break;
+
+    case a1:
+        sc[arrocco_bsx] = NO_ARROCCO;
+        break;
+    
+    case h1:
+        sc[arrocco_bdx] = NO_ARROCCO;
+        break;
+    
+    default:
+        break;
+    }
+
     sc[presa_al_varco] = NO_PRESA_AL_VARCO; // solo per un turno 
 
     //guarda se sono possibili prese al varco
