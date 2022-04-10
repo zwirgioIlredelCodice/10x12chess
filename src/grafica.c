@@ -195,7 +195,7 @@ int gui(int *sc)
             if (turno == 1)
             {
                 
-                mosse_i_l = mosse_legali_biachi(sc, mosse_l, mosse_i_l);
+                mosse_i_l = mosse_legali(sc, mosse_l, mosse_i_l);
 
                 if (mosse_i_l == 0)
                 {
@@ -206,81 +206,14 @@ int gui(int *sc)
                 
                 // ---------mossa engine
                 
-                mossa mm = minimaxRoot(4, sc);
+                mossa mm = minimax_alpha_beta_Root(4, sc);
                 fai_mossa(sc, mm.da, mm.a);
                 turno = -turno;
                 
-                
-                /*
-                if (IsMouseButtonPressed(0))
-                {
-                    mosse_i = 0;
-
-                    posizione_mouse = GetMousePosition();
-                    px = (int)posizione_mouse.x;
-                    py = (int)posizione_mouse.y;
-
-                    px = (px / QUAD_SIZE);
-                    py = (py / QUAD_SIZE);
-
-                    mouse_scacchiera = py * 10 + px + 21;
-
-                    mossa_speciale_quadrato = 0;
-                    mossa_speciale_mossa = 0;
-
-                    if (sc[mouse_scacchiera] != vuoto)
-                    {
-
-                        switch (sc[mouse_scacchiera])
-                        {
-                        case pedone_b:
-                            mosse_i = mosse_pedone_bianco_l(sc, mouse_scacchiera, mosse, mosse_i);
-                            break;
-                        case cavallo_b:
-                            mosse_i = mosse_cavallo_bianco_l(sc, mouse_scacchiera, mosse, mosse_i);
-                            break;
-                        case alfiere_b:
-                            mosse_i = mosse_alfiere_bianco_l(sc, mouse_scacchiera, mosse, mosse_i);
-                            break;
-                        case torre_b:
-                            mosse_i = mosse_torre_bianca_l(sc, mouse_scacchiera, mosse, mosse_i);
-                            break;
-                        case regina_b:
-                            mosse_i = mosse_regina_bianca_l(sc, mouse_scacchiera, mosse, mosse_i);
-                            break;
-                        case re_b:
-                            mosse_i = mosse_re_bianco_l(sc, mouse_scacchiera, mosse, mosse_i);
-                            break;
-                        default:
-                            break;
-                        }
-                    }
-                }
-
-                if (IsMouseButtonPressed(1))
-                {
-                    posizione_mouse = GetMousePosition();
-                    int sspx = (int)posizione_mouse.x;
-                    int sspy = (int)posizione_mouse.y;
-
-                    sspx = (sspx / QUAD_SIZE);
-                    sspy = (sspy / QUAD_SIZE);
-
-                    mossa_mouse = sspy * 10 + sspx + 21;
-
-                    if (mossa_mouse == mossa_speciale_quadrato) {
-                        fai_mossa(sc, mouse_scacchiera, mossa_speciale_mossa);
-                    }
-                    else {
-                        fai_mossa(sc, mouse_scacchiera, mossa_mouse);
-                    }
-
-                    turno = -turno;
-                }*/
             }
             else if (turno == -1)
             {
-                mosse_i_l = mosse_legali_neri(sc, mosse_l, mosse_i_l);
+                mosse_i_l = mosse_legali(sc, mosse_l, mosse_i_l);
 
                 if (mosse_i_l == 0)
                 {

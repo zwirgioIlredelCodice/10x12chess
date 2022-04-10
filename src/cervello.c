@@ -159,3 +159,112 @@ void perftRoot(int depth, int *game) {
     }
     printf("\nNodes searched: %d\n", tot);
 }
+
+int minimax_alpha_beta(int depth, int *game, int alpha, int beta) {
+
+    int game_used[GRANDEZZA_SC];
+    memcpy(game_used, game, MEM_GRANDEZZA_SC);
+
+    if (depth == 0) {
+        return valuta_posizione(game_used);
+    }
+
+    mossa mosse[400];
+    int mosse_i = 0;
+    mosse_i = mosse_legali(game_used, mosse, mosse_i);
+
+    if (game_used[turno] == turn_white) {
+        
+
+        if (mosse_i == 0) {
+            if (re_bianco_attaccato(game_used)) {
+                return -99999; //ha perso
+            }
+            else {
+                return 0;
+            }
+        }
+
+        int bestMove = -99999;
+        for (int i = 0; i < mosse_i; i++) {
+            fai_mossa(game_used, mosse[i].da, mosse[i].a);
+            int mmOVE = minimax_alpha_beta(depth - 1, game_used, alpha, beta);
+            if (mmOVE > bestMove) {
+                bestMove = mmOVE;
+            }
+            memcpy(game_used, game, MEM_GRANDEZZA_SC);
+
+            if (alpha <= bestMove) {
+                alpha = bestMove;
+            }
+            if (beta <= alpha) {
+                return bestMove;
+            }
+        }
+        return bestMove;
+    } else {
+
+        if (mosse_i == 0) {
+            if (re_nero_attaccato(game_used)) {
+                return +99999; //ha perso
+            }
+            else {
+                return 0;
+            }
+        }
+
+        int bestMove = 99999;
+        for (int i = 0; i < mosse_i; i++) {
+            fai_mossa(game_used, mosse[i].da, mosse[i].a);
+            int mmOVE = minimax_alpha_beta(depth - 1, game_used, alpha, beta);
+            if (mmOVE < bestMove) {
+                bestMove = mmOVE;
+            }
+            memcpy(game_used, game, MEM_GRANDEZZA_SC);
+
+            if (beta >= bestMove) {
+                beta = bestMove;
+            }
+            if (beta <= alpha) {
+                return bestMove;
+            }
+        }
+        return bestMove;
+    }
+}
+
+mossa minimax_alpha_beta_Root(int depth, int *game) {
+
+    mossa mosse[400];
+    int mosse_i = 0;
+
+    int game_used[GRANDEZZA_SC];
+    memcpy(game_used, game, MEM_GRANDEZZA_SC);
+
+    mosse_i = mosse_legali(game_used, mosse, mosse_i);
+
+    int bestMove = 0;
+
+    if (game_used[turno] == turn_white) {
+        bestMove = -99999;
+    } else {
+        bestMove = +99999;
+    }
+    mossa bestMoveFound;
+
+    for(int i = 0; i < mosse_i; i++) {
+        mossa newGameMove = mosse[i];
+        fai_mossa(game_used, mosse[i].da, mosse[i].a);
+        int value = minimax_alpha_beta(depth - 1, game_used, -100000, +100000);
+
+        printf("mossa da %d a %d valutazione %d\n", newGameMove.da, newGameMove.a, value);
+
+        memcpy(game_used, game, MEM_GRANDEZZA_SC);
+        if(value >= bestMove) {
+            bestMove = value;
+            bestMoveFound = newGameMove;
+        }
+    }
+    printf("#--- deciso da %d a %d punteggio %d \n\n", bestMoveFound.da, bestMoveFound.a, bestMove);
+    return bestMoveFound;
+};

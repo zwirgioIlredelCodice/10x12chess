@@ -17,24 +17,19 @@ const char cli_help_text[] =
     "   * help (various helps)\n"
     "   * printboard (print the board in the terminal)\n"
     "   * fen (set the board with a fen notation string)\n"
+    "   * bestmove (calculate the best move)\n"
     "   * perft (see al node in the position for testing)\n"
     "   * test (test suite)\n"
     "   * playgui (play against the engine with a gui)\n"
     ;
 
-void fen_fn(int board[]) {
-    char fen_string[256];
-    printf("insert fen string notation:\n");
-    scanf("%s", fen_string);
-    fen_to_board(fen_string, board);
-}
-
 void cli() {
     
     char command[200] = "";
+    int depth = 0;
 
     int board_used[GRANDEZZA_SC] = {0};
-    memcpy(board_used, empty_board, MEM_GRANDEZZA_SC);
+    memcpy(board_used, scacchiera_0, MEM_GRANDEZZA_SC);
 
     printf(cli_start_text);
 
@@ -58,8 +53,15 @@ void cli() {
             fgets(fen_string, 256, stdin);
             fen_to_board(fen_string, board_used);
         }
+        else if ((strcmp(command, "bestmove\n") == 0)) {
+            depth = 0;
+            printf("insert depth to search ( > 5 slow):\n");
+            scanf("%d", &depth);
+            mossa best = minimax_alpha_beta_Root(depth, board_used);
+            // do somethings with best move
+        }
         else if ((strcmp(command, "perft\n") == 0)) {
-            int depth;
+            depth = 0;
             printf("insert perft depth:\n");
             scanf("%d", &depth);
             unsigned long int nodes = perft(depth, board_used); //ismaximising temp
