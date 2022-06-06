@@ -8,9 +8,6 @@ sas malibox board representation
 #include "scacchiera.h"
 #include "valutazione.h"
 #include "cervello.h"
-
-#include "raylib.h"
-#include "grafica.h"
 #include "cli.h"
 
 #include "test.h"

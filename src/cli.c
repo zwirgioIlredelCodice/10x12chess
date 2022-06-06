@@ -2,7 +2,6 @@
 #include <string.h>
 
 #include "cli.h"
-#include "grafica.h"
 #include "scacchiera.h"
 #include "cervello.h"
 #include "test.h"
@@ -20,7 +19,6 @@ const char cli_help_text[] =
     "   * bestmove (calculate the best move)\n"
     "   * perft (see al node in the position for testing)\n"
     "   * test (test suite)\n"
-    "   * playgui (play against the engine with a gui)\n"
     ;
 
 void cli() {
@@ -38,7 +36,6 @@ void cli() {
         fgets(command, 200, stdin); //fgets to read an entire line with spaces
 
         if (strcmp(command, "quit\n") == 0) {
-            printf("quitting...\n");
             break;
         }
         else if ((strcmp(command, "help\n") == 0)) {
@@ -69,9 +66,6 @@ void cli() {
         }
         else if ((strcmp(command, "test\n") == 0)) {
             test_moves();
-        }
-        else if ((strcmp(command, "playgui\n") == 0)) { // not definitive
-            gui(scacchiera_0);
         }
         else {
             printf("! %s command not found, type help for help :]\n", command);

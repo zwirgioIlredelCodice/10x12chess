@@ -227,6 +227,7 @@ void fen_to_board(char fen_string[], int board[]) {
             break;
         
         case en_passant:
+            ;
             int pos = (90 - (fen_string[i+1] - '1' + 2) * 10) + (fen_string[i] - 'a' + 1) + 20;
             i++; //skip one char because use 2 char
 
