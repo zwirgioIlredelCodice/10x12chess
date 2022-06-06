@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/debug/10x12chess",
+            "program": "${workspaceFolder}10x12chess",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

@@ -9,6 +9,7 @@ sas malibox board representation
 #include "valutazione.h"
 #include "cervello.h"
 #include "cli.h"
+#include "uci.h"
 
 #include "test.h"
 
@@ -43,5 +44,6 @@ void gioco() {
 
 int main() {
     //gui(test1);
-    cli();
+    //cli();
+    ucimain();
 }

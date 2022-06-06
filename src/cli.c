@@ -29,7 +29,7 @@ void cli() {
     int board_used[GRANDEZZA_SC] = {0};
     memcpy(board_used, scacchiera_0, MEM_GRANDEZZA_SC);
 
-    printf(cli_start_text);
+    printf("%s",cli_start_text);
 
     while (1) {
         printf("10x12chess -> ");
