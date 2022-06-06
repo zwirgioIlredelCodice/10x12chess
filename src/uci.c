@@ -18,8 +18,8 @@ int uci_token(char * command_string, char * token, int pos) {
     return pos;
 }
 
-#define N_UCI_COMMANDS 5
-char str_uci[][20] = {"uci", "quit", "debug", "on", "off"};
+#define N_UCI_COMMANDS 7
+char str_uci[][20] = {"uci", "quit", "debug", "on", "off", "isready", "setoption", "register", "id_ucinewgame", "position"};
 
 typedef enum uci_id {
     id_uci,
@@ -27,6 +27,11 @@ typedef enum uci_id {
     id_debug,
     id_on,
     id_off,
+    id_isready,
+    id_setoption,
+    id_register,
+    id_ucinewgame,
+    id_position,
     id_unknown,
     id_end
 } uci_id;
@@ -61,21 +66,14 @@ void ucimain() {
         
         id = uci_token_id(command_string, &pos);
 
-        if (id == id_uci) {
+        switch (id)
+        {
+        case id_uci:
             printf("id name 10x12chess 0\n");
             printf("id author Fabio Murer\n");
-            /*
-            tell engine to use the uci (universal chess interface),
-	        this will be sent once as a first command after program boot
-	        to tell the engine to switch to uci mode.
-	        After receiving the uci command the engine must identify itself with the "id" command
-	        and send the "option" commands to tell the GUI which engine settings the engine supports if any.
-	        After that the engine should send "uciok" to acknowledge the uci mode.
-	        If no uciok is sent within a certain time period, the engine task will be killed by the GUI.
-            */
             printf("uciok\n");
-        }
-        else if (id == id_debug) {
+            break;
+        case id_debug:
             id = uci_token_id(command_string, &pos);
             if (id == id_on) {
                 ; //da fare
@@ -83,13 +81,28 @@ void ucimain() {
             else if (id == id_off) {
                 ; //da fare
             }
-        }
-        else if (id == id_quit) {
+            break;
+        case id_isready:
+            printf("readyok\n");
+            break;
+        case id_setoption:
+            //setoption name Nullmove value true\n
+            break;
+        case id_register:
+            //"register name Stefan MK code 4359874324"
+            break;
+        case id_ucinewgame:
+            //this is sent to the engine when the next search (started with "position" and "go") will be from a different game.
+            break;
+        case id_position:
+            //blablabla
+            break;
+        case id_quit:
+            return;
+            break;
+        default:
             break;
         }
-        
-
-        //printf("[ token %s len %d]\n", token, strlen(token));
         pos = 0;
     }
     
