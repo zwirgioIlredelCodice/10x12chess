@@ -228,10 +228,10 @@ void fen_to_board(char fen_string[], int board[]) {
         
         case en_passant:
             ;
-            int pos = (90 - (fen_string[i+1] - '1' + 2) * 10) + (fen_string[i] - 'a' + 1) + 20;
+            int nn = pos_lettere(fen_string + i);
+            board[presa_al_varco] = nn;
+            state++;
             i++; //skip one char because use 2 char
-
-            board[presa_al_varco] = pos;
             break;
         
         case halfmove:

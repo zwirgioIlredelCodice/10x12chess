@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "scacchiera.h"
+
 int uci_token(char * command_string, char * token, int pos) {
 
     if (command_string[pos] == '\n') { //no more chars
@@ -15,11 +17,12 @@ int uci_token(char * command_string, char * token, int pos) {
         pos++;
     }
     strncpy(token, command_string+pos_token_start, (pos - pos_token_start));
+    token[pos - pos_token_start] = '\0';
     return pos;
 }
 
-#define N_UCI_COMMANDS 7
-char str_uci[][20] = {"uci", "quit", "debug", "on", "off", "isready", "setoption", "register", "id_ucinewgame", "position"};
+#define N_UCI_COMMANDS 11
+char str_uci[][20] = {"uci", "quit", "debug", "on", "off", "isready", "setoption", "register", "id_ucinewgame", "position", "mydebug"};
 
 typedef enum uci_id {
     id_uci,
@@ -32,8 +35,8 @@ typedef enum uci_id {
     id_register,
     id_ucinewgame,
     id_position,
+    id_mydebug,
     id_unknown,
-    id_end
 } uci_id;
 
 uci_id uci_token_id(char * command_string, int * pos) {
@@ -59,6 +62,11 @@ void ucimain() {
     char command_string[1000];
     int pos = 0;
     uci_id id = id_unknown;
+    char token[200];
+
+    int uci_board[GRANDEZZA_SC];
+    memcpy(uci_board, scacchiera_0, MEM_GRANDEZZA_SC);
+
     while (1)
     {
         memset(command_string,0,strlen(command_string));
@@ -86,16 +94,25 @@ void ucimain() {
             printf("readyok\n");
             break;
         case id_setoption:
-            //setoption name Nullmove value true\n
             break;
         case id_register:
             //"register name Stefan MK code 4359874324"
             break;
         case id_ucinewgame:
-            //this is sent to the engine when the next search (started with "position" and "go") will be from a different game.
+            memcpy(uci_board, scacchiera_0, MEM_GRANDEZZA_SC);
             break;
         case id_position:
-            //blablabla
+            pos = uci_token(command_string, token, pos);
+            if (strcmp("startpos", token) == 0) {
+                memcpy(uci_board, scacchiera_0, MEM_GRANDEZZA_SC);
+            }
+            else if (strcmp("fen", token) == 0) {
+                fen_to_board(command_string + pos + 1, uci_board);
+            }
+            memset(token,0,strlen(token));
+            break;
+        case id_mydebug:
+            disegna_scacchiera(uci_board);
             break;
         case id_quit:
             return;
