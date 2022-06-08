@@ -72,7 +72,7 @@ uci_id uci_token_id(char *command_string, int *pos)
     return id;
 }
 
-void uci_mossa_to_ucimove(mossa move, char *ucimove, int *uciboard)
+void uci_mossa_to_ucimove(mossa move, char *ucimove, int *board)
 {
     strcpy(ucimove, square_coordinate[move.da]);
     if (move.a > 0)
@@ -83,11 +83,11 @@ void uci_mossa_to_ucimove(mossa move, char *ucimove, int *uciboard)
     {
         if (move.a == pav_b_dx || move.a == pav_b_sx)
         { // presa al varco
-            strcat(ucimove, square_coordinate[uciboard[presa_al_varco - 10]]);
+            strcat(ucimove, square_coordinate[board[presa_al_varco - 10]]);
         }
         else if (move.a == pav_n_dx || move.a == pav_n_sx)
         { // presa al varco
-            strcat(ucimove, square_coordinate[uciboard[presa_al_varco + 10]]);
+            strcat(ucimove, square_coordinate[board[presa_al_varco + 10]]);
         }
         else
         {
@@ -290,7 +290,11 @@ void ucimain()
                 depth = 100; // --------- da cambiare
             }
             mossa bestmove;
+            char bestmove_str[10];
             bestmove = minimax_alpha_beta_Root(depth, uci_board);
+
+            uci_mossa_to_ucimove(bestmove, bestmove_str, uci_board);
+            printf("bestmove %s\n", bestmove_str);
             break;
         case id_mydebug:
             disegna_scacchiera(uci_board);

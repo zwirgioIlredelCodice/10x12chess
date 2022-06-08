@@ -257,7 +257,7 @@ mossa minimax_alpha_beta_Root(int depth, int *game) {
         fai_mossa(game_used, mosse[i].da, mosse[i].a);
         int value = minimax_alpha_beta(depth - 1, game_used, -100000, +100000);
 
-        printf("mossa da %d a %d valutazione %d\n", newGameMove.da, newGameMove.a, value);
+        //printf("mossa da %d a %d valutazione %d\n", newGameMove.da, newGameMove.a, value);
 
         memcpy(game_used, game, MEM_GRANDEZZA_SC);
         if(value >= bestMove) {
@@ -265,6 +265,6 @@ mossa minimax_alpha_beta_Root(int depth, int *game) {
             bestMoveFound = newGameMove;
         }
     }
-    printf("#--- deciso da %d a %d punteggio %d \n\n", bestMoveFound.da, bestMoveFound.a, bestMove);
+    //printf("#--- deciso da %d a %d punteggio %d \n\n", bestMoveFound.da, bestMoveFound.a, bestMove);
     return bestMoveFound;
 };
