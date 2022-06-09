@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <pthread.h>
 
 #include "scacchiera.h"
 #include "cervello.h"
@@ -83,11 +84,11 @@ void uci_mossa_to_ucimove(mossa move, char *ucimove, int *board)
     {
         if (move.a == pav_b_dx || move.a == pav_b_sx)
         { // presa al varco
-            strcat(ucimove, square_coordinate[board[presa_al_varco - 10]]);
+            strcat(ucimove, square_coordinate[board[presa_al_varco] - 10]);
         }
         else if (move.a == pav_n_dx || move.a == pav_n_sx)
         { // presa al varco
-            strcat(ucimove, square_coordinate[board[presa_al_varco + 10]]);
+            strcat(ucimove, square_coordinate[board[presa_al_varco] + 10]);
         }
         else
         {

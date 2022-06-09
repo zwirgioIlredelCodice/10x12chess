@@ -18,9 +18,6 @@ target_include_directories(${PROJECT_NAME}
         ${PROJECT_SOURCE_DIR}/include
 )
 
-# Checks if OSX and links appropriate frameworks (Only required on MacOS)
-if (APPLE)
-    target_link_libraries(${PROJECT_NAME} "-framework IOKit")
-    target_link_libraries(${PROJECT_NAME} "-framework Cocoa")
-    target_link_libraries(${PROJECT_NAME} "-framework OpenGL")
-endif()
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+target_link_libraries(10x12chess PRIVATE Threads::Threads)
