@@ -40,6 +40,19 @@ a chess engine with the [10x12 board representation](https://www.chessprogrammin
     * open the project folder in **visual studio**
     * compile
 
+* for mac
+    open terminal in the project folder and type:
+    
+    ``` bash
+    brew install gcc clang raylib
+    mkdir build
+    cd build
+    cmake ..
+    make
+    ```
+    
+    * currently there are compiling problems, in scacchiera.c:230, but i guess you can just comment it out
+
 ### Executing program
 
 * for linux:
